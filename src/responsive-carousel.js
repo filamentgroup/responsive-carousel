@@ -8,21 +8,16 @@
 
 (function($) {
 
-  // Collection method.
-  $.fn.awesome = function() {
-    return this.each(function() {
-      $(this).html('awesome');
-    });
-  };
-
-  // Static method.
-  $.awesome = function() {
-    return 'awesome';
-  };
-
-  // Custom selector.
-  $.expr[':'].awesome = function(elem) {
-    return elem.textContent.indexOf('awesome') >= 0;
-  };
+	// Collection method.
+	$.fn.carousel = function() {
+		return this.each(function() {
+		  $(this).addClass('carousel');
+		});
+	};
+  
+	// DOM-ready auto-init
+	$(function(){
+		$( "[data-carousel]" ).carousel();
+	});
 
 }(jQuery));
