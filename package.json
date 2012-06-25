@@ -1,0 +1,32 @@
+{
+  "name": "responsive-carousel",
+  "title": "Responsive Carousel",
+  "description": "A jQuery-based script for responsive carousels that work with mouse, touch, and keyboard",
+  "version": "0.1.0",
+  "homepage": "https://github.com/filamentgroup/responsive-carousel",
+  "author": {
+    "name": "Filament Group, Inc.",
+    "url": "http://filamentgroup.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/filamentgroup/responsive-carousel"
+  },
+  "bugs": {
+    "url": "https://github.com/filamentgroup/responsive-carousel/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/filamentgroup/responsive-carousel/blob/master/LICENSE-MIT"
+    },
+    {
+      "type": "GPL",
+      "url": "https://github.com/filamentgroup/responsive-carousel/blob/master/LICENSE-GPL"
+    }
+  ],
+  "dependencies": {
+    "jquery": "~1.5"
+  },
+  "keywords": []
+}
