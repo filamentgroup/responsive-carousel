@@ -28,7 +28,6 @@
 			update: function(){
 				$( this )
 					.trigger( "beforeupdate." + pluginName )
-					[ pluginName ]( "_addNextPrev" )
 					[ pluginName ]( "_updateItems" )
 					.trigger( "update." + pluginName );
 			},
