@@ -13,7 +13,7 @@ module.exports = function(grunt) {
     },
     concat: {
       dist: {
-        src: ['<banner:meta.banner>', '<file_strip_banner:src/<%= pkg.name %>.js>'],
+        src: ['<banner:meta.banner>', '<file_strip_banner:src/<%= pkg.name %>.js>', '<file_strip_banner:src/<%= pkg.name %>.touch.js>'],
         dest: 'dist/<%= pkg.name %>.js'
       }
     },
@@ -27,7 +27,7 @@ module.exports = function(grunt) {
       files: ['test/**/*.html']
     },
     lint: {
-      files: ['grunt.js', 'src/**/*.js', 'test/**/*.js']
+      files: ['grunt.js', 'src/*.js', 'test/**/*.js']
     },
     watch: {
       files: '<config:lint.files>',

@@ -15,6 +15,8 @@
 					.trigger( "beforecreate." + pluginName )
 					.addClass( pluginName )
 					[ pluginName ]( "_addContainer" )
+					[ pluginName ]( "_addNextPrev" )
+					[ pluginName ]( "_bindEventListeners" )
 					[ pluginName ]( "_updateItems" )
 					.trigger( "create." + pluginName );
 			},
@@ -22,41 +24,60 @@
 			update: function(){
 				$( this )
 					.trigger( "beforeupdate." + pluginName )
+					[ pluginName ]( "_addNextPrev" )
 					[ pluginName ]( "_updateItems" )
 					.trigger( "update." + pluginName );
 			},
 
 			_addContainer: function(){
-				$( this ).wrapInner( "<div class='"+ pluginName + "-contain'></div>" );
+				return $( this ).wrapInner( "<div class='"+ pluginName + "-contain'></div>" );
 			},
 			
-			next: function(){
-				$( this )[ pluginName ]( "goTo", [ "-1" ] );
+			next: function( currMarg ){
+				$( this )[ pluginName ]( "goTo", [ "-1", currMarg ] );
 			},
 			
-			prev: function(){
-				$( this )[ pluginName ]( "goTo", [ "1" ] );
+			prev: function( currMarg ){
+				$( this )[ pluginName ]( "goTo", [ "1", currMarg  ] );
 			},
 			
-			goTo: function( num ){
+			goTo: function( num, currMarg ){
 				var $contain = $( this ).find( "." + pluginName + "-contain" ),
 					items = $( this ).find( "[data-" + pluginName + "-item]" ),
-					currMar = getMarginLeft( $contain ) || 0,
-					newMar = typeof( num ) === Number ? (num-1) * -100 : currMar + ( parseFloat(num) * 100 );
-
+					currMar = currMarg !== undefined ? currMarg : getMarginLeft( $contain ) || 0,
+					newMar = typeof( num ) === "number" ? (num-1) * -100 : currMar + ( parseFloat(num) * 100 );
+					
 				if( newMar <= 0 && newMar > (items.length) * -100 ){
 					$contain.css( "margin-left", newMar + "%" );
 				}
+				return this;
+			},
+			
+			_bindEventListeners: function(){
+				var $elem = $( this )
+					.bind( "click", function( e ){
+						var targ = $( e.target );
+						if( targ.is( "a" ) ){
+							$elem[ pluginName ]( targ.is( "[href='#next']" ) ? "next" : "prev" );
+							e.preventDefault();
+						}
+					});
 			},
 			
 			_updateItems: function(){
-				var newItems = $( this ).find( "[data-" + pluginName + "-item]" );
+				var childItems = $( this ).find( "[data-" + pluginName + "-item]" );
 				
-				newItems
+				childItems
 					.addClass( pluginName + "-item" )
-					.width( ( 100 / newItems.length ) + "%" );
+					.width( ( 100 / childItems.length ) + "%" );
 				
-				$(this).find( "." + pluginName + "-contain" ).width( ( 100 * newItems.length ) + "%" );
+				$(this).find( "." + pluginName + "-contain" ).width( ( 100 * childItems.length ) + "%" );
+				return this;
+			},
+			
+			_addNextPrev: function(){
+				return $( this )
+					.append( "<nav><a href='#prev' class='prev' title='Previous'>Prev</a><a href='#next' class='next' title='Next'>Next</a></nav>" );		
 			},
 			
 			destroy: function(){
@@ -74,6 +95,8 @@
 					.unbind( "." + pluginName );
 				
 				$elem .trigger( "destroy." + pluginName );
+				
+				return this;
 			}
 		};
 		
@@ -103,6 +126,82 @@
 	// DOM-ready auto-init
 	$( function(){
 		$( initSelector )[ pluginName ]();
+	} );
+
+}(jQuery));
+(function($) {
+	
+	var pluginName = "carousel",
+		initSelector = "[data-"+ pluginName +"]",
+		getMarginLeft = function( $elem ){
+			return $elem[ 0 ].style.cssText.match( /margin\-left:\s*(-?[0-9]+)%/ ) && parseFloat( RegExp.$1 );
+		},
+		touchMethods = {
+			_dragBehavior: function(){
+				
+				var origin, deltaX, deltaY,
+					$contain = $( this ).find( "." + pluginName + "-contain"  ),
+					currPercentMargin,
+					currPXMargin,
+					carouselWidth,
+					containWidth,
+					endLeft;
+
+				$contain
+					.bind( "touchstart", function( e ){
+							
+						var touches = e.touches || e.originalEvent.touches;
+						origin = { "x": touches[ 0 ].pageX, "y": touches[ 0 ].pageY };
+						currPercentMargin = getMarginLeft( $contain ) || 0;
+						currPXMargin = parseFloat( $contain.css( "margin-left" ) );
+						carouselWidth = $( this ).parent().width();
+						containWidth = $contain.width();	
+						$( this ).addClass( pluginName + "-dragging" );							
+					} )
+					.bind( "touchmove", function( e ){
+						var touches = e.touches || e.originalEvent.touches,
+							curr = { "x": touches[ 0 ].pageX, "y": touches[ 0 ].pageY };
+						
+						deltaX = curr.x - origin.x;
+						deltaY = curr.y - origin.y;
+						
+						e.preventDefault();
+						
+						var newLeft = currPXMargin + deltaX;
+						
+						if( Math.abs( newLeft ) < containWidth && newLeft < 0 ){
+							$contain.css( "margin-left", currPXMargin + deltaX + "px" );
+						}						
+					} )
+					.bind( "touchend", function( e ){							
+						$( this ).removeClass( pluginName + "-dragging" );
+						
+						var newLeft = currPXMargin + deltaX;
+						
+						if( Math.abs( deltaX ) > 45 && Math.abs( newLeft ) < containWidth && newLeft < 0  ){
+							endLeft = ( deltaX > 0 ? carouselWidth : -carouselWidth ) + currPXMargin;
+						}
+						else{
+							endLeft = currPXMargin;
+						}
+						
+						$contain
+							.css( "margin-left", endLeft + "px" )
+							.bind( "webkitTransitionEnd transitionend", function(){
+								$( this )
+									.css( "margin-left", endLeft / carouselWidth * 100 + "%" )
+									.unbind( "webkitTransitionEnd transitionend" );
+							});
+					} );
+			}
+		};
+			
+	// add methods
+	$.extend( $.fn[ pluginName ].prototype, touchMethods ); 
+	
+	// DOM-ready auto-init
+	$( initSelector ).live( "create." + pluginName, function(){
+		$( this )[ pluginName ]( "_dragBehavior" );
 	} );
 
 }(jQuery));
