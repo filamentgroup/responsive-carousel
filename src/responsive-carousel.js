@@ -38,11 +38,11 @@
 			},
 			
 			next: function( currMarg ){
-				$( this )[ pluginName ]( "goTo", [ "-1", currMarg ] );
+				$( this )[ pluginName ]( "goTo", "-1", currMarg  );
 			},
 			
 			prev: function( currMarg ){
-				$( this )[ pluginName ]( "goTo", [ "1", currMarg  ] );
+				$( this )[ pluginName ]( "goTo", "1", currMarg );
 			},
 			
 			goTo: function( num, currMarg ){
@@ -110,7 +110,7 @@
 
 			// if it's a method
 			if( arrg && typeof( arrg ) === "string" ){
-				return $.fn[ pluginName ].prototype[ arrg ].apply( this, adds );
+				return $.fn[ pluginName ].prototype[ arrg ].call( this, adds );
 			}
 			
 			// don't re-init
