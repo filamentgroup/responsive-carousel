@@ -1,4 +1,4 @@
-/*! Responsive Carousel - v0.1.0 - 2012-06-25
+/*! Responsive Carousel - v0.1.0 - 2012-06-26
 * https://github.com/filamentgroup/responsive-carousel
 * Copyright (c) 2012 Filament Group, Inc.; Licensed MIT, GPL */
 
@@ -24,7 +24,6 @@
 			update: function(){
 				$( this )
 					.trigger( "beforeupdate." + pluginName )
-					[ pluginName ]( "_addNextPrev" )
 					[ pluginName ]( "_updateItems" )
 					.trigger( "update." + pluginName );
 			},
@@ -34,11 +33,11 @@
 			},
 			
 			next: function( currMarg ){
-				$( this )[ pluginName ]( "goTo", [ "-1", currMarg ] );
+				$( this )[ pluginName ]( "goTo", "-1", currMarg  );
 			},
 			
 			prev: function( currMarg ){
-				$( this )[ pluginName ]( "goTo", [ "1", currMarg  ] );
+				$( this )[ pluginName ]( "goTo", "1", currMarg );
 			},
 			
 			goTo: function( num, currMarg ){
@@ -106,7 +105,7 @@
 
 			// if it's a method
 			if( arrg && typeof( arrg ) === "string" ){
-				return $.fn[ pluginName ].prototype[ arrg ].apply( this, adds );
+				return $.fn[ pluginName ].prototype[ arrg ].call( this, adds );
 			}
 			
 			// don't re-init
@@ -149,29 +148,27 @@
 
 				$contain
 					.bind( "touchstart", function( e ){
-							
 						var touches = e.touches || e.originalEvent.touches;
 						origin = { "x": touches[ 0 ].pageX, "y": touches[ 0 ].pageY };
 						currPercentMargin = getMarginLeft( $contain ) || 0;
 						currPXMargin = parseFloat( $contain.css( "margin-left" ) );
 						carouselWidth = $( this ).parent().width();
 						containWidth = $contain.width();	
-						$( this ).addClass( pluginName + "-dragging" );							
+						$( this ).addClass( pluginName + "-dragging" );
+						e.preventDefault();					
 					} )
-					.bind( "touchmove", function( e ){
+					.bind( "touchmove", function( e ){						
 						var touches = e.touches || e.originalEvent.touches,
 							curr = { "x": touches[ 0 ].pageX, "y": touches[ 0 ].pageY };
 						
 						deltaX = curr.x - origin.x;
 						deltaY = curr.y - origin.y;
 						
-						e.preventDefault();
-						
 						var newLeft = currPXMargin + deltaX;
 						
-						if( Math.abs( newLeft ) < containWidth && newLeft < 0 ){
-							$contain.css( "margin-left", currPXMargin + deltaX + "px" );
-						}						
+						if( Math.abs( newLeft ) <= containWidth && newLeft <= 0 ){
+							$contain.css( "margin-left", newLeft + "px" );
+						}
 					} )
 					.bind( "touchend", function( e ){							
 						$( this ).removeClass( pluginName + "-dragging" );
