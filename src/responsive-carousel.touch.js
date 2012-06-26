@@ -1,5 +1,5 @@
 /*
- * responsive-carousel
+ * responsive-carousel touch drag extension
  * https://github.com/filamentgroup/responsive-carousel
  *
  * Copyright (c) 2012 Filament Group, Inc.
@@ -26,7 +26,6 @@
 
 				$contain
 					.bind( "touchstart", function( e ){
-							
 						var touches = e.touches || e.originalEvent.touches;
 						origin = { "x": touches[ 0 ].pageX, "y": touches[ 0 ].pageY };
 						currPercentMargin = getMarginLeft( $contain ) || 0;
@@ -35,20 +34,18 @@
 						containWidth = $contain.width();	
 						$( this ).addClass( pluginName + "-dragging" );							
 					} )
-					.bind( "touchmove", function( e ){
+					.bind( "touchmove", function( e ){						
 						var touches = e.touches || e.originalEvent.touches,
 							curr = { "x": touches[ 0 ].pageX, "y": touches[ 0 ].pageY };
 						
 						deltaX = curr.x - origin.x;
 						deltaY = curr.y - origin.y;
 						
-						e.preventDefault();
-						
 						var newLeft = currPXMargin + deltaX;
 						
-						if( Math.abs( newLeft ) < containWidth && newLeft < 0 ){
-							$contain.css( "margin-left", currPXMargin + deltaX + "px" );
-						}						
+						if( Math.abs( newLeft ) <= containWidth && newLeft <= 0 ){
+							$contain.css( "margin-left", newLeft + "px" );
+						}
 					} )
 					.bind( "touchend", function( e ){							
 						$( this ).removeClass( pluginName + "-dragging" );
