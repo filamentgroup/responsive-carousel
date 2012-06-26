@@ -26,9 +26,13 @@
 $(function(){
 
 	test( "Carousel initializes automatically on DOM ready", function() {
-    	ok( $( "[data-carousel]" ).is( ".carousel" ) );
-	
+		ok( $( "[data-carousel]" ).is( ".carousel" ) );
 	});
+	
+	test( "Carousel child-items have carousel-item class", function() {
+		ok( $( "[data-carousel] [data-carousel-item]" ).is( ".carousel-item" ) );
+	});
+
 });
 
 
