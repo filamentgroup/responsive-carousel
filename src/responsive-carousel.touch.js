@@ -16,13 +16,15 @@
 		touchMethods = {
 			_dragBehavior: function(){
 				
-				var origin, deltaX, deltaY,
-					$contain = $( this ).find( "." + pluginName + "-contain"  ),
+				var origin,
+					deltaX,
+					deltaY,
 					currPercentMargin,
 					currPXMargin,
 					carouselWidth,
 					containWidth,
-					endLeft;
+					endLeft,
+					$contain = $( this ).find( "." + pluginName + "-contain"  );
 
 				$contain
 					.bind( "touchstart", function( e ){
@@ -32,8 +34,7 @@
 						currPXMargin = parseFloat( $contain.css( "margin-left" ) );
 						carouselWidth = $( this ).parent().width();
 						containWidth = $contain.width();	
-						$( this ).addClass( pluginName + "-dragging" );
-						e.preventDefault();					
+						$( this ).addClass( pluginName + "-contain-notrans" );			
 					} )
 					.bind( "touchmove", function( e ){						
 						var touches = e.touches || e.originalEvent.touches,
@@ -47,9 +48,12 @@
 						if( Math.abs( newLeft ) <= containWidth && newLeft <= 0 ){
 							$contain.css( "margin-left", newLeft + "px" );
 						}
+						
+						// return tolerance bool - true allows a scroll to bubble
+						return Math.abs( deltaY ) < 15;
 					} )
 					.bind( "touchend", function( e ){							
-						$( this ).removeClass( pluginName + "-dragging" );
+						$( this ).removeClass( pluginName + "-contain-notrans" );
 						
 						var newLeft = currPXMargin + deltaX;
 						
@@ -62,6 +66,7 @@
 						
 						$contain
 							.css( "margin-left", endLeft + "px" )
+							// bind transition end handlers here so that they don't fire on next/prev calls
 							.bind( "webkitTransitionEnd transitionend", function(){
 								$( this )
 									.css( "margin-left", endLeft / carouselWidth * 100 + "%" )
