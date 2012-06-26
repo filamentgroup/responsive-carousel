@@ -32,7 +32,8 @@
 						currPXMargin = parseFloat( $contain.css( "margin-left" ) );
 						carouselWidth = $( this ).parent().width();
 						containWidth = $contain.width();	
-						$( this ).addClass( pluginName + "-dragging" );							
+						$( this ).addClass( pluginName + "-dragging" );
+						e.preventDefault();					
 					} )
 					.bind( "touchmove", function( e ){						
 						var touches = e.touches || e.originalEvent.touches,
