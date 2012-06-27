@@ -72,12 +72,18 @@
 					bind( "goTo", function(data){
 						var newMar = data.newMar,
 								items = $( this ).find( "[data-" + pluginName + "-item]" ),
-								onFirst = newMar === 0,
-								onLast = newMar === items.length * -100,
 								$prev = $( "[href='#prev']" ),
 								$next = $( "[href='#next']" );
-						onFirst ? $prev.hide() : $prev.show();
-						onLast ? $next.hide() : $next.show();
+						if( newMar === 0 ){
+							$prev.hide();
+							$next.show();
+						} else if( newMar === items.length * -100 ) {
+							$next.hide();
+							$prev.show();
+						} else {
+							$next.show();
+							$prev.show();
+						}
 					});
 			},
 			
