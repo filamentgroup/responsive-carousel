@@ -9,14 +9,14 @@
 	position: relative;
 	overflow: hidden;
 	width: 100%;
-}
-.carousel-contain {
-	float: left;
 	-webkit-transform: translate3d(0, 0, 0);
 	-moz-transform: translate3d(0, 0, 0);
 	-o-transform: translate3d(0, 0, 0);
 	-ms-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
+}
+.carousel-contain {
+	float: left;
 	-webkit-transition: margin-left .3s ease;
 	-moz-transition: margin-left .3s ease;
 	-o-transition: margin-left .3s ease;
@@ -28,6 +28,7 @@
 	-moz-transition: none;
 	-o-transition: none;
 	-ms-transition: none;
+	
 	transition: none;
 }
 .carousel-item {
