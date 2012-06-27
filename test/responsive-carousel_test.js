@@ -3,24 +3,24 @@
 /*global notDeepEqual:false, strictEqual:false, notStrictEqual:false, raises:false*/
 (function($) {
 
-  /*
-    ======== A Handy Little QUnit Reference ========
-    http://docs.jquery.com/QUnit
+	/*
+		======== A Handy Little QUnit Reference ========
+		http://docs.jquery.com/QUnit
 
-    Test methods:
-      expect(numAssertions)
-      stop(increment)
-      start(decrement)
-    Test assertions:
-      ok(value, [message])
-      equal(actual, expected, [message])
-      notEqual(actual, expected, [message])
-      deepEqual(actual, expected, [message])
-      notDeepEqual(actual, expected, [message])
-      strictEqual(actual, expected, [message])
-      notStrictEqual(actual, expected, [message])
-      raises(block, [expected], [message])
-  */
+		Test methods:
+			expect(numAssertions)
+			stop(increment)
+			start(decrement)
+		Test assertions:
+			ok(value, [message])
+			equal(actual, expected, [message])
+			notEqual(actual, expected, [message])
+			deepEqual(actual, expected, [message])
+			notDeepEqual(actual, expected, [message])
+			strictEqual(actual, expected, [message])
+			notStrictEqual(actual, expected, [message])
+			raises(block, [expected], [message])
+	*/
 
 // DOM readiness needed for all tests
 $(function(){
@@ -35,11 +35,16 @@ $(function(){
 
 	module("Testing goTo");
 
+	QUnit.testStart = function(name){
+		$( ".carousel" ).carousel( "goTo", 1 );
+	};
+
 	test( "Carousel contain width is set based upon the amount of carousel-items there are" , function() {
 		var $items = $( "[data-carousel] [data-carousel-item]" ),
 				amt = $items.length,
 				$contain = $( ".carousel-contain" ),
-				width = Math.round($contain.width()/$(window).width());
+				$carousel = $( ".carousel" ),
+				width = Math.round($contain.width()/$carousel.width());
 		equal( width, amt, "The width is correctly set" );
 	});
 
@@ -48,14 +53,15 @@ $(function(){
 		stop();
 		var $items = $( "[data-carousel] [data-carousel-item]" ),
 				amt = $items.length,
-			  $contain = $( ".carousel-contain" ),
-				position = 2,
-				expectedMargin = -100;
+				$contain = $( ".carousel-contain" ),
+				$carousel = $( ".carousel" ),
+				position = 1;
 		$( ".carousel" ).carousel( "goTo", position );
 		setTimeout(function(){
-			var marg = parseFloat($contain.css( "marginLeft" ), 10),
-			    x = Math.round(marg/$(window).width()) * 100;
-			equal( x, expectedMargin, "The margin is at the correct position" );
+			var marg = parseFloat($contain.css( "margin-left" ), 10),
+					carouselWidth = $carousel.width(),
+					actual = Math.round(Math.abs(marg/carouselWidth)+1);
+			equal( actual, position, "The margin is at the correct position" );
 			start();
 		}, 200);
 	});
@@ -64,14 +70,15 @@ $(function(){
 		stop();
 		var $items = $( "[data-carousel] [data-carousel-item]" ),
 				amt = $items.length,
-			  $contain = $( ".carousel-contain" ),
-				position = 3,
-				expectedMargin = -200;
+				$contain = $( ".carousel-contain" ),
+				$carousel = $( ".carousel" ),
+				position = 2;
 		$( ".carousel" ).carousel( "goTo", position );
 		setTimeout(function(){
-			var marg = parseFloat($contain.css( "marginLeft" ), 10),
-			    x = Math.round(marg/$(window).width()) * 100;
-			equal( x, expectedMargin, "The margin is at the correct position" );
+			var marg = parseFloat($contain.css( "margin-left" ), 10),
+					carouselWidth = $carousel.width(),
+					actual = Math.round(Math.abs(marg/carouselWidth)+1);
+			equal( actual, position, "The margin is at the correct position" );
 			start();
 		}, 200);
 	});
@@ -81,12 +88,30 @@ $(function(){
 		stop();
 		var $items = $( "[data-carousel] [data-carousel-item]" ),
 				amt = $items.length,
-			  $contain = $( ".carousel-contain" ),
+				$contain = $( ".carousel-contain" ),
 				expectedMargin = -100;
 		$( ".carousel" ).carousel( "next" );
 		setTimeout(function(){
 			var marg = parseFloat($contain.css( "marginLeft" ), 10),
-			    x = Math.round(marg/$(window).width()) * 100;
+					actualMargin = Math.round(marg/$(window).width()) * 100;
+			equal( actualMargin, expectedMargin, "The margin is at the correct position" );
+			start();
+		}, 200);
+	});
+
+	test( "if current slide is the last, next should do nothing" , function(){
+		var $items = $( "[data-carousel] [data-carousel-item]" ),
+				amt = $items.length,
+				$carousel = $( ".carousel" );
+		$carousel.carousel( "goTo", amt-1 );
+		stop();
+		var $contain = $( ".carousel-contain" ),
+				expectedMargin = (amt-1)*(-100);
+		$carousel.carousel( "next" );
+		setTimeout(function(){
+			var marg = parseFloat($contain.css( "marginLeft" ), 10),
+					winWidth = $(window).width() || 1000,
+					x = Math.round(marg/winWidth) * 100;
 			equal( x, expectedMargin, "The margin is at the correct position" );
 			start();
 		}, 200);
@@ -97,17 +122,35 @@ $(function(){
 		stop();
 		var $items = $( "[data-carousel] [data-carousel-item]" ),
 				amt = $items.length,
-			  $contain = $( ".carousel-contain" ),
+				$contain = $( ".carousel-contain" ),
 				expectedMargin = 0;
 		$( ".carousel" ).carousel( "prev" );
 		setTimeout(function(){
 			var marg = parseFloat($contain.css( "marginLeft" ), 10),
-			    x = Math.round(marg/$(window).width()) * 100;
+					winWidth = $(window).width() || 1000,
+					x = Math.round(marg/winWidth) * 100;
 			equal( x, expectedMargin, "The margin is at the correct position" );
 			start();
 		}, 200);
 	});
 	
+	test( "if current slide is first, prev should do nothing" , function(){
+		var $items = $( "[data-carousel] [data-carousel-item]" ),
+				amt = $items.length,
+				$carousel = $( ".carousel" );
+		$( ".carousel" ).carousel( "goTo", 1 );
+		stop();
+		var $contain = $( ".carousel-contain" ),
+				expectedMargin = 0;
+		$( ".carousel" ).carousel( "prev" );
+		setTimeout(function(){
+			var marg = parseFloat($contain.css( "marginLeft" ), 10),
+					winWidth = $(window).width() || 1000,
+					x = Math.round(marg/winWidth) * 100;
+			equal( x, expectedMargin, "The margin is at the correct position" );
+			start();
+		}, 200);
+	});
 
 });
 
