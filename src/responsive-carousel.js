@@ -52,6 +52,10 @@
 					
 				if( newMar <= 0 && newMar > (items.length) * -100 ){
 					$contain.css( "margin-left", newMar + "%" );
+					$( this ).trigger({
+						type: "goTo",
+						newMar: newMar
+					});
 				}
 				return this;
 			},
@@ -64,6 +68,16 @@
 							$elem[ pluginName ]( targ.is( "[href='#next']" ) ? "next" : "prev" );
 							e.preventDefault();
 						}
+					}).
+					bind( "goTo", function(data){
+						var newMar = data.newMar,
+								items = $( this ).find( "[data-" + pluginName + "-item]" ),
+								onFirst = newMar === 0,
+								onLast = newMar === items.length * -100,
+								$prev = $( "[href='#prev']" ),
+								$next = $( "[href='#next']" );
+						onFirst ? $prev.hide() : $prev.show();
+						onLast ? $next.hide() : $next.show();
 					});
 			},
 			

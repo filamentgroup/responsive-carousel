@@ -117,6 +117,18 @@ $(function(){
 		}, 200);
 	});
 
+	test( "if current slide is last, next link should not be showing", function(){
+		var $items = $( "[data-carousel] [data-carousel-item]" ),
+				amt = $items.length,
+				$carousel = $( ".carousel" );
+		$carousel.carousel( "goTo", amt-1 );
+		stop();
+		setTimeout(function(){
+			ok( $( "[href='#next']" ).not( ":visible" ), "The next button is not visible" );
+			start();
+		}, 200);
+	});
+
 	test( "prev sets margin to prev spot according to the current margin" , function(){
 		$( ".carousel" ).carousel( "goTo", 2 );
 		stop();
@@ -138,11 +150,11 @@ $(function(){
 		var $items = $( "[data-carousel] [data-carousel-item]" ),
 				amt = $items.length,
 				$carousel = $( ".carousel" );
-		$( ".carousel" ).carousel( "goTo", 1 );
+		$carousel.carousel( "goTo", 1 );
 		stop();
 		var $contain = $( ".carousel-contain" ),
 				expectedMargin = 0;
-		$( ".carousel" ).carousel( "prev" );
+		$carousel.carousel( "prev" );
 		setTimeout(function(){
 			var marg = parseFloat($contain.css( "marginLeft" ), 10),
 					winWidth = $(window).width() || 1000,
@@ -152,6 +164,15 @@ $(function(){
 		}, 200);
 	});
 
+	test( "if current slide is first, prev link should not be showing", function(){
+		var $carousel = $( ".carousel" );
+		$carousel.carousel( "goTo", 1 );
+		stop();
+		setTimeout(function(){
+			ok( $( "[href='#prev']" ).not( ":visible" ), "The previous button is not visible" );
+			start();
+		}, 200);
+	});
 });
 
 
