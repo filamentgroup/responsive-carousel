@@ -39,3 +39,8 @@
 	left: 0;
 	bottom: 0;
 }
+
+.disabled {
+	display: none !important;
+	visibility: hidden;
+}

@@ -75,14 +75,14 @@
 								$prev = $( "[href='#prev']" ),
 								$next = $( "[href='#next']" );
 						if( newMar === 0 ){
-							$prev.hide();
-							$next.show();
+							$prev.addClass( "disabled" );
+							$next.removeClass( "disabled" );
 						} else if( newMar === items.length * -100 ) {
-							$next.hide();
-							$prev.show();
+							$next.addClass( "disabled" );
+							$prev.removeClass( "disabled" );
 						} else {
-							$next.show();
-							$prev.show();
+							$next.removeClass( "disabled" );
+							$prev.removeClass( "disabled" );
 						}
 					});
 			},
