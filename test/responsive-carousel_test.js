@@ -124,7 +124,7 @@ $(function(){
 		$carousel.carousel( "goTo", amt-1 );
 		stop();
 		setTimeout(function(){
-			ok( $( "[href='#next']" ).not( ":visible" ), "The next button is not visible" );
+			ok( $( "[href='#next']" ).is( ".disabled" ), "The next button is disabled" );
 			start();
 		}, 200);
 	});
@@ -169,7 +169,7 @@ $(function(){
 		$carousel.carousel( "goTo", 1 );
 		stop();
 		setTimeout(function(){
-			ok( $( "[href='#prev']" ).not( ":visible" ), "The previous button is not visible" );
+			ok( $( "[href='#prev']" ).is( ".disabled" ), "The previous button is disabled" );
 			start();
 		}, 200);
 	});

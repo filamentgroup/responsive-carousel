@@ -110,6 +110,25 @@
 							$elem[ pluginName ]( targ.is( "[href='#next']" ) ? "next" : "prev" );
 							e.preventDefault();
 						}
+<<<<<<< HEAD
+=======
+					}).
+					bind( "goTo", function(data){
+						var newMar = data.newMar,
+								items = $( this ).find( "[data-" + pluginName + "-item]" ),
+								$prev = $( "[href='#prev']" ),
+								$next = $( "[href='#next']" );
+						if( newMar === 0 ){
+							$prev.addClass( "disabled" );
+							$next.removeClass( "disabled" );
+						} else if( newMar === items.length * -100 ) {
+							$next.addClass( "disabled" );
+							$prev.removeClass( "disabled" );
+						} else {
+							$next.removeClass( "disabled" );
+							$prev.removeClass( "disabled" );
+						}
+>>>>>>> origin/master
 					});
 				
 				return this;
