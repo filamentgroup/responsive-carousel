@@ -9,57 +9,99 @@
 (function($) {
 	
 	var pluginName = "carousel",
-		initSelector = "[data-"+ pluginName +"]",
-		getMarginLeft = function( $elem ){
-			return $elem[ 0 ].style.cssText.match( /margin\-left:\s*(-?[0-9]+)%/ ) && parseFloat( RegExp.$1 );
-		},
+		initSelector = "." + pluginName,
+		transitionAttr = "data-transition",
+		transitioningClass = pluginName + "-transitioning",
+		itemClass = pluginName + "-item",
+		activeClass = pluginName + "-active",
+		inClass = pluginName + "-in",
+		outClass = pluginName + "-out",
+		navClass =  pluginName + "-nav",
+		cssTransitionsSupport = (function(){
+			var prefixes = " -webkit- -moz- -o- -ms- ".split( " " ),
+				supported = false;
+			
+			while( prefixes.length ){
+				if( prefixes.shift() + "transition" in document.documentElement.style !== undefined ){
+					supported = true;
+				}
+			}
+			return supported;
+		}()),
 		methods = {
 			_create: function(){
 				$( this )
 					.trigger( "beforecreate." + pluginName )
-					.addClass( pluginName )
-					[ pluginName ]( "_addContainer" )
+					[ pluginName ]( "_init" )
 					[ pluginName ]( "_addNextPrev" )
-					[ pluginName ]( "_bindEventListeners" )
-					[ pluginName ]( "_updateItems" )
 					.trigger( "create." + pluginName );
 			},
 			
-			update: function(){
-				$( this )
-					.trigger( "beforeupdate." + pluginName )
-					[ pluginName ]( "_updateItems" )
-					.trigger( "update." + pluginName );
-			},
+			_init: function(){
+				var trans = $( this ).attr( transitionAttr );
 
-			_addContainer: function(){
-				return $( this ).wrapInner( "<div class='"+ pluginName + "-contain'></div>" );
+				return $( this )
+					.addClass(
+						pluginName + 
+						" " + ( trans ? pluginName + "-" + trans : "" ) + " "
+					)
+					.children()
+					.addClass( itemClass )
+					.first()
+					.addClass( activeClass );
 			},
 			
-			next: function( currMarg ){
-				$( this )[ pluginName ]( "goTo", "-1", currMarg  );
+			next: function(){
+				$( this )[ pluginName ]( "goTo", "+1" );
 			},
 			
-			prev: function( currMarg ){
-				$( this )[ pluginName ]( "goTo", "1", currMarg );
+			prev: function(){
+				$( this )[ pluginName ]( "goTo", "-1" );
 			},
 			
-			goTo: function( num, currMarg ){
-				var $contain = $( this ).find( "." + pluginName + "-contain" ),
-					items = $( this ).find( "[data-" + pluginName + "-item]" ),
-					currMar = currMarg !== undefined ? currMarg : getMarginLeft( $contain ) || 0,
-					newMar = typeof( num ) === "number" ? (num-1) * -100 : currMar + ( parseFloat(num) * 100 );
-					
-				if( newMar <= 0 && newMar > (items.length) * -100 ){
-					$contain.css( "margin-left", newMar + "%" );
-					$( this ).trigger({
-						type: "goTo",
-						newMar: newMar
-					});
+			goTo: function( num ){
+				var $self = $(this),
+					$from = $( this ).find( "." + activeClass ),
+					activeNum = $from.prevAll().length + 1,
+					nextNum = typeof( num ) === "number" ? num : activeNum + parseFloat(num),
+					$to = $( this ).find( ".carousel-item" ).eq( nextNum - 1 ),
+					reverseClass = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : " " + pluginName + "-" + $self.attr( transitionAttr ) + "-reverse";
+				
+				if( !$to.length ){
+					$to = $( this ).find( "." + itemClass )[ reverseClass.length ? "last" : "first" ]();
 				}
-				return this;
+				
+				if( cssTransitionsSupport ){
+					$self[ pluginName ]( "_transitionStart", $from, $to, reverseClass );
+				}
+				else {
+					$to.addClass( activeClass );
+					$self[ pluginName ]( "_transitionEnd", $from, $to, reverseClass );
+				}
 			},
 			
+			update: function(){
+				return $(this).children().not( "." + navClass ).addClass( itemClass );
+			},
+			
+			_transitionStart: function( $from, $to, reverseClass ){
+				var $self = $(this);
+				
+				$to.one( "webkitTransitionEnd transitionend webkitAnimationEnd animationend", function(){
+					$self[ pluginName ]( "_transitionEnd", $from, $to, reverseClass );
+				});
+				
+				$(this).addClass( reverseClass );
+				$from.addClass( outClass );
+				$to.addClass( inClass );	
+			},
+			
+			_transitionEnd: function( $from, $to, reverseClass ){
+				$(this).removeClass( reverseClass );
+				$from.removeClass( outClass + " " + activeClass );
+				$to.removeClass( inClass ).addClass( activeClass );
+			},
+						
 			_bindEventListeners: function(){
 				var $elem = $( this )
 					.bind( "click", function( e ){
@@ -68,68 +110,29 @@
 							$elem[ pluginName ]( targ.is( "[href='#next']" ) ? "next" : "prev" );
 							e.preventDefault();
 						}
-					}).
-					bind( "goTo", function(data){
-						var newMar = data.newMar,
-								items = $( this ).find( "[data-" + pluginName + "-item]" ),
-								$prev = $( "[href='#prev']" ),
-								$next = $( "[href='#next']" );
-						if( newMar === 0 ){
-							$prev.hide();
-							$next.show();
-						} else if( newMar === items.length * -100 ) {
-							$next.hide();
-							$prev.show();
-						} else {
-							$next.show();
-							$prev.show();
-						}
 					});
-			},
-			
-			_updateItems: function(){
-				var childItems = $( this ).find( "[data-" + pluginName + "-item]" );
 				
-				childItems
-					.addClass( pluginName + "-item" )
-					.width( ( 100 / childItems.length ) + "%" );
-				
-				$(this).find( "." + pluginName + "-contain" ).width( ( 100 * childItems.length ) + "%" );
 				return this;
 			},
 			
 			_addNextPrev: function(){
 				return $( this )
-					.append( "<nav><a href='#prev' class='prev' title='Previous'>Prev</a><a href='#next' class='next' title='Next'>Next</a></nav>" );		
+					.append( "<nav class='"+ navClass +"'><a href='#prev' class='prev' title='Previous'>Prev</a><a href='#next' class='next' title='Next'>Next</a></nav>" )
+					[ pluginName ]( "_bindEventListeners" );
 			},
 			
 			destroy: function(){
-				var $elem = $( this );
-				
-				$elem
-					.removeData( pluginName + "active" )
-					.removeClass( pluginName )
-					.unbind( "." + pluginName )
-					.html( $elem.children().children() );
-				
-				$elem
-					.find( "[data-" + pluginName + "-item]" )
-					.removeClass( pluginName + "-item" )
-					.unbind( "." + pluginName );
-				
-				$elem .trigger( "destroy." + pluginName );
-				
-				return this;
+				// TODO
 			}
 		};
 		
 	// Collection method.
-	$.fn[ pluginName ] = function( arrg, adds ) {
+	$.fn[ pluginName ] = function( arrg, a, b, c ) {
 		return this.each(function() {
 
 			// if it's a method
 			if( arrg && typeof( arrg ) === "string" ){
-				return $.fn[ pluginName ].prototype[ arrg ].call( this, adds );
+				return $.fn[ pluginName ].prototype[ arrg ].call( this, a, b, c );
 			}
 			
 			// don't re-init

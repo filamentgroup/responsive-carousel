@@ -9,69 +9,51 @@
 (function($) {
 	
 	var pluginName = "carousel",
-		initSelector = "[data-"+ pluginName +"]",
-		getMarginLeft = function( $elem ){
-			return $elem[ 0 ].style.cssText.match( /margin\-left:\s*(-?[0-9]+)%/ ) && parseFloat( RegExp.$1 );
-		},
+		initSelector = "." + pluginName,
+		noTrans = pluginName + "-no-transition",
 		touchMethods = {
 			_dragBehavior: function(){
-				
 				var origin,
-					deltaX,
+					data = {},
 					deltaY,
-					currPercentMargin,
-					currPXMargin,
-					carouselWidth,
-					containWidth,
-					endLeft,
-					$contain = $( this ).find( "." + pluginName + "-contain"  );
-
-				$contain
-					.bind( "touchstart", function( e ){
-						var touches = e.touches || e.originalEvent.touches;
-						origin = { "x": touches[ 0 ].pageX, "y": touches[ 0 ].pageY };
-						currPercentMargin = getMarginLeft( $contain ) || 0;
-						currPXMargin = parseFloat( $contain.css( "margin-left" ) );
-						carouselWidth = $( this ).parent().width();
-						containWidth = $contain.width();	
-						$( this ).addClass( pluginName + "-contain-notrans" );			
-					} )
-					.bind( "touchmove", function( e ){						
+					xPerc,
+					yPerc,
+					emitEvents = function( e ){
 						var touches = e.touches || e.originalEvent.touches,
-							curr = { "x": touches[ 0 ].pageX, "y": touches[ 0 ].pageY };
+							$elem = $( e.target ).closest( initSelector );
 						
-						deltaX = curr.x - origin.x;
-						deltaY = curr.y - origin.y;
-						
-						var newLeft = currPXMargin + deltaX;
-						
-						if( Math.abs( newLeft ) <= containWidth && newLeft <= 0 ){
-							$contain.css( "margin-left", newLeft + "px" );
+						if( e.type === "touchstart" ){
+							origin = { 
+								x : touches[ 0 ].pageX,
+								y: touches[ 0 ].pageY
+							};
 						}
-						
-						// return tolerance bool - true allows a scroll to bubble
-						return Math.abs( deltaY ) < 15;
+
+						if( touches[ 0 ] && touches[ 0 ].pageX ){
+							data.deltaX = touches[ 0 ].pageX - origin.x;
+							data.deltaY = touches[ 0 ].pageY - origin.y;
+							data.w = $elem.width();
+							data.h = $elem.height();
+							data.xPercent = data.deltaX / data.w;
+							data.yPercent = data.deltaY / data.h;
+							data.srcEvent = e;
+						}
+
+						$elem.trigger( "drag" + e.type.split( "touch" )[ 1], data );
+					};
+
+				$( this )
+					.bind( "touchstart", function( e ){
+						$( this ).addClass( noTrans );
+						emitEvents( e );
 					} )
-					.bind( "touchend", function( e ){							
-						$( this ).removeClass( pluginName + "-contain-notrans" );
-						
-						var newLeft = currPXMargin + deltaX;
-						
-						if( Math.abs( deltaX ) > 45 && Math.abs( newLeft ) < containWidth && newLeft < 0  ){
-							endLeft = ( deltaX > 0 ? carouselWidth : -carouselWidth ) + currPXMargin;
-						}
-						else{
-							endLeft = currPXMargin;
-						}
-						
-						$contain
-							.css( "margin-left", endLeft + "px" )
-							// bind transition end handlers here so that they don't fire on next/prev calls
-							.bind( "webkitTransitionEnd transitionend", function(){
-								$( this )
-									.css( "margin-left", endLeft / carouselWidth * 100 + "%" )
-									.unbind( "webkitTransitionEnd transitionend" );
-							});
+					.bind( "touchmove", function( e ){
+						emitEvents( e );
+						e.preventDefault();
+					} )
+					.bind( "touchend", function( e ){
+						$( this ).removeClass( noTrans );
+						emitEvents( e );
 					} );
 			}
 		};

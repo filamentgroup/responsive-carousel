@@ -9,36 +9,11 @@
 (function($) {
 	
 	var pluginName = "carousel",
-		initSelector = "[data-"+ pluginName +"]",
-		getMarginLeft = function( $elem ){
-			return $elem[ 0 ].style.cssText.match( /margin\-left:\s*(-?[0-9]+)%/ ) && parseFloat( RegExp.$1 );
-		},
-		methods = {
-			_ajaxUpdate: function(){
-				var $contain = $( this ).find( "." + pluginName + "-contain" ),
-					currItem = (-getMarginLeft( $contain ) || 0) / 100,
-					activeElem = $( this ).find( "." + pluginName + "-item:eq("+ currItem +")" ),
-					notrans =  pluginName + "-contain-notrans";
-					
-				$( this )[ pluginName ]( "update" );
-				
-				$contain
-					.addClass( notrans )
-					.css( "margin-left", activeElem.prevAll().length * -100 + "%" );
-				
-				setTimeout(function(){
-					$contain.removeClass( notrans );
-				}, 0);
-				
-			}
-		};
-			
-	// add methods
-	$.extend( $.fn[ pluginName ].prototype, methods ); 
+		initSelector = "." + pluginName;
 	
 	// DOM-ready auto-init
 	$( initSelector ).live( "ajaxInclude", function(){
-		$( this )[ pluginName ]( "_ajaxUpdate" );
+		$( this )[ pluginName ]( "update" );
 	} );
 	
 	// kick off ajaxIncs at dom ready

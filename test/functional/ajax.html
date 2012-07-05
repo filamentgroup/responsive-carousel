@@ -8,6 +8,7 @@
   <script src="../../libs/jquery/jquery.js"></script>
   <script src="../../libs/ajaxInclude/ajaxinclude.jquery.js"></script>
   <link rel="stylesheet" href="../../src/responsive-carousel.css" media="screen">
+  <link rel="stylesheet" href="../../src/responsive-carousel.slide.css" media="screen">
   <style>
   .carousel {
 
@@ -35,19 +36,20 @@
   <!-- Load local lib and tests. -->
   <script src="../../src/responsive-carousel.js"></script>
   <script src="../../src/responsive-carousel.touch.js"></script>
+  <script src="../../src/responsive-carousel.drag.js"></script>
   <script src="../../src/responsive-carousel.ajax.js"></script>
   
 </head>
 <body>
-	<div data-carousel>
-	    <div data-carousel-item data-after="ajax-more.html">
+	<div class="carousel" data-transition="slide">
+	    <div data-after="ajax-more.html">
 	        <img src="../assets/large.jpg">
 	    </div>		
 	</div>
 
 
-	<div data-carousel>
-	    <div data-carousel-item data-before="ajax-more.html">
+	<div class="carousel" data-transition="slide">
+	    <div data-before="ajax-more.html">
 	        <img src="../assets/large.jpg">
 	    </div>		
 	</div>

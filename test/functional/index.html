@@ -7,13 +7,14 @@
   <!-- Load local jQuery, removing access to $ (use jQuery, not $). -->
   <script src="../../libs/jquery/jquery.js"></script>
   <link rel="stylesheet" href="../../src/responsive-carousel.css" media="screen">
+  <link rel="stylesheet" href="../../src/responsive-carousel.slide.css" media="screen">
   <style>
   .carousel {
-
-	  max-width: 90%;
+	  margin: 10px auto;
+	  width: 95%;
   }
   .carousel-item img {
-	  max-width: 100%;
+	  width: 100%;
 	  height: auto;
 	  display: block;
   }
@@ -21,39 +22,19 @@
   <!-- Load local lib and tests. -->
   <script src="../../src/responsive-carousel.js"></script>
   <script src="../../src/responsive-carousel.touch.js"></script>
+ <script src="../../src/responsive-carousel.drag.js"></script>
 </head>
 <body>
-	<div data-carousel>
-	    <div data-carousel-item>
+	<div class="carousel" data-transition="slide">
+	    <div>
 	        <img src="../assets/large.jpg">
 	    </div>
-	    <div data-carousel-item>
-	        <img src="../assets/large.jpg">
+	    <div>
+	        <img src="../assets/monks.jpg">
 	    </div>
-	    <div data-carousel-item>
-	        <img src="../assets/large.jpg">
+	    <div>
+	        <img src="../assets/monkey.jpg">
 	    </div>
-		
-	    <div data-carousel-item>
-	        <img src="../assets/large.jpg">
-	    </div>
-		
-	    <div data-carousel-item>
-	        <img src="../assets/large.jpg">
-	    </div>
-		
-	    <div data-carousel-item>
-	        <img src="../assets/large.jpg">
-	    </div>
-		
-		
-	    <div data-carousel-item>
-	        <img src="../assets/large.jpg">
-	    </div>
-		
-		
-	    
-		
 		
 	</div>
 
