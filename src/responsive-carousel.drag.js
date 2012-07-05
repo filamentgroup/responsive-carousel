@@ -44,7 +44,7 @@
 				return;
 			}
 			var activeSlides = getActiveSlides( $( this ), data.deltaX ),
-				newSlide = Math.abs( data.xPercent ) > 0.4;
+				newSlide = Math.abs( data.deltaX ) > 45;
 			
 			$( this ).one( "webkitTransitionEnd transitionend webkitAnimationEnd animationend", function(){
 				activeSlides[ 0 ].add( activeSlides[ 1 ] ).css( "left", "" );
