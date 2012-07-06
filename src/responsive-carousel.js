@@ -39,7 +39,11 @@
 			
 			_init: function(){
 				var trans = $( this ).attr( transitionAttr );
-
+				
+				if( !trans ){
+					cssTransitionsSupport = false;
+				}
+				
 				return $( this )
 					.addClass(
 						pluginName + 
