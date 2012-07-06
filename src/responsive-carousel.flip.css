@@ -1,0 +1,67 @@
+/*
+ * responsive-carousel
+ * https://github.com/filamentgroup/responsive-carousel
+ *
+ * Copyright (c) 2012 Filament Group, Inc.
+ * Licensed under the MIT, GPL licenses.
+*/
+.carousel-flip {
+	position: relative;
+	overflow: visible;
+	-webkit-transform: translate3d(0, 0, 0);
+	-moz-transform: translate3d(0, 0, 0);
+	-ms-transform: translate3d(0, 0, 0);
+	-o-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0);
+	-webkit-perspective: 800;
+	-moz-perspective: 800;
+	-ms-perspective: 800;
+	-o-perspective: 800;
+	perspective: 800;
+}
+.carousel-flip .carousel-item {
+	position: absolute;
+	top: 0;
+	width: 100%; /* necessary for non-active slides */
+	display: block; /* overrides basic carousel styles */
+	z-index: 1;
+	opacity: 0;
+	-webkit-transition: -webkit-transform .2s ease;
+	-moz-transition: -moz-transform .2s ease;
+	-ms-transition: -ms-transform .2s ease;
+	-o-transition: -o-transform .2s ease;
+	transition: transform .2s ease;
+	-webkit-transform: rotateY(180deg);
+	-webkit-backface-visibility: hidden;
+}
+.carousel-no-transition .carousel-item {
+	-webkit-transition: none;
+	-moz-transition: none;
+	-ms-transition: none;
+	-o-transition: none;
+	transition: none;
+}
+.carousel-flip .carousel-active {
+	-webkit-transform: rotateY(0deg);
+	position: relative;
+	z-index: 2;
+	opacity: 1;	
+}
+.carousel-flip .carousel-out,
+.carousel-flip-reverse .carousel-item {
+	-webkit-transform: rotateY(-180deg);
+}
+.carousel-flip .carousel-in {
+	-webkit-transform: rotateY(0deg);
+	opacity: 1;
+}
+.carousel-flip .carousel-top {
+	z-index: 3;
+	opacity: 1;
+}
+.carousel-flip-reverse .carousel-out {
+	-webkit-transform: rotateY(180deg);
+}
+.carousel-flip-reverse .carousel-in {
+	-webkit-transform: rotateY(0deg);
+}

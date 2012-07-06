@@ -60,6 +60,8 @@
 			},
 			
 			goTo: function( num ){
+				$( this ).find( "." + itemClass ).removeClass( [ outClass, inClass, reverseClass ].join( " " ) );
+				
 				var $self = $(this),
 					$from = $( this ).find( "." + activeClass ),
 					activeNum = $from.prevAll().length + 1,
@@ -70,7 +72,7 @@
 				if( !$to.length ){
 					$to = $( this ).find( "." + itemClass )[ reverseClass.length ? "last" : "first" ]();
 				}
-				
+								
 				if( cssTransitionsSupport ){
 					$self[ pluginName ]( "_transitionStart", $from, $to, reverseClass );
 				}

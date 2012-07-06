@@ -40,6 +40,7 @@
 						}
 
 						$elem.trigger( "drag" + e.type.split( "touch" )[ 1], data );
+						return data;
 					};
 
 				$( this )
@@ -48,10 +49,13 @@
 						emitEvents( e );
 					} )
 					.bind( "touchmove", function( e ){
-						emitEvents( e );
-						e.preventDefault();
+						var data = emitEvents( e );
+						if( Math.abs( data.deltaY ) < 15 ){
+							return false;
+						}
+						
 					} )
-					.bind( "touchend", function( e ){
+					.bind( "touchend touchcancel", function( e ){
 						$( this ).removeClass( noTrans );
 						emitEvents( e );
 					} );
