@@ -7,7 +7,7 @@
  */
 
 (function($) {
-
+	
 	var pluginName = "carousel",
 		initSelector = "." + pluginName,
 		noTrans = pluginName + "-no-transition",
@@ -17,19 +17,19 @@
 				console.log(this)
 			},
 			pause: function(){
-
+				
 			},
 			_initAutoPlay: function(){
 				if( $( this ).attr( "data-autoplay") ){
 					$( this )[ pluginName ]( "play" );
 				}
 			}
-
+			 
 		};
-
+			
 	// add methods
-	$.extend( $.fn[ pluginName ].prototype, autoPlayMethods );
-
+	$.extend( $.fn[ pluginName ].prototype, autoPlayMethods ); 
+	
 	// DOM-ready auto-init
 	$( initSelector ).live( "create." + pluginName, function(){
 		$( this )[ pluginName ]( "_initAutoPlay" );
