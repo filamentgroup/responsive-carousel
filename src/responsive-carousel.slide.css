@@ -39,9 +39,11 @@
 	position: relative;
 	z-index: 2;
 }
-.carousel-slide .carousel-in,
-.carousel-slide-reverse .carousel-out {
+.carousel-slide .carousel-in {
 	left: 0;
+}
+.carousel-slide-reverse .carousel-out {
+	left: 100%;
 }
 .carousel-slide .carousel-out,
 .carousel-slide-reverse .carousel-item,
