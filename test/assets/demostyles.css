@@ -2,6 +2,7 @@
  margin: 10px auto;
  max-width: 400px;
  font-family: sans-serif;
+ position: relative;
 }
 .carousel-item img {
   width: 100%;
