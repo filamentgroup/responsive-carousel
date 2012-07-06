@@ -6,22 +6,40 @@
  * Licensed under the MIT, GPL licenses.
  */
 
-(function($) {
-	
+(function( $, undefined ) {
 	var pluginName = "carousel",
 		initSelector = "." + pluginName,
-		noTrans = pluginName + "-no-transition",
+		interval = 4000,
 		autoPlayMethods = {
-			timer: null,
 			play: function(){
-				console.log(this)
+				var $self = $( this ),
+					intAttr = $self.attr( "data-interval" ),
+					thisInt = intAttr !== undefined ? parseFloat( intAttr ) : interval;
+				return $self.data(
+					"timer", 
+					setInterval( function(){
+						$self[ pluginName ]( "next" );
+					},
+					thisInt )
+				);
 			},
-			pause: function(){
-				
+			
+			stop: function(){
+				clearTimeout( $( this ).data( "timer" ) );
 			},
+			
+			_bindStopListener: function(){
+				return $(this).bind( "mousedown", function(){
+					$( this )[ pluginName ]( "stop" );
+				} );
+			},
+			
 			_initAutoPlay: function(){
-				if( $( this ).attr( "data-autoplay") ){
-					$( this )[ pluginName ]( "play" );
+				var autoplay = $( this ).attr( "data-autoplay");
+				if( autoplay !== undefined && autoplay !== false ){
+					$( this )
+						[ pluginName ]( "_bindStopListener" )
+						[ pluginName ]( "play" );
 				}
 			}
 			 
