@@ -7,6 +7,7 @@
  */
 .carousel {
 	width: 100%;
+	position: relative;
 }
 .carousel .carousel-item {
 	display: none;

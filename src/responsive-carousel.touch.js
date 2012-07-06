@@ -52,8 +52,8 @@
 					.bind( "touchmove", function( e ){
 						var data = emitEvents( e );
 
-						if( Math.abs( data.deltaY ) < 15 && data.touches.length === 1 ){
-							//return false;
+						if( Math.abs( data.deltaX ) > 35 && Math.abs( data.deltaY ) < 35 && data.touches.length === 1 ){
+							return false;
 						}
 					} )
 					.bind( "touchend", function( e ){

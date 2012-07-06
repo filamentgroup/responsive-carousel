@@ -1,0 +1,33 @@
+.carousel {
+ margin: 10px auto;
+ max-width: 400px;
+ font-family: sans-serif;
+}
+.carousel-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.carousel-nav {
+  position: absolute;
+  bottom: 0;
+  z-index: 4;
+  width: 100%;
+}
+.carousel-nav a {
+  text-decoration: none;
+  font-size: .8em;
+  background: #fff;
+  color: #333;
+  opacity: .8;
+  padding: .5em;
+  position: absolute;
+  bottom: 0;
+  font-weight: bold;
+}
+.carousel-nav a:first-child {
+  left: 0;
+}
+.carousel-nav a:last-child {
+  right: 0;
+}
