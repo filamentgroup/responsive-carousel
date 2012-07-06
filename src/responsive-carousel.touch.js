@@ -30,6 +30,7 @@
 						}
 
 						if( touches[ 0 ] && touches[ 0 ].pageX ){
+							data.touches = touches;
 							data.deltaX = touches[ 0 ].pageX - origin.x;
 							data.deltaY = touches[ 0 ].pageY - origin.y;
 							data.w = $elem.width();
@@ -50,15 +51,17 @@
 					} )
 					.bind( "touchmove", function( e ){
 						var data = emitEvents( e );
-						if( Math.abs( data.deltaY ) < 15 ){
-							return false;
+
+						if( Math.abs( data.deltaY ) < 15 && data.touches.length === 1 ){
+							//return false;
 						}
-						
 					} )
-					.bind( "touchend touchcancel", function( e ){
+					.bind( "touchend", function( e ){
 						$( this ).removeClass( noTrans );
 						emitEvents( e );
 					} );
+					
+					
 			}
 		};
 			
