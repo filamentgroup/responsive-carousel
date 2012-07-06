@@ -11,7 +11,7 @@
   <style>
   .carousel {
 	  margin: 10px auto;
-	  max-width: 400px;
+	 max-width: 400px;
   }
   .carousel-item img {
 	  width: 100%;
@@ -21,9 +21,10 @@
   </style>
   <!-- Load local lib and tests. -->
   <script src="../../src/responsive-carousel.js"></script>
+  <script src="../../src/responsive-carousel.autoplay.js"></script>
 </head>
 <body>
-	<div class="carousel" data-transition="fade">
+	<div class="carousel" data-transition="fade" data-autoplay data-interval="5000">
 	    <div>
 		<img src="../assets/large.jpg">
 	    </div>

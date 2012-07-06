@@ -6,55 +6,38 @@
   <title>Responsive Carousel Demo Page</title>
   <!-- Load local jQuery, removing access to $ (use jQuery, not $). -->
   <script src="../../libs/jquery/jquery.js"></script>
-  <script src="../../libs/ajaxInclude/ajaxinclude.jquery.js"></script>
   <link rel="stylesheet" href="../../src/responsive-carousel.css" media="screen">
   <link rel="stylesheet" href="../../src/responsive-carousel.slide.css" media="screen">
   <style>
   .carousel {
 	  margin: 10px auto;
-	  max-width: 400px;
+	 max-width: 400px;
   }
   .carousel-item img {
 	  width: 100%;
 	  height: auto;
 	  display: block;
   }
-
-  .carousel .carousel-item {
-  	counter-increment: section;
-  }
-  .carousel .carousel-item:after {
-	  content: counter(section);
-	  position: absolute;
-	  margin: 1em 0 0 1em;
-	  font-family: sans-serif;
-	  background: #fff;
-	  padding: .2em .5em;
-	  font-size: .8em;
-	  top: 0;
-  }
   </style>
   <!-- Load local lib and tests. -->
   <script src="../../src/responsive-carousel.js"></script>
   <script src="../../src/responsive-carousel.touch.js"></script>
-  <script src="../../src/responsive-carousel.drag.js"></script>
-  <script src="../../src/responsive-carousel.ajax.js"></script>
-  
+ <script src="../../src/responsive-carousel.drag.js"></script>
 </head>
 <body>
 	<div class="carousel" data-transition="slide">
-	    <div data-after="ajax-more.html">
+	    <div>
 	        <img src="../assets/large.jpg">
-	    </div>		
+	    </div>
+	    <div>
+	        <img src="../assets/monks.jpg">
+	    </div>
+	    <div>
+	        <img src="../assets/monkey.jpg">
+	    </div>
+		
 	</div>
 
-
-	<div class="carousel" data-transition="slide">
-	    <div data-before="ajax-more.html">
-	        <img src="../assets/large.jpg">
-	    </div>		
-	</div>
-	
 
 </body>
 </html>
