@@ -1,4 +1,4 @@
-/*! Responsive Carousel - v0.1.0 - 2012-07-05
+/*! Responsive Carousel - v0.1.0 - 2012-07-09
 * https://github.com/filamentgroup/responsive-carousel
 * Copyright (c) 2012 Filament Group, Inc.; Licensed MIT, GPL */
 
@@ -35,7 +35,11 @@
 			
 			_init: function(){
 				var trans = $( this ).attr( transitionAttr );
-
+				
+				if( !trans ){
+					cssTransitionsSupport = false;
+				}
+				
 				return $( this )
 					.addClass(
 						pluginName + 
@@ -56,6 +60,8 @@
 			},
 			
 			goTo: function( num ){
+				$( this ).find( "." + itemClass ).removeClass( [ outClass, inClass, reverseClass ].join( " " ) );
+				
 				var $self = $(this),
 					$from = $( this ).find( "." + activeClass ),
 					activeNum = $from.prevAll().length + 1,
@@ -66,7 +72,7 @@
 				if( !$to.length ){
 					$to = $( this ).find( "." + itemClass )[ reverseClass.length ? "last" : "first" ]();
 				}
-				
+								
 				if( cssTransitionsSupport ){
 					$self[ pluginName ]( "_transitionStart", $from, $to, reverseClass );
 				}
@@ -176,6 +182,7 @@
 						}
 
 						if( touches[ 0 ] && touches[ 0 ].pageX ){
+							data.touches = touches;
 							data.deltaX = touches[ 0 ].pageX - origin.x;
 							data.deltaY = touches[ 0 ].pageY - origin.y;
 							data.w = $elem.width();
@@ -186,6 +193,7 @@
 						}
 
 						$elem.trigger( "drag" + e.type.split( "touch" )[ 1], data );
+						return data;
 					};
 
 				$( this )
@@ -194,13 +202,18 @@
 						emitEvents( e );
 					} )
 					.bind( "touchmove", function( e ){
-						emitEvents( e );
-						e.preventDefault();
+						var data = emitEvents( e );
+
+						if( Math.abs( data.deltaX ) > 35 && Math.abs( data.deltaY ) < 35 && data.touches.length === 1 ){
+							return false;
+						}
 					} )
 					.bind( "touchend", function( e ){
 						$( this ).removeClass( noTrans );
 						emitEvents( e );
 					} );
+					
+					
 			}
 		};
 			
