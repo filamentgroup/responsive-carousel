@@ -42,7 +42,6 @@
 						[ pluginName ]( "play" );
 				}
 			}
-			 
 		};
 			
 	// add methods
