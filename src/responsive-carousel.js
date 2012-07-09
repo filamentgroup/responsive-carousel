@@ -64,25 +64,30 @@
 			},
 			
 			goTo: function( num ){
-				$( this ).find( "." + itemClass ).removeClass( [ outClass, inClass, reverseClass ].join( " " ) );
+				
 				
 				var $self = $(this),
-					$from = $( this ).find( "." + activeClass ),
+					reverseClass = " " + pluginName + "-" + $self.attr( transitionAttr ) + "-reverse";
+				
+				// clean up children
+				$( this ).find( "." + itemClass ).removeClass( [ outClass, inClass, reverseClass ].join( " " ) );
+				
+				var $from = $( this ).find( "." + activeClass ),
 					activeNum = $from.prevAll().length + 1,
 					nextNum = typeof( num ) === "number" ? num : activeNum + parseFloat(num),
 					$to = $( this ).find( ".carousel-item" ).eq( nextNum - 1 ),
-					reverseClass = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : " " + pluginName + "-" + $self.attr( transitionAttr ) + "-reverse";
+					reverse = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : reverseClass;
 				
 				if( !$to.length ){
-					$to = $( this ).find( "." + itemClass )[ reverseClass.length ? "last" : "first" ]();
+					$to = $( this ).find( "." + itemClass )[ reverse.length ? "last" : "first" ]();
 				}
 								
 				if( cssTransitionsSupport ){
-					$self[ pluginName ]( "_transitionStart", $from, $to, reverseClass );
+					$self[ pluginName ]( "_transitionStart", $from, $to, reverse );
 				}
 				else {
 					$to.addClass( activeClass );
-					$self[ pluginName ]( "_transitionEnd", $from, $to, reverseClass );
+					$self[ pluginName ]( "_transitionEnd", $from, $to, reverse );
 				}
 			},
 			
