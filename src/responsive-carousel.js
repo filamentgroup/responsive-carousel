@@ -98,14 +98,9 @@
 			_transitionStart: function( $from, $to, reverseClass ){
 				var $self = $(this);
 				
-				if( !$self.data( "animation-events-bound" ) ){
-					
-					$to.bind( "webkitTransitionEnd transitionend webkitAnimationEnd animationend", function(){
-						$self[ pluginName ]( "_transitionEnd", $from, $to, reverseClass );
-					});
-					
-					$self.data( "animation-events-bound", true );
-				}
+				$to.one( "webkitTransitionEnd transitionend webkitAnimationEnd animationend", function(){
+					$self[ pluginName ]( "_transitionEnd", $from, $to, reverseClass );
+				});
 				
 				$(this).addClass( reverseClass );
 				$from.addClass( outClass );
