@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Responsive Carousel Demo Page</title>
+  <!-- Load local jQuery, removing access to $ (use jQuery, not $). -->
+  <script src="../../libs/jquery/jquery.js"></script>
+  <link rel="stylesheet" href="../../src/responsive-carousel.css" media="screen">
+  <link rel="stylesheet" href="../../src/responsive-carousel.slide.css" media="screen">
+  <link rel="stylesheet" href="../assets/demostyles.css">
+  <!-- Load local lib and tests. -->
+  <script src="../../src/responsive-carousel.js"></script>
+   <script src="../../src/responsive-carousel.touch.js"></script>
+   <script src="../../src/responsive-carousel.drag.js"></script>
+ <script src="../../src/responsive-carousel.dynamic-containers.js"></script>
+ 
+ <style>
+ .carousel {
+	 min-width: 100%;
+ }
+ .carousel-item {
+	 width: 100%;
+	 background: #fff;
+ }
+ img {
+	 max-width: 100%;
+ }
+ /* any old class name would do here */
+ .slag {
+	 float: left;
+	 width: 50%;
+ }
+ @media (min-width: 30em){
+	 .slag {
+		 width: 33.333333333333333333%;
+	 }
+ 
+ }
+ @media (min-width: 50em){
+	 .slag {
+		 width: 25%;
+	 }
+ 
+ }
+ 
+ </style>
+ 
+ 
+</head>
+<body>
+	<div class="carousel" data-transition="slide">
+	    <div class="slag">
+	        <img src="../assets/large.jpg">
+	    </div>
+	    <div class="slag">
+	        <img src="../assets/monks.jpg">
+	    </div>
+	    <div class="slag">
+	        <img src="../assets/monkey.jpg">
+	    </div>
+	    <div class="slag">
+	        <img src="../assets/large.jpg">
+	    </div>
+	    <div class="slag">
+	        <img src="../assets/monks.jpg">
+	    </div>
+	    <div class="slag">
+	        <img src="../assets/monkey.jpg">
+	    </div>
+		
+	    <div class="slag">
+	        <img src="../assets/large.jpg">
+	    </div>
+	    <div class="slag">
+	        <img src="../assets/monks.jpg">
+	    </div>
+	    <div class="slag">
+	        <img src="../assets/monkey.jpg">
+	    </div>
+	    <div class="slag">
+	        <img src="../assets/monks.jpg">
+	    </div>
+	    <div class="slag">
+	        <img src="../assets/monkey.jpg">
+	    </div>
+	    <div class="slag">
+	        <img src="../assets/monkey.jpg">
+	    </div>
+		
+		
+	</div>
+
+
+</body>
+</html>
