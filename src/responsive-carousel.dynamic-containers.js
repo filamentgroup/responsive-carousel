@@ -47,7 +47,7 @@
 						$row.append( sets[ i ][ j ] );
 					}
 					
-					$row.appendTo( $self );
+					$row.prependTo( $self );
 				}
 				
 				$self[ pluginName ]( "update" );
