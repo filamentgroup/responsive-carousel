@@ -19,6 +19,7 @@
 					$rows = $self.find( "[" + rowAttr + "]" ),
 					$activeItem = $rows.filter( "." + activeClass ).children( 0 ),
 					$kids = $rows.children(),
+					$nav = $self.find( "." + pluginName + "-nav" ),
 					sets = [];
 				
 				if( !$rows.length ){
@@ -47,7 +48,7 @@
 						$row.append( sets[ i ][ j ] );
 					}
 					
-					$row.prependTo( $self );
+					$row.insertBefore( $nav );
 				}
 				
 				$self[ pluginName ]( "update" );
