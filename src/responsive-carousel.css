@@ -15,3 +15,6 @@
 .carousel .carousel-active {
 	display: block;
 }
+.carousel .carousel-nav:nth-child(2) {
+	display: none;
+}
