@@ -20,7 +20,7 @@
 			strictEqual(actual, expected, [message])
 			notStrictEqual(actual, expected, [message])
 			raises(block, [expected], [message])
-	*/
+	
 
 // DOM readiness needed for all tests
 $(function(){
@@ -175,5 +175,5 @@ $(function(){
 	});
 });
 
-
+*/
 }(jQuery));
