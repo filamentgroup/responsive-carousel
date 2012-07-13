@@ -225,16 +225,23 @@
 				$( this )
 					.bind( "touchstart", function( e ){
 						$( this ).addClass( noTrans );
-						
 						emitEvents( e );
 					} )
 					.bind( "touchmove", function( e ){
+						
 						setData( e );
-						if( Math.abs( data.deltaY ) < 25 && data.touches.length === 1 ){
+						
+						if( Math.abs( data.deltaX ) < 15 ){
+							return;
+						}
+						else {
 							emitEvents( e );
-							// return true in iOS to allow scrolling-through at all times. Other platforms need the buffer
-							return iOS;
-						}										
+						
+							if( !iOS ){
+								e.preventDefault();
+								window.scrollBy( 0, -data.deltaY );
+							}
+						}				
 					} )
 					.bind( "touchend", function( e ){
 						$( this ).removeClass( noTrans );

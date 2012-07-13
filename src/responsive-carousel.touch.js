@@ -55,12 +55,20 @@
 						emitEvents( e );
 					} )
 					.bind( "touchmove", function( e ){
+						
 						setData( e );
-						emitEvents( e );
-						if( !iOS ){
-							e.preventDefault();
-							window.scrollBy( 0, -data.deltaY );
-						}					
+						
+						if( Math.abs( data.deltaX ) < 15 ){
+							return;
+						}
+						else {
+							emitEvents( e );
+						
+							if( !iOS ){
+								e.preventDefault();
+								window.scrollBy( 0, -data.deltaY );
+							}
+						}				
 					} )
 					.bind( "touchend", function( e ){
 						$( this ).removeClass( noTrans );
