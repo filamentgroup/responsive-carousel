@@ -1,4 +1,4 @@
-/*! Responsive Carousel - v0.1.0 - 2012-07-11
+/*! Responsive Carousel - v0.1.0 - 2012-07-13
 * https://github.com/filamentgroup/responsive-carousel
 * Copyright (c) 2012 Filament Group, Inc.; Licensed MIT, GPL */
 
@@ -184,14 +184,17 @@
 	var pluginName = "carousel",
 		initSelector = "." + pluginName,
 		noTrans = pluginName + "-no-transition",
+		// UA is needed to determine whether to return true or false during touchmove (only iOS handles true gracefully)
+		iOS = /iPhone|iPad|iPod/.test( navigator.platform ) && navigator.userAgent.indexOf( "AppleWebKit" ) > -1,
 		touchMethods = {
 			_dragBehavior: function(){
-				var origin,
+				var $self = $( this ),
+					origin,
 					data = {},
-					deltaY,
 					xPerc,
 					yPerc,
-					emitEvents = function( e ){
+					setData = function( e ){
+						
 						var touches = e.touches || e.originalEvent.touches,
 							$elem = $( e.target ).closest( initSelector );
 						
@@ -213,21 +216,25 @@
 							data.srcEvent = e;
 						}
 
-						$elem.trigger( "drag" + e.type.split( "touch" )[ 1], data );
-						return data;
+					},
+					emitEvents = function( e ){
+						setData( e );
+						$( e.target ).closest( initSelector ).trigger( "drag" + e.type.split( "touch" )[ 1], data );
 					};
 
 				$( this )
 					.bind( "touchstart", function( e ){
 						$( this ).addClass( noTrans );
+						
 						emitEvents( e );
 					} )
 					.bind( "touchmove", function( e ){
-						var data = emitEvents( e );
-
-						if( Math.abs( data.deltaX ) > 35 && Math.abs( data.deltaY ) < 35 && data.touches.length === 1 ){
-							return false;
-						}
+						setData( e );
+						if( Math.abs( data.deltaY ) < 25 && data.touches.length === 1 ){
+							emitEvents( e );
+							// return true in iOS to allow scrolling-through at all times. Other platforms need the buffer
+							return iOS;
+						}										
 					} )
 					.bind( "touchend", function( e ){
 						$( this ).removeClass( noTrans );
