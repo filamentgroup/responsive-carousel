@@ -65,24 +65,25 @@
 			
 			goTo: function( num ){
 				
-				
 				var $self = $(this),
-					reverseClass = " " + pluginName + "-" + $self.attr( transitionAttr ) + "-reverse";
+					trans = $self.attr( transitionAttr ),
+					reverseClass = " " + pluginName + "-" + trans + "-reverse";
 				
 				// clean up children
 				$( this ).find( "." + itemClass ).removeClass( [ outClass, inClass, reverseClass ].join( " " ) );
 				
 				var $from = $( this ).find( "." + activeClass ),
-					activeNum = $from.prevAll().length + 1,
+					prevs = $from.prevAll().length,
+					activeNum = ( prevs || 0 ) + 1,
 					nextNum = typeof( num ) === "number" ? num : activeNum + parseFloat(num),
 					$to = $( this ).find( ".carousel-item" ).eq( nextNum - 1 ),
 					reverse = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : reverseClass;
-				
+
 				if( !$to.length ){
 					$to = $( this ).find( "." + itemClass )[ reverse.length ? "last" : "first" ]();
 				}
-								
-				if( cssTransitionsSupport ){
+
+				if( cssTransitionsSupport  ){
 					$self[ pluginName ]( "_transitionStart", $from, $to, reverse );
 				}
 				else {
@@ -98,7 +99,7 @@
 			_transitionStart: function( $from, $to, reverseClass ){
 				var $self = $(this);
 				
-				$to.one( "webkitTransitionEnd transitionend webkitAnimationEnd animationend", function(){
+				$to.one( navigator.userAgent.indexOf( "AppleWebKit" ) ? "webkitTransitionEnd" : "transitionEnd", function(){
 					$self[ pluginName ]( "_transitionEnd", $from, $to, reverseClass );
 				});
 				
