@@ -93,7 +93,9 @@
 			},
 			
 			update: function(){
-				return $(this).children().not( "." + navClass ).addClass( itemClass );
+				$(this).children().not( "." + navClass ).addClass( itemClass );
+				
+				return $(this).trigger( "update." + pluginName );
 			},
 			
 			_transitionStart: function( $from, $to, reverseClass ){
