@@ -497,7 +497,7 @@
 					var pagLink = $( e.target ).closest( "a" ),
 						href = pagLink.attr( "href" );
 						
-					if( href ){
+					if( pagLink.closest( "." + paginationClass ).length && href ){
 						$( this )[ pluginName ]( "goTo", parseFloat( href.split( "#" )[ 1 ] ) );
 						e.preventDefault();
 					}
