@@ -13,7 +13,7 @@ module.exports = function(grunt) {
     },
     concat: {
       dist: {
-        src: ['<banner:meta.banner>', 'src/responsive-carousel.js', 'src/responsive-carousel.touch.js', 'src/responsive-carousel.drag.js', 'src/responsive-carousel.dynamic-containers.js' ],
+        src: ['<banner:meta.banner>', 'src/responsive-carousel.js', 'src/responsive-carousel.touch.js', 'src/responsive-carousel.drag.js', 'src/responsive-carousel.dynamic-containers.js', 'src/responsive-carousel.autoplay.js' ],
         dest: 'dist/<%= pkg.name %>.js'
       }
     },
