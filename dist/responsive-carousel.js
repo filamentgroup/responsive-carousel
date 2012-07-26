@@ -472,7 +472,7 @@
 
 (function( $, undefined ) {
 	var pluginName = "carousel",
-		initSelector = "." + pluginName,
+		initSelector = "." + pluginName + "[data-paginate]",
 		paginationClass = pluginName + "-pagination",
 		paginationMethods = {
 			_createPagination: function(){
@@ -499,6 +499,7 @@
 						
 					if( href ){
 						$( this )[ pluginName ]( "goTo", parseFloat( href.split( "#" )[ 1 ] ) );
+						e.preventDefault();
 					}
 				} );
 			}
