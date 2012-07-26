@@ -1,4 +1,4 @@
-/*! Responsive Carousel - v0.1.0 - 2012-07-13
+/*! Responsive Carousel - v0.1.0 - 2012-07-26
 * https://github.com/filamentgroup/responsive-carousel
 * Copyright (c) 2012 Filament Group, Inc.; Licensed MIT, GPL */
 
@@ -69,24 +69,25 @@
 			
 			goTo: function( num ){
 				
-				
 				var $self = $(this),
-					reverseClass = " " + pluginName + "-" + $self.attr( transitionAttr ) + "-reverse";
+					trans = $self.attr( transitionAttr ),
+					reverseClass = " " + pluginName + "-" + trans + "-reverse";
 				
 				// clean up children
 				$( this ).find( "." + itemClass ).removeClass( [ outClass, inClass, reverseClass ].join( " " ) );
 				
 				var $from = $( this ).find( "." + activeClass ),
-					activeNum = $from.prevAll().length + 1,
+					prevs = $from.prevAll().length,
+					activeNum = ( prevs || 0 ) + 1,
 					nextNum = typeof( num ) === "number" ? num : activeNum + parseFloat(num),
 					$to = $( this ).find( ".carousel-item" ).eq( nextNum - 1 ),
 					reverse = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : reverseClass;
-				
+
 				if( !$to.length ){
 					$to = $( this ).find( "." + itemClass )[ reverse.length ? "last" : "first" ]();
 				}
-								
-				if( cssTransitionsSupport ){
+
+				if( cssTransitionsSupport  ){
 					$self[ pluginName ]( "_transitionStart", $from, $to, reverse );
 				}
 				else {
@@ -96,13 +97,15 @@
 			},
 			
 			update: function(){
-				return $(this).children().not( "." + navClass ).addClass( itemClass );
+				$(this).children().not( "." + navClass ).addClass( itemClass );
+				
+				return $(this).trigger( "update." + pluginName );
 			},
 			
 			_transitionStart: function( $from, $to, reverseClass ){
 				var $self = $(this);
 				
-				$to.one( "webkitTransitionEnd transitionend webkitAnimationEnd animationend", function(){
+				$to.one( navigator.userAgent.indexOf( "AppleWebKit" ) ? "webkitTransitionEnd" : "transitionEnd", function(){
 					$self[ pluginName ]( "_transitionEnd", $from, $to, reverseClass );
 				});
 				
@@ -225,16 +228,15 @@
 				$( this )
 					.bind( "touchstart", function( e ){
 						$( this ).addClass( noTrans );
-						
 						emitEvents( e );
 					} )
 					.bind( "touchmove", function( e ){
 						setData( e );
-						if( Math.abs( data.deltaY ) < 25 && data.touches.length === 1 ){
-							emitEvents( e );
-							// return true in iOS to allow scrolling-through at all times. Other platforms need the buffer
-							return iOS;
-						}										
+						emitEvents( e );
+						if( !iOS ){
+							e.preventDefault();
+							window.scrollBy( 0, -data.deltaY );
+						}					
 					} )
 					.bind( "touchend", function( e ){
 						$( this ).removeClass( noTrans );
@@ -302,7 +304,7 @@
 			var activeSlides = getActiveSlides( $( this ), data.deltaX ),
 				newSlide = Math.abs( data.deltaX ) > 45;
 			
-			$( this ).one( "webkitTransitionEnd transitionend webkitAnimationEnd animationend", function(){
+			$( this ).one( navigator.userAgent.indexOf( "AppleWebKit" ) ? "webkitTransitionEnd" : "transitionEnd", function(){
 				activeSlides[ 0 ].add( activeSlides[ 1 ] ).css( "left", "" );
 			});			
 				
@@ -403,5 +405,117 @@
 	$( initSelector ).live( "create." + pluginName, function(){
 		$( this )[ pluginName ]( "_dynamicContainerEvents" );
 	} );
+
+}(jQuery));
+/*
+ * responsive-carousel autoplay extension
+ * https://github.com/filamentgroup/responsive-carousel
+ *
+ * Copyright (c) 2012 Filament Group, Inc.
+ * Licensed under the MIT, GPL licenses.
+ */
+
+(function( $, undefined ) {
+	var pluginName = "carousel",
+		initSelector = "." + pluginName,
+		interval = 4000,
+		autoPlayMethods = {
+			play: function(){
+				var $self = $( this ),
+					intAttr = $self.attr( "data-interval" ),
+					thisInt = parseFloat( intAttr ) || interval;
+				return $self.data(
+					"timer", 
+					setInterval( function(){
+						$self[ pluginName ]( "next" );
+					},
+					thisInt )
+				);
+			},
+			
+			stop: function(){
+				clearTimeout( $( this ).data( "timer" ) );
+			},
+			
+			_bindStopListener: function(){
+				return $(this).bind( "mousedown", function(){
+					$( this )[ pluginName ]( "stop" );
+				} );
+			},
+			
+			_initAutoPlay: function(){
+				var autoplay = $( this ).attr( "data-autoplay");
+				if( autoplay !== undefined && autoplay !== false ){
+					$( this )
+						[ pluginName ]( "_bindStopListener" )
+						[ pluginName ]( "play" );
+				}
+			}
+		};
+			
+	// add methods
+	$.extend( $.fn[ pluginName ].prototype, autoPlayMethods ); 
+	
+	// DOM-ready auto-init
+	$( initSelector ).live( "create." + pluginName, function(){
+		$( this )[ pluginName ]( "_initAutoPlay" );
+	} );
+
+}(jQuery));
+/*
+ * responsive-carousel pagination extension
+ * https://github.com/filamentgroup/responsive-carousel
+ *
+ * Copyright (c) 2012 Filament Group, Inc.
+ * Licensed under the MIT, GPL licenses.
+ */
+
+(function( $, undefined ) {
+	var pluginName = "carousel",
+		initSelector = "." + pluginName,
+		paginationClass = pluginName + "-pagination",
+		paginationMethods = {
+			_createPagination: function(){
+				var nav = $( this ).find( "." + pluginName + "-nav" ),
+					items = $( this ).find( "." + pluginName + "-item" ),
+					pNav = $( "<ol class='" + paginationClass + "'></ol>" ),
+					num;
+				
+				// remove any existing nav
+				nav.find( "." + paginationClass ).remove();
+				
+				for( var i = 0, il = items.length; i < il; i++ ){
+					num = i + 1;
+					pNav.append( "<li><a href='#" + num + "' title='Go to slide " + num + "'>" + num + "</a>" );
+				}
+				nav
+					.addClass( pluginName + "-nav-paginated" )
+					.find( "a" ).first().after( pNav );
+			},
+			_bindPaginationEvents: function(){
+				$( this ).bind( "click", function( e ){
+					var pagLink = $( e.target ).closest( "a" ),
+						href = pagLink.attr( "href" );
+						
+					if( href ){
+						$( this )[ pluginName ]( "goTo", parseFloat( href.split( "#" )[ 1 ] ) );
+					}
+				} );
+			}
+		};
+			
+	// add methods
+	$.extend( $.fn[ pluginName ].prototype, paginationMethods ); 
+	
+	// create pagination on create and update
+	$( initSelector )
+		.live( "create." + pluginName, function(){
+			$( this )
+				[ pluginName ]( "_createPagination" )
+				[ pluginName ]( "_bindPaginationEvents" );
+		} )
+		.live( "update." + pluginName, function(){
+			$( this )[ pluginName ]( "_createPagination" );
+		} );
 
 }(jQuery));

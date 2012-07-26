@@ -1,0 +1,16 @@
+/*
+ * responsive-carousel
+ * https://github.com/filamentgroup/responsive-carousel
+ *
+ * Copyright (c) 2012 Filament Group, Inc.
+ * Licensed under the MIT, GPL licenses.
+ */
+.carousel-nav-paginated ol {
+ margin: 0 4em;
+ padding: 0;
+}
+.carousel-nav-paginated li,
+.carousel-nav-paginated li a {
+	display: inline-block;
+	position: relative;
+}
