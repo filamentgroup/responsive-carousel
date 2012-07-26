@@ -14,7 +14,7 @@
 			play: function(){
 				var $self = $( this ),
 					intAttr = $self.attr( "data-interval" ),
-					thisInt = intAttr !== undefined ? parseFloat( intAttr ) : interval;
+					thisInt = parseFloat( intAttr ) || interval;
 				return $self.data(
 					"timer", 
 					setInterval( function(){
