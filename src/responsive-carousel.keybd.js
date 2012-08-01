@@ -28,7 +28,7 @@
 	// Touch handling
 	$( navSelector )
 		.live( "click", function( e ) {
-			$( this ).focus();
+			$( e.target )[ 0 ].focus();
 		})
 		.live( "keydown", keyNav );
 }(jQuery));
