@@ -32,12 +32,14 @@
 	// Touch handling
 	$( initSelector )
 		.live( "dragmove", function( e, data ){
+
 			if( !dragThreshold( data.deltaX ) ){
 				return;
 			}
 			var activeSlides = getActiveSlides( $( this ), data.deltaX );
-			activeSlides[ 0 ].css( "left", data.deltaX );
-			activeSlides[ 1 ].css( "left", data.deltaX < 0 ? data.w + data.deltaX : -data.w + data.deltaX );
+			
+			activeSlides[ 0 ].css( "left", data.deltaX + "px" );
+			activeSlides[ 1 ].css( "left", data.deltaX < 0 ? data.w + data.deltaX + "px" : -data.w + data.deltaX + "px" );
 		} )
 		.live( "dragend", function( e, data ){
 			if( !dragThreshold( data.deltaX ) ){
@@ -51,12 +53,12 @@
 			});			
 				
 			if( newSlide ){
-				activeSlides[ 0 ].removeClass( activeClass ).css( "left", data.deltaX > 0 ? data.w : -data.w );
+				activeSlides[ 0 ].removeClass( activeClass ).css( "left", data.deltaX > 0 ? data.w  + "px" : -data.w  + "px" );
 				activeSlides[ 1 ].addClass( activeClass ).css( "left", 0 );
 			}
 			else {
 				activeSlides[ 0 ].css( "left", 0);
-				activeSlides[ 1 ].css( "left", data.deltaX > 0 ? -data.w : data.w  );	
+				activeSlides[ 1 ].css( "left", data.deltaX > 0 ? -data.w  + "px" : data.w  + "px" );	
 			}
 		} );
 		
