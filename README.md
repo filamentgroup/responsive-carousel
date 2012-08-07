@@ -13,6 +13,7 @@ In your web page:
 ```html
 <script src="jquery.js"></script>
 <script src="dist/responsive-carousel.min.js"></script>
+<link href="src/responsive-carousel.css" rel="stylesheet">
 
 <div data-carousel>
 	<div data-carousel-item>
@@ -24,6 +25,26 @@ In your web page:
 </div>
 
 ```
+
+The default build includes the slide/drag transition that you can apply by adding a data attribute and including some additional CSS.
+```html
+<script src="jquery.js"></script>
+<script src="dist/responsive-carousel.min.js"></script>
+<link href="src/responsive-carousel.css" rel="stylesheet">
+<link href="src/responsive-carousel.slide.css" rel="stylesheet">
+
+<div data-carousel data-transition="slide">
+	<div data-carousel-item>
+		<!-- carousel item content here -->
+	</div>
+	<div data-carousel-item>
+		<!-- carousel item content here -->
+	</div>
+</div>
+
+```
+
+There are other extensions in the `src` folder, such as flip and fade transitions, autoplay, keyboard handling, pagination, and more. Check out the `test/functional/` directory for examples.
 
 ## Documentation
 _(Coming soon)_
