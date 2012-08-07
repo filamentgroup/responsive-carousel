@@ -44,7 +44,11 @@ The default build includes the slide/drag transition that you can apply by addin
 
 ```
 
-There are other extensions in the `src` folder, such as flip and fade transitions, autoplay, keyboard handling, pagination, and more. Check out the `test/functional/` directory for examples.
+There are other extensions in the `src` folder, such as flip and fade transitions, autoplay, keyboard handling, pagination, and more. 
+
+### Demos
+
+Check out the [`test/functional/`](http://filamentgroup.github.com/responsive-carousel/test/functional/) directory for examples.
 
 ## Documentation
 _(Coming soon)_
