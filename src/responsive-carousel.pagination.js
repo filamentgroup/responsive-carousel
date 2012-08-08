@@ -10,6 +10,7 @@
 	var pluginName = "carousel",
 		initSelector = "." + pluginName + "[data-paginate]",
 		paginationClass = pluginName + "-pagination",
+		activeClass = pluginName + "-active-page",
 		paginationMethods = {
 			_createPagination: function(){
 				var nav = $( this ).find( "." + pluginName + "-nav" ),
@@ -29,15 +30,29 @@
 					.find( "a" ).first().after( pNav );
 			},
 			_bindPaginationEvents: function(){
-				$( this ).bind( "click", function( e ){
-					var pagLink = $( e.target ).closest( "a" ),
-						href = pagLink.attr( "href" );
+				$( this )
+					.bind( "click", function( e ){
+						var pagLink = $( e.target ).closest( "a" ),
+							href = pagLink.attr( "href" );
 						
-					if( pagLink.closest( "." + paginationClass ).length && href ){
-						$( this )[ pluginName ]( "goTo", parseFloat( href.split( "#" )[ 1 ] ) );
-						e.preventDefault();
-					}
-				} );
+						if( pagLink.closest( "." + paginationClass ).length && href ){
+							$( this )[ pluginName ]( "goTo", parseFloat( href.split( "#" )[ 1 ] ) );
+							e.preventDefault();
+						}
+					} )
+					// update pagination on page change
+					.bind( "goto." + pluginName, function( e, to  ){
+						
+						var index = to ? $( to ).index() : 0;
+							
+						$( this ).find( "ol." + paginationClass + " li" )
+							.removeClass( activeClass )
+							.eq( index )
+								.addClass( activeClass );
+						
+					} )
+					// initialize pagination
+					.trigger( "goto." + pluginName );
 			}
 		};
 			
