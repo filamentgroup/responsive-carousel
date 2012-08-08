@@ -32,3 +32,8 @@
 .carousel-nav a:last-child {
   right: 0;
 }
+.carousel-nav-paginated .carousel-active-page a {
+	background: #333;
+	color: #fff;
+	opacity: .8;
+}

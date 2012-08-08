@@ -90,6 +90,9 @@
 					$to.addClass( activeClass );
 					$self[ pluginName ]( "_transitionEnd", $from, $to, reverse );
 				}
+				
+				// added to allow pagination to track
+				$self.trigger( "goto." + pluginName, $to );
 			},
 			
 			update: function(){
