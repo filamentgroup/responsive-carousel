@@ -1,4 +1,4 @@
-/*! Responsive Carousel - v0.1.0 - 2012-08-07
+/*! Responsive Carousel - v0.1.0 - 2012-08-08
 * https://github.com/filamentgroup/responsive-carousel
 * Copyright (c) 2012 Filament Group, Inc.; Licensed MIT, GPL */
 
@@ -94,6 +94,9 @@
 					$to.addClass( activeClass );
 					$self[ pluginName ]( "_transitionEnd", $from, $to, reverse );
 				}
+				
+				// added to allow pagination to track
+				$self.trigger( "goto." + pluginName, $to );
 			},
 			
 			update: function(){
