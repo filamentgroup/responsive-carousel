@@ -51,7 +51,9 @@
 					$row.insertBefore( $nav );
 				}
 				
-				$self[ pluginName ]( "update" );
+				$self[ pluginName ]( "update" )
+					// initialize pagination
+					.trigger( "goto." + pluginName );
 				
 				$self.find( "." + itemClass ).eq( 0 ).addClass( activeClass );
 			},
