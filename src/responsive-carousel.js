@@ -19,11 +19,14 @@
 		navClass =  pluginName + "-nav",
 		cssTransitionsSupport = (function(){
 			var prefixes = " -webkit- -moz- -o- -ms- ".split( " " ),
-				supported = false;
-			
+				supported = false,
+				property;
 			while( prefixes.length ){
-				if( prefixes.shift() + "transition" in document.documentElement.style !== undefined ){
+				property = prefixes.shift() + "transition";
+				if ( property in document.documentElement.style !== undefined &&
+				 	 property in document.documentElement.style === true ) {
 					supported = true;
+					break;
 				}
 			}
 			return supported;
@@ -73,12 +76,12 @@
 				$( this ).find( "." + itemClass ).removeClass( [ outClass, inClass, reverseClass ].join( " " ) );
 				
 				var $from = $( this ).find( "." + activeClass ),
-					prevs = $from.prevAll().length,
+					prevs = $from.index(),
 					activeNum = ( prevs || 0 ) + 1,
 					nextNum = typeof( num ) === "number" ? num : activeNum + parseFloat(num),
 					$to = $( this ).find( ".carousel-item" ).eq( nextNum - 1 ),
 					reverse = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : reverseClass;
-
+				
 				if( !$to.length ){
 					$to = $( this ).find( "." + itemClass )[ reverse.length ? "last" : "first" ]();
 				}
@@ -87,7 +90,7 @@
 					$self[ pluginName ]( "_transitionStart", $from, $to, reverse );
 				}
 				else {
-					$to.addClass( activeClass );
+					//$to.addClass( activeClass );
 					$self[ pluginName ]( "_transitionEnd", $from, $to, reverse );
 				}
 				
