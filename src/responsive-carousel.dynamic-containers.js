@@ -13,6 +13,7 @@
 		itemClass = pluginName + "-item",
 		activeClass = pluginName + "-active",
 		rowAttr = "data-" + pluginName + "-slide",
+		$win = $( window ),
 		dynamicContainers = {
 			_assessContainers: function(){
 				var $self = $( this ),
@@ -60,22 +61,35 @@
 			
 			_dynamicContainerEvents: function(){
 				var $self = $( this ),
+					win_w = $win.width(),
+					win_h = $win.height(),
 					timeout;
 				
 				// on init
 				$self[ pluginName ]( "_assessContainers" );
 				
 				// and on resize
-				$( window )
-					.bind( "resize", function( e ){
-						if( timeout ){
-							clearTimeout( timeout );
-						}
-						
+				$win.on( "resize", function( e ){
+					
+					// IE wants to constantly run resize for some reason
+					// Let’s make sure it is actually a resize event
+					var win_w_new = $win.width(),
+						win_h_new = $win.height();
+					
+					if( win_w != win_w_new ||
+						win_h != win_h_new )
+					{
+						// timer shennanigans
+						clearTimeout(timeout);
 						timeout = setTimeout( function(){
 							$self[ pluginName ]( "_assessContainers" );
 						}, 200 );
-					} );				
+						
+						// Update the width and height
+						win_w = win_w_new;
+						win_h = win_h_new;
+					}
+				});
 			}
 		};
 			

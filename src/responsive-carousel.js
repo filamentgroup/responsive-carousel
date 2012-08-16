@@ -77,7 +77,7 @@
 				
 				var $from = $( this ).find( "." + activeClass ),
 					prevs = $from.index(),
-					activeNum = ( prevs || 0 ) + 1,
+					activeNum = ( prevs < 0 ? 0 : prevs ) + 1,
 					nextNum = typeof( num ) === "number" ? num : activeNum + parseFloat(num),
 					$to = $( this ).find( ".carousel-item" ).eq( nextNum - 1 ),
 					reverse = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : reverseClass;
@@ -93,7 +93,7 @@
 					//$to.addClass( activeClass );
 					$self[ pluginName ]( "_transitionEnd", $from, $to, reverse );
 				}
-				
+
 				// added to allow pagination to track
 				$self.trigger( "goto." + pluginName, $to );
 			},
