@@ -104,7 +104,7 @@
 			_transitionStart: function( $from, $to, reverseClass ){
 				var $self = $(this);
 				
-				$to.one( navigator.userAgent.indexOf( "AppleWebKit" ) ? "webkitTransitionEnd" : "transitionEnd", function(){
+				$to.one( navigator.userAgent.indexOf( "AppleWebKit" ) > -1 ? "webkitTransitionEnd" : "transitionend", function(){
 					$self[ pluginName ]( "_transitionEnd", $from, $to, reverseClass );
 				});
 				
