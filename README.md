@@ -15,7 +15,7 @@ In your web page:
 <script src="dist/responsive-carousel.min.js"></script>
 <link href="src/responsive-carousel.css" rel="stylesheet">
 
-<div data-carousel>
+<div class="carousel">
 	<div data-carousel-item>
 		<!-- carousel item content here -->
 	</div>
@@ -33,11 +33,11 @@ The default build includes the slide/drag transition that you can apply by addin
 <link href="src/responsive-carousel.css" rel="stylesheet">
 <link href="src/responsive-carousel.slide.css" rel="stylesheet">
 
-<div data-carousel data-transition="slide">
-	<div data-carousel-item>
+<div class="carousel" data-transition="slide">
+	<div>
 		<!-- carousel item content here -->
 	</div>
-	<div data-carousel-item>
+	<div>
 		<!-- carousel item content here -->
 	</div>
 </div>
