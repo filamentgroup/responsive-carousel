@@ -16,10 +16,10 @@ In your web page:
 <link href="src/responsive-carousel.css" rel="stylesheet">
 
 <div class="carousel">
-	<div data-carousel-item>
+	<div>
 		<!-- carousel item content here -->
 	</div>
-	<div data-carousel-item>
+	<div>
 		<!-- carousel item content here -->
 	</div>
 </div>
