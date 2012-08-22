@@ -1,4 +1,4 @@
-/*! Responsive Carousel - v0.1.0 - 2012-08-16
+/*! Responsive Carousel - v0.1.0 - 2012-08-22
 * https://github.com/filamentgroup/responsive-carousel
 * Copyright (c) 2012 Filament Group, Inc.; Licensed MIT, GPL */
 
@@ -316,6 +316,8 @@
 			if( newSlide ){
 				activeSlides[ 0 ].removeClass( activeClass ).css( "left", data.deltaX > 0 ? data.w  + "px" : -data.w  + "px" );
 				activeSlides[ 1 ].addClass( activeClass ).css( "left", 0 );
+				//Add an event for pagination on touch-enabled devices
+				$(this).trigger( "goto." + pluginName, activeSlides[ 1 ] );
 			}
 			else {
 				activeSlides[ 0 ].css( "left", 0);

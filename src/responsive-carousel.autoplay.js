@@ -29,7 +29,7 @@
 			},
 			
 			_bindStopListener: function(){
-				return $(this).bind( "mousedown", function(){
+				return $(this).bind( "mousedown touchstart", function(){
 					$( this )[ pluginName ]( "stop" );
 				} );
 			},

@@ -55,6 +55,8 @@
 			if( newSlide ){
 				activeSlides[ 0 ].removeClass( activeClass ).css( "left", data.deltaX > 0 ? data.w  + "px" : -data.w  + "px" );
 				activeSlides[ 1 ].addClass( activeClass ).css( "left", 0 );
+				//Add an event for pagination on touch-enabled devices
+				$(this).trigger( "goto." + pluginName, activeSlides[ 1 ] );
 			}
 			else {
 				activeSlides[ 0 ].css( "left", 0);
