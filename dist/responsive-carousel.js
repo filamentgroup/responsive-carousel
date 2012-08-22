@@ -1,4 +1,4 @@
-/*! Responsive Carousel - v0.1.0 - 2012-08-16
+/*! Responsive Carousel - v0.1.0 - 2012-08-22
 * https://github.com/filamentgroup/responsive-carousel
 * Copyright (c) 2012 Filament Group, Inc.; Licensed MIT, GPL */
 
@@ -82,6 +82,10 @@
 					nextNum = typeof( num ) === "number" ? num : activeNum + parseFloat(num),
 					$to = $( this ).find( ".carousel-item" ).eq( nextNum - 1 ),
 					reverse = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : reverseClass;
+
+				if(activeNum === nextNum){
+					return;
+				}
 
 				if( !$to.length ){
 					$to = $( this ).find( "." + itemClass )[ reverse.length ? "last" : "first" ]();
