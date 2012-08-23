@@ -137,7 +137,7 @@
 			
 			_addNextPrev: function(){
 				return $( this )
-					.append( "<nav class='"+ navClass +"'><a href='#prev' class='prev' title='Previous'>Prev</a><a href='#next' class='next' title='Next'>Next</a></nav>" )
+					.append( "<nav class='"+ navClass +"'><a href='#prev' class='prev' aria-hidden='true' title='Previous'>Prev</a><a href='#next' class='next' aria-hidden='true' title='Next'>Next</a></nav>" )
 					[ pluginName ]( "_bindEventListeners" );
 			},
 			
