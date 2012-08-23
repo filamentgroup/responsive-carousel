@@ -87,11 +87,10 @@
 					$to = $( this ).find( "." + itemClass )[ reverse.length ? "last" : "first" ]();
 				}
 
-				if( cssTransitionsSupport  ){
+				if( cssTransitionsSupport ){
 					$self[ pluginName ]( "_transitionStart", $from, $to, reverse );
-				}
-				else {
-					//$to.addClass( activeClass );
+				} else {
+					$to.addClass( activeClass );
 					$self[ pluginName ]( "_transitionEnd", $from, $to, reverse );
 				}
 
