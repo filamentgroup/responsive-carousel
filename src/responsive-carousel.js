@@ -18,13 +18,14 @@
 		outClass = pluginName + "-out",
 		navClass =  pluginName + "-nav",
 		cssTransitionsSupport = (function(){
-			var prefixes = " -webkit- -moz- -o- -ms- ".split( " " ),
+			var prefixes = "webkit Moz O Ms".split( " " ),
 				supported = false,
 				property;
+
 			while( prefixes.length ){
-				property = prefixes.shift() + "transition";
-				if ( property in document.documentElement.style !== undefined &&
-				 	 property in document.documentElement.style === true ) {
+				property = prefixes.shift() + "Transition";
+
+				if ( property in document.documentElement.style !== undefined && property in document.documentElement.style !== false ) {
 					supported = true;
 					break;
 				}
