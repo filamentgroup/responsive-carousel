@@ -26,10 +26,10 @@
   bottom: 0;
   font-weight: bold;
 }
-.carousel-nav a:first-child {
+.carousel-nav a.prev {
   left: 0;
 }
-.carousel-nav a:last-child {
+.carousel-nav a.next {
   right: 0;
 }
 .carousel-nav-paginated .carousel-active-page a {
