@@ -10,14 +10,11 @@
 	position: relative;
 }
 .carousel .carousel-item {
-	position: absolute;
-	z-index: -1;
+	display: none;
 }
 .carousel .carousel-active {
-	position: relative;
-	z-index: 2;
+	display: block;
 }
 .carousel .carousel-nav:nth-child(2) {
-	position: absolute;
-	z-index: -1;
+	display: none;
 }
