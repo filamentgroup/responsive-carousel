@@ -33,7 +33,7 @@
 	$( initSelector )
 		.live( "dragmove", function( e, data ){
 
-			if( !dragThreshold( data.deltaX ) ){
+			if( !data || !dragThreshold( data.deltaX ) ){
 				return;
 			}
 			var activeSlides = getActiveSlides( $( this ), data.deltaX );
@@ -42,7 +42,7 @@
 			activeSlides[ 1 ].css( "left", data.deltaX < 0 ? data.w + data.deltaX + "px" : -data.w + data.deltaX + "px" );
 		} )
 		.live( "dragend", function( e, data ){
-			if( !dragThreshold( data.deltaX ) ){
+			if( !data || !dragThreshold( data.deltaX ) ){
 				return;
 			}
 			var activeSlides = getActiveSlides( $( this ), data.deltaX ),
