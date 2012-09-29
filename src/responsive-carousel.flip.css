@@ -32,7 +32,15 @@
 	-o-transition: -o-transform .2s ease;
 	transition: transform .2s ease;
 	-webkit-transform: rotateY(180deg);
+	-moz-transform: rotateY(180deg);
+	-ms-transform: rotateY(180deg);
+	-o-transform: rotateY(180deg);
+	-transform: rotateY(180deg);
 	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	-ms-backface-visibility: hidden;
+	-o-backface-visibility: hidden;
+	backface-visibility: hidden;
 }
 .carousel-no-transition .carousel-item {
 	-webkit-transition: none;
@@ -43,6 +51,10 @@
 }
 .carousel-flip .carousel-active {
 	-webkit-transform: rotateY(0deg);
+	-moz-transform: rotateY(0deg);
+	-ms-transform: rotateY(0deg);
+	-o-transform: rotateY(0deg);
+	-transform: rotateY(0deg);
 	position: relative;
 	z-index: 2;
 	opacity: 1;	
@@ -50,9 +62,17 @@
 .carousel-flip .carousel-out,
 .carousel-flip-reverse .carousel-item {
 	-webkit-transform: rotateY(-180deg);
+	-moz-transform: rotateY(-180deg);
+	-ms-transform: rotateY(-180deg);
+	-o-transform: rotateY(-180deg);
+	-transform: rotateY(-180deg);
 }
 .carousel-flip .carousel-in {
 	-webkit-transform: rotateY(0deg);
+	-moz-transform: rotateY(0deg);
+	-ms-transform: rotateY(0deg);
+	-o-transform: rotateY(0deg);
+	-transform: rotateY(0deg);
 	opacity: 1;
 }
 .carousel-flip .carousel-top {
@@ -61,7 +81,16 @@
 }
 .carousel-flip-reverse .carousel-out {
 	-webkit-transform: rotateY(180deg);
+	-moz-transform: rotateY(180deg);
+	-ms-transform: rotateY(180deg);
+	-o-transform: rotateY(180deg);
+	-transform: rotateY(180deg);
+	
 }
 .carousel-flip-reverse .carousel-in {
 	-webkit-transform: rotateY(0deg);
+	-moz-transform: rotateY(0deg);
+	-ms-transform: rotateY(0deg);
+	-o-transform: rotateY(0deg);
+	-transform: rotateY(0deg);
 }

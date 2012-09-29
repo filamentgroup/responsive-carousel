@@ -26,6 +26,7 @@
 			{
 				if ( ( prefixes.shift() + "Transition" ) in styles ) {
 					supported = true;
+					break;
 				}
 			}
 			return supported;
@@ -85,10 +86,9 @@
 					$to = $( this ).find( "." + itemClass )[ reverse.length ? "last" : "first" ]();
 				}
 
-				if( cssTransitionsSupport  ){
+				if( cssTransitionsSupport ){
 					$self[ pluginName ]( "_transitionStart", $from, $to, reverse );
-				}
-				else {
+				} else {
 					//$to.addClass( activeClass );
 					$self[ pluginName ]( "_transitionEnd", $from, $to, reverse );
 				}
@@ -106,7 +106,7 @@
 			_transitionStart: function( $from, $to, reverseClass ){
 				var $self = $(this);
 				
-				$to.one( navigator.userAgent.indexOf( "AppleWebKit" ) ? "webkitTransitionEnd" : "transitionEnd", function(){
+				$to.one( navigator.userAgent.indexOf( "AppleWebKit" ) > -1 ? "webkitTransitionEnd" : "transitionend otransitionend", function(){
 					$self[ pluginName ]( "_transitionEnd", $from, $to, reverseClass );
 				});
 				
@@ -136,7 +136,7 @@
 			
 			_addNextPrev: function(){
 				return $( this )
-					.append( "<nav class='"+ navClass +"'><a href='#prev' class='prev' title='Previous'>Prev</a><a href='#next' class='next' title='Next'>Next</a></nav>" )
+					.append( "<nav class='"+ navClass +"'><a href='#prev' class='prev' aria-hidden='true' title='Previous'>Prev</a><a href='#next' class='next' aria-hidden='true' title='Next'>Next</a></nav>" )
 					[ pluginName ]( "_bindEventListeners" );
 			},
 			
