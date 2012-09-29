@@ -45,10 +45,11 @@
 			if( !dragThreshold( data.deltaX ) ){
 				return;
 			}
-			var activeSlides = getActiveSlides( $( this ), data.deltaX ),
+			var $self = $( this ),
+				activeSlides = getActiveSlides( $self, data.deltaX ),
 				newSlide = Math.abs( data.deltaX ) > 45;
 			
-			$( this ).one( navigator.userAgent.indexOf( "AppleWebKit" ) ? "webkitTransitionEnd" : "transitionEnd", function(){
+			$self.one( navigator.userAgent.indexOf( "AppleWebKit" ) ? "webkitTransitionEnd" : "transitionEnd", function(){
 				activeSlides[ 0 ].add( activeSlides[ 1 ] ).css( "left", "" );
 			});			
 				
@@ -60,6 +61,7 @@
 				activeSlides[ 0 ].css( "left", 0);
 				activeSlides[ 1 ].css( "left", data.deltaX > 0 ? -data.w  + "px" : data.w  + "px" );	
 			}
+			$self.trigger( "goto." + pluginName, activeSlides[ ( newSlide ? 1 : 0 ) ] );
 		} );
 		
 }(jQuery));
