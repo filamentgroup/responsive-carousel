@@ -12,6 +12,7 @@
 		initSelector = "." + pluginName,
 		transitionAttr = "data-transition",
 		transitioningClass = pluginName + "-transitioning",
+		transitionEndEvent = 'transitionEnd',
 		itemClass = pluginName + "-item",
 		activeClass = pluginName + "-active",
 		inClass = pluginName + "-in",
@@ -19,14 +20,16 @@
 		navClass =  pluginName + "-nav",
 		cssTransitionsSupport = (function(){
 			var prefixes = "Webkit Moz O Ms".split( " " ),
+				prefix = null,
 				styles = document.documentElement.style,
 				supported = ( "transition" in styles ),
 				property;
 			while( ! supported && prefixes.length )
 			{
-				if ( ( prefixes.shift() + "Transition" ) in styles ) {
+				prefix = prefixes.shift();
+				if ( ( prefix + "Transition" ) in styles ) {
+					transitionEndEvent = prefix.toLowerCase() + 'TransitionEnd';
 					supported = true;
-					break;
 				}
 			}
 			return supported;
@@ -75,15 +78,15 @@
 				// clean up children
 				$( this ).find( "." + itemClass ).removeClass( [ outClass, inClass, reverseClass ].join( " " ) );
 				
-				var $from = $( this ).find( "." + activeClass ),
+				var $from = $self.find( "." + activeClass ),
 					prevs = $from.index(),
 					activeNum = ( prevs < 0 ? 0 : prevs ) + 1,
 					nextNum = typeof( num ) === "number" ? num : activeNum + parseFloat(num),
-					$to = $( this ).find( ".carousel-item" ).eq( nextNum - 1 ),
+					$to = $self.find( ".carousel-item" ).eq( nextNum - 1 ),
 					reverse = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : reverseClass;
 				
 				if( !$to.length ){
-					$to = $( this ).find( "." + itemClass )[ reverse.length ? "last" : "first" ]();
+					$to = $self.find( "." + itemClass )[ reverse.length ? "last" : "first" ]();
 				}
 
 				if( cssTransitionsSupport ){
@@ -106,11 +109,12 @@
 			_transitionStart: function( $from, $to, reverseClass ){
 				var $self = $(this);
 				
-				$to.one( navigator.userAgent.indexOf( "AppleWebKit" ) > -1 ? "webkitTransitionEnd" : "transitionend otransitionend", function(){
+				// Firefox does not camelCase the transitionend event
+				$to.one( transitionEndEvent + ' transitionend', function(){
 					$self[ pluginName ]( "_transitionEnd", $from, $to, reverseClass );
 				});
 				
-				$(this).addClass( reverseClass );
+				$self.addClass( reverseClass );
 				$from.addClass( outClass );
 				$to.addClass( inClass );	
 			},
