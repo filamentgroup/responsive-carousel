@@ -76,8 +76,8 @@
 					var win_w_new = $win.width(),
 						win_h_new = $win.height();
 					
-					if( win_w != win_w_new ||
-						win_h != win_h_new )
+					if( win_w !== win_w_new ||
+						win_h !== win_h_new )
 					{
 						// timer shennanigans
 						clearTimeout(timeout);
