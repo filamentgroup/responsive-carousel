@@ -1,4 +1,4 @@
-/*! Responsive Carousel - v0.1.0 - 2012-08-16
+/*! Responsive Carousel - v0.1.0 - 2012-10-23
 * https://github.com/filamentgroup/responsive-carousel
 * Copyright (c) 2012 Filament Group, Inc.; Licensed MIT, GPL */
 
