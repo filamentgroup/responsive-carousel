@@ -42,14 +42,11 @@
 					} )
 					// update pagination on page change
 					.bind( "goto." + pluginName, function( e, to  ){
-						
 						var index = to ? $( to ).index() : 0;
-							
 						$( this ).find( "ol." + paginationClass + " li" )
 							.removeClass( activeClass )
 							.eq( index )
 								.addClass( activeClass );
-						
 					} )
 					// initialize pagination
 					.trigger( "goto." + pluginName );
