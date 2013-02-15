@@ -27,7 +27,7 @@
 	],
 	"main": "dist/responsive-carousel.js",
 	"engines":{
-		"node": ">0.6"
+		"node": "~0.6"
 	},
 	"scripts":{
 		"test" : "grunt travis --verbose"
