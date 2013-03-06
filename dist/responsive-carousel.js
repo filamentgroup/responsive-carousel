@@ -1,6 +1,6 @@
-/*! Responsive Carousel - v0.1.0 - 2012-08-16
+/*! Responsive Carousel - v0.1.0 - 2013-03-06
 * https://github.com/filamentgroup/responsive-carousel
-* Copyright (c) 2012 Filament Group, Inc.; Licensed MIT, GPL */
+* Copyright (c) 2013 Filament Group, Inc.; Licensed MIT, GPL */
 
 /*
  * responsive-carousel
@@ -169,14 +169,137 @@
 	
 	// add methods
 	$.extend( $.fn[ pluginName ].prototype, methods ); 
-	
-	// DOM-ready auto-init
-	$( function(){
-		$( initSelector )[ pluginName ]();
-	} );
 
 }(jQuery));
 
+/*
+ * responsive-carousel pagination extension
+ * https://github.com/filamentgroup/responsive-carousel
+ *
+ * Copyright (c) 2012 Filament Group, Inc.
+ * Licensed under the MIT, GPL licenses.
+ */
+
+(function( $, undefined ) {
+	var pluginName = "carousel",
+		initSelector = "." + pluginName + "[data-paginate]",
+		paginationClass = pluginName + "-pagination",
+		activeClass = pluginName + "-active-page",
+		paginationMethods = {
+			_createPagination: function(){
+				var nav = $( this ).find( "." + pluginName + "-nav" ),
+					items = $( this ).find( "." + pluginName + "-item" ),
+					pNav = $( "<ol class='" + paginationClass + "'></ol>" ),
+					num;
+				
+				// remove any existing nav
+				nav.find( "." + paginationClass ).remove();
+				
+				for( var i = 0, il = items.length; i < il; i++ ){
+					num = i + 1;
+					pNav.append( "<li><a href='#" + num + "' title='Go to slide " + num + "'>" + num + "</a>" );
+				}
+				nav
+					.addClass( pluginName + "-nav-paginated" )
+					.find( "a" ).first().after( pNav );
+			},
+			_bindPaginationEvents: function(){
+				$( this )
+					.bind( "click", function( e ){
+						var pagLink = $( e.target ).closest( "a" ),
+							href = pagLink.attr( "href" );
+						
+						if( pagLink.closest( "." + paginationClass ).length && href ){
+							$( this )[ pluginName ]( "goTo", parseFloat( href.split( "#" )[ 1 ] ) );
+							e.preventDefault();
+						}
+					} )
+					// update pagination on page change
+					.bind( "goto." + pluginName, function( e, to  ){
+						
+						var index = to ? $( to ).index() : 0;
+							
+						$( this ).find( "ol." + paginationClass + " li" )
+							.removeClass( activeClass )
+							.eq( index )
+								.addClass( activeClass );
+						
+					} )
+					// initialize pagination
+					.trigger( "goto." + pluginName );
+			}
+		};
+			
+	// add methods
+	$.extend( $.fn[ pluginName ].prototype, paginationMethods ); 
+	
+	// create pagination on create and update
+	$( initSelector )
+		.live( "create." + pluginName, function(){
+			$( this )
+				[ pluginName ]( "_createPagination" )
+				[ pluginName ]( "_bindPaginationEvents" );
+		} )
+		.live( "update." + pluginName, function(){
+			$( this )[ pluginName ]( "_createPagination" );
+		} );
+
+}(jQuery));
+/*
+ * responsive-carousel autoplay extension
+ * https://github.com/filamentgroup/responsive-carousel
+ *
+ * Copyright (c) 2012 Filament Group, Inc.
+ * Licensed under the MIT, GPL licenses.
+ */
+
+(function( $, undefined ) {
+	var pluginName = "carousel",
+		initSelector = "." + pluginName,
+		interval = 4000,
+		autoPlayMethods = {
+			play: function(){
+				var $self = $( this ),
+					intAttr = $self.attr( "data-interval" ),
+					thisInt = parseFloat( intAttr ) || interval;
+				return $self.data(
+					"timer", 
+					setInterval( function(){
+						$self[ pluginName ]( "next" );
+					},
+					thisInt )
+				);
+			},
+			
+			stop: function(){
+				clearTimeout( $( this ).data( "timer" ) );
+			},
+			
+			_bindStopListener: function(){
+				return $(this).bind( "mousedown", function(){
+					$( this )[ pluginName ]( "stop" );
+				} );
+			},
+			
+			_initAutoPlay: function(){
+				var autoplay = $( this ).attr( "data-autoplay");
+				if( autoplay !== undefined && autoplay !== false ){
+					$( this )
+						[ pluginName ]( "_bindStopListener" )
+						[ pluginName ]( "play" );
+				}
+			}
+		};
+			
+	// add methods
+	$.extend( $.fn[ pluginName ].prototype, autoPlayMethods ); 
+	
+	// DOM-ready auto-init
+	$( initSelector ).live( "create." + pluginName, function(){
+		$( this )[ pluginName ]( "_initAutoPlay" );
+	} );
+
+}(jQuery));
 /*
  * responsive-carousel touch drag extension
  * https://github.com/filamentgroup/responsive-carousel
@@ -324,3 +447,17 @@
 		} );
 		
 }(jQuery));
+/*
+ * responsive-carousel auto-init extension
+ * https://github.com/filamentgroup/responsive-carousel
+ *
+ * Copyright (c) 2012 Filament Group, Inc.
+ * Licensed under the MIT, GPL licenses.
+ */
+
+(function( $ ) {
+	// DOM-ready auto-init
+	$( function(){
+		$( ".carousel" ).carousel();
+	} );
+}( jQuery ));

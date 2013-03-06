@@ -165,10 +165,5 @@
 	
 	// add methods
 	$.extend( $.fn[ pluginName ].prototype, methods ); 
-	
-	// DOM-ready auto-init
-	$( function(){
-		$( initSelector )[ pluginName ]();
-	} );
 
 }(jQuery));
