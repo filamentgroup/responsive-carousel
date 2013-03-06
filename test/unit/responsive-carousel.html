@@ -1,48 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Responsive Carousel Test Suite</title>
-  <!-- Load local jQuery, removing access to $ (use jQuery, not $). -->
-  <script src="../../libs/jquery/jquery.js"></script>
-
-  <!-- Load local QUnit (grunt requires v1.0.0 or newer). -->
-  <link rel="stylesheet" href="../../libs/qunit/qunit.css" media="screen">
-  <link rel="stylesheet" href="../../src/responsive-carousel.css" media="screen">
-   <link rel="stylesheet" href="../../src/responsive-carousel.slide.css" media="screen">
-  <style>
-  .carousel-item img {
-	  width: 100%;
-	  height: auto;
-	  display: block;
-  }
-  </style>
-  <script src="../../libs/qunit/qunit.js"></script>
-  <!-- Load local lib and tests. -->
-  <script src="../../src/responsive-carousel.js"></script>
-  <script src="responsive-carousel_test.js"></script>
+	<meta charset="utf-8">
+	<title>Responsive Carousel Test Suite</title>
+	<!-- Load local jQuery, removing access to $ (use jQuery, not $). -->
+	<script src="../../libs/jquery/jquery.js"></script>
+	<!-- Load local QUnit (grunt requires v1.0.0 or newer). -->
+	<link rel="stylesheet" href="../../libs/qunit/qunit.css" media="screen">
+	<link rel="stylesheet" href="../../src/responsive-carousel.css" media="screen">
+	 <link rel="stylesheet" href="../../src/responsive-carousel.slide.css" media="screen">
+	<style>
+	.carousel-item img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+	</style>
+	<script src="../../libs/qunit/qunit.js"></script>
+	<!-- Load local lib and tests. -->
+	<script src="../../src/responsive-carousel.js"></script>
+	<script src="responsive-carousel_test.js"></script>
 </head>
-<body>
-  <h1 id="qunit-header">Responsive Carousel Test Suite</h1>
-  <h2 id="qunit-banner"></h2>
-  <div id="qunit-testrunner-toolbar"></div>
-  <h2 id="qunit-userAgent"></h2>
-  <ol id="qunit-tests"></ol>
-
-
-	<div data-carousel>
-	    <div data-carousel-item>
-
-	    </div>
-	    <div data-carousel-item>
-
-			</div>
-	    <div data-carousel-item>
-
-			</div>
-
-	</div>
-
-
-</body>
+	<body>
+		<h1 id="qunit-header">Responsive Carousel Test Suite</h1>
+		<h2 id="qunit-banner"></h2>
+		<div id="qunit-testrunner-toolbar"></div>
+		<h2 id="qunit-userAgent"></h2>
+		<ol id="qunit-tests"></ol>
+		<div data-carousel>
+				<div data-carousel-item>
+				</div>
+				<div data-carousel-item>
+				</div>
+				<div data-carousel-item>
+				</div>
+		</div>
+	</body>
 </html>

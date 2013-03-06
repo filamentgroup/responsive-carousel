@@ -2,6 +2,8 @@
 
 A jQuery-based script for responsive carousels that work with mouse, touch, and keyboard
 
+[![Build Status](https://travis-ci.org/filamentgroup/responsive-carousel.png)](https://travis-ci.org/filamentgroup/responsive-carousel)
+
 ## Getting Started
 Download the [production version][min] or the [development version][max].
 

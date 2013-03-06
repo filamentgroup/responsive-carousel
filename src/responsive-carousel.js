@@ -18,12 +18,16 @@
 		outClass = pluginName + "-out",
 		navClass =  pluginName + "-nav",
 		cssTransitionsSupport = (function(){
-			var prefixes = " -webkit- -moz- -o- -ms- ".split( " " ),
-				supported = false;
-			
+			var prefixes = "webkit Moz O Ms".split( " " ),
+				supported = false,
+				property;
+
 			while( prefixes.length ){
-				if( prefixes.shift() + "transition" in document.documentElement.style !== undefined ){
+				property = prefixes.shift() + "Transition";
+
+				if ( property in document.documentElement.style !== undefined && property in document.documentElement.style !== false ) {
 					supported = true;
+					break;
 				}
 			}
 			return supported;
@@ -73,24 +77,23 @@
 				$( this ).find( "." + itemClass ).removeClass( [ outClass, inClass, reverseClass ].join( " " ) );
 				
 				var $from = $( this ).find( "." + activeClass ),
-					prevs = $from.prevAll().length,
-					activeNum = ( prevs || 0 ) + 1,
+					prevs = $from.index(),
+					activeNum = ( prevs < 0 ? 0 : prevs ) + 1,
 					nextNum = typeof( num ) === "number" ? num : activeNum + parseFloat(num),
 					$to = $( this ).find( ".carousel-item" ).eq( nextNum - 1 ),
 					reverse = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : reverseClass;
-
+				
 				if( !$to.length ){
 					$to = $( this ).find( "." + itemClass )[ reverse.length ? "last" : "first" ]();
 				}
 
-				if( cssTransitionsSupport  ){
+				if( cssTransitionsSupport ){
 					$self[ pluginName ]( "_transitionStart", $from, $to, reverse );
-				}
-				else {
+				} else {
 					$to.addClass( activeClass );
 					$self[ pluginName ]( "_transitionEnd", $from, $to, reverse );
 				}
-				
+
 				// added to allow pagination to track
 				$self.trigger( "goto." + pluginName, $to );
 			},
@@ -104,7 +107,7 @@
 			_transitionStart: function( $from, $to, reverseClass ){
 				var $self = $(this);
 				
-				$to.one( navigator.userAgent.indexOf( "AppleWebKit" ) > -1 ? "webkitTransitionEnd" : "transitionend", function(){
+				$to.one( navigator.userAgent.indexOf( "AppleWebKit" ) > -1 ? "webkitTransitionEnd" : "transitionend otransitionend", function(){
 					$self[ pluginName ]( "_transitionEnd", $from, $to, reverseClass );
 				});
 				
@@ -134,7 +137,7 @@
 			
 			_addNextPrev: function(){
 				return $( this )
-					.append( "<nav class='"+ navClass +"'><a href='#prev' class='prev' title='Previous'>Prev</a><a href='#next' class='next' title='Next'>Next</a></nav>" )
+					.append( "<nav class='"+ navClass +"'><a href='#prev' class='prev' aria-hidden='true' title='Previous'>Prev</a><a href='#next' class='next' aria-hidden='true' title='Next'>Next</a></nav>" )
 					[ pluginName ]( "_bindEventListeners" );
 			},
 			
