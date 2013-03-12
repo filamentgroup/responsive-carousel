@@ -16,15 +16,25 @@
 				var nav = $( this ).find( "." + pluginName + "-nav" ),
 					items = $( this ).find( "." + pluginName + "-item" ),
 					pNav = $( "<ol class='" + paginationClass + "'></ol>" ),
-					num;
-				
+					num, thumb, content;
+
 				// remove any existing nav
 				nav.find( "." + paginationClass ).remove();
-				
-				for( var i = 0, il = items.length; i < il; i++ ){
-					num = i + 1;
-					pNav.append( "<li><a href='#" + num + "' title='Go to slide " + num + "'>" + num + "</a>" );
+
+				items.each(function(i){
+						num = i + 1;
+						thumb = $( this ).attr( "data-thumb" );
+						content = num;
+						if( thumb ){
+							content = "<img src='" + thumb + "' alt=''>";
+						}
+						pNav.append( "<li><a href='#" + num + "' title='Go to slide " + num + "'>" + content + "</a>" );
+				});
+
+				if( thumb ){
+					pNav.addClass( pluginName + "-nav-thumbs" );
 				}
+
 				nav
 					.addClass( pluginName + "-nav-paginated" )
 					.find( "a" ).first().after( pNav );
@@ -32,8 +42,14 @@
 			_bindPaginationEvents: function(){
 				$( this )
 					.bind( "click", function( e ){
-						var pagLink = $( e.target ).closest( "a" ),
-							href = pagLink.attr( "href" );
+						var pagLink = $( e.target );
+
+						if( e.target.nodeName === "IMG" ){
+							pagLink = pagLink.parent();
+						}
+
+						pagLink = pagLink.closest( "a" );
+						var href = pagLink.attr( "href" );
 						
 						if( pagLink.closest( "." + paginationClass ).length && href ){
 							$( this )[ pluginName ]( "goTo", parseFloat( href.split( "#" )[ 1 ] ) );
