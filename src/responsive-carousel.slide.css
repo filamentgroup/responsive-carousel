@@ -46,9 +46,15 @@
 	left: 100%;
 }
 .carousel-slide .carousel-out,
-.carousel-slide-reverse .carousel-item,
 .carousel-slide-reverse .carousel-in {
 	left: -100%;
+}
+.carousel-slide-reverse .carousel-item {
+	-webkit-transition: left .1s ease;
+	-moz-transition: left .1s ease;
+	-ms-transition: left .1s ease;
+	-o-transition: left .1s ease;
+	transition: left .1s ease;
 }
 .carousel-slide-reverse .carousel-active {
 	left: 0;
