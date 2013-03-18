@@ -46,7 +46,9 @@
 					},
 					emitEvents = function( e ){
 						setData( e );
-						$( e.target ).closest( initSelector ).trigger( "drag" + e.type.split( "touch" )[ 1], data );
+						if( data.touches.length === 1 ){
+							$( e.target ).closest( initSelector ).trigger( "drag" + e.type.split( "touch" )[ 1], data );
+						}
 					};
 
 				$( this )
