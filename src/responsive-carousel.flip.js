@@ -32,10 +32,10 @@
 		
 	// Touch handling
 	$( initSelector )
-		.live( "dragstart", function( e, data ){
+		.on( "dragstart", function( e, data ){
 			$( this ).find( "." + topClass ).removeClass( topClass );
 		})
-		.live( "dragmove", function( e, data ){
+		.on( "dragmove", function( e, data ){
 			if( !dragThreshold( data.xPercent ) ){
 				return;
 			}
@@ -50,7 +50,7 @@
 			activeSlides[ halfWay ? 0 : 1 ].removeClass( topClass );
 			
 		} )
-		.live( "dragend", function( e, data ){
+		.on( "dragend", function( e, data ){
 			if( !dragThreshold( data.xPercent ) ){
 				return;
 			}

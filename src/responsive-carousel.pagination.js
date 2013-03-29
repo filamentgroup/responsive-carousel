@@ -74,12 +74,12 @@
 	
 	// create pagination on create and update
 	$( initSelector )
-		.live( "create." + pluginName, function(){
+		.on( "create." + pluginName, function(){
 			$( this )
 				[ pluginName ]( "_createPagination" )
 				[ pluginName ]( "_bindPaginationEvents" );
 		} )
-		.live( "update." + pluginName, function(){
+		.on( "update." + pluginName, function(){
 			$( this )[ pluginName ]( "_createPagination" );
 		} );
 

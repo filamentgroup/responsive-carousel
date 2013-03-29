@@ -31,7 +31,7 @@
 		
 	// Touch handling
 	$( initSelector )
-		.live( "dragmove", function( e, data ){
+		.on( "dragmove", function( e, data ){
 
 			if( !dragThreshold( data.deltaX ) ){
 				return;
@@ -41,7 +41,7 @@
 			activeSlides[ 0 ].css( "left", data.deltaX + "px" );
 			activeSlides[ 1 ].css( "left", data.deltaX < 0 ? data.w + data.deltaX + "px" : -data.w + data.deltaX + "px" );
 		} )
-		.live( "dragend", function( e, data ){
+		.on( "dragend", function( e, data ){
 			if( !dragThreshold( data.deltaX ) ){
 				return;
 			}

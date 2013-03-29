@@ -12,7 +12,7 @@
 		initSelector = "." + pluginName;
 	
 	// DOM-ready auto-init
-	$( initSelector ).live( "ajaxInclude", function(){
+	$( initSelector ).on( "ajaxInclude", function(){
 		$( this )[ pluginName ]( "update" );
 	} );
 	

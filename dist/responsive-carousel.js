@@ -1,4 +1,4 @@
-/*! Responsive Carousel - v0.1.0 - 2013-03-12
+/*! Responsive Carousel - v0.1.0 - 2013-03-29
 * https://github.com/filamentgroup/responsive-carousel
 * Copyright (c) 2013 Filament Group, Inc.; Licensed MIT, GPL */
 
@@ -223,7 +223,9 @@
 					},
 					emitEvents = function( e ){
 						setData( e );
-						$( e.target ).closest( initSelector ).trigger( "drag" + e.type.split( "touch" )[ 1], data );
+						if( data.touches.length === 1 ){
+							$( e.target ).closest( initSelector ).trigger( "drag" + e.type.split( "touch" )[ 1], data );
+						}
 					};
 
 				$( this )
@@ -252,7 +254,7 @@
 	$.extend( $.fn[ pluginName ].prototype, touchMethods ); 
 	
 	// DOM-ready auto-init
-	$( initSelector ).live( "create." + pluginName, function(){
+	$( initSelector ).on( "create." + pluginName, function(){
 		$( this )[ pluginName ]( "_dragBehavior" );
 	} );
 
@@ -290,7 +292,7 @@
 		
 	// Touch handling
 	$( initSelector )
-		.live( "dragmove", function( e, data ){
+		.on( "dragmove", function( e, data ){
 
 			if( !dragThreshold( data.deltaX ) ){
 				return;
@@ -300,7 +302,7 @@
 			activeSlides[ 0 ].css( "left", data.deltaX + "px" );
 			activeSlides[ 1 ].css( "left", data.deltaX < 0 ? data.w + data.deltaX + "px" : -data.w + data.deltaX + "px" );
 		} )
-		.live( "dragend", function( e, data ){
+		.on( "dragend", function( e, data ){
 			if( !dragThreshold( data.deltaX ) ){
 				return;
 			}
@@ -321,6 +323,92 @@
 			}
 		} );
 		
+}(jQuery));
+/*
+ * responsive-carousel pagination extension
+ * https://github.com/filamentgroup/responsive-carousel
+ *
+ * Copyright (c) 2012 Filament Group, Inc.
+ * Licensed under the MIT, GPL licenses.
+ */
+
+(function( $, undefined ) {
+	var pluginName = "carousel",
+		initSelector = "." + pluginName + "[data-paginate]",
+		paginationClass = pluginName + "-pagination",
+		activeClass = pluginName + "-active-page",
+		paginationMethods = {
+			_createPagination: function(){
+				var nav = $( this ).find( "." + pluginName + "-nav" ),
+					items = $( this ).find( "." + pluginName + "-item" ),
+					pNav = $( "<ol class='" + paginationClass + "'></ol>" ),
+					num, thumb, content;
+
+				// remove any existing nav
+				nav.find( "." + paginationClass ).remove();
+
+				items.each(function(i){
+						num = i + 1;
+						thumb = $( this ).attr( "data-thumb" );
+						content = num;
+						if( thumb ){
+							content = "<img src='" + thumb + "' alt=''>";
+						}
+						pNav.append( "<li><a href='#" + num + "' title='Go to slide " + num + "'>" + content + "</a>" );
+				});
+
+				if( thumb ){
+					pNav.addClass( pluginName + "-nav-thumbs" );
+				}
+
+				nav
+					.addClass( pluginName + "-nav-paginated" )
+					.find( "a" ).first().after( pNav );
+			},
+			_bindPaginationEvents: function(){
+				$( this )
+					.bind( "click", function( e ){
+						var pagLink = $( e.target );
+
+						if( e.target.nodeName === "IMG" ){
+							pagLink = pagLink.parent();
+						}
+
+						pagLink = pagLink.closest( "a" );
+						var href = pagLink.attr( "href" );
+						
+						if( pagLink.closest( "." + paginationClass ).length && href ){
+							$( this )[ pluginName ]( "goTo", parseFloat( href.split( "#" )[ 1 ] ) );
+							e.preventDefault();
+						}
+					} )
+					// update pagination on page change
+					.bind( "goto." + pluginName, function( e, to  ){
+						var index = to ? $( to ).index() : 0;
+						$( this ).find( "ol." + paginationClass + " li" )
+							.removeClass( activeClass )
+							.eq( index )
+								.addClass( activeClass );
+					} )
+					// initialize pagination
+					.trigger( "goto." + pluginName );
+			}
+		};
+			
+	// add methods
+	$.extend( $.fn[ pluginName ].prototype, paginationMethods ); 
+	
+	// create pagination on create and update
+	$( initSelector )
+		.on( "create." + pluginName, function(){
+			$( this )
+				[ pluginName ]( "_createPagination" )
+				[ pluginName ]( "_bindPaginationEvents" );
+		} )
+		.on( "update." + pluginName, function(){
+			$( this )[ pluginName ]( "_createPagination" );
+		} );
+
 }(jQuery));
 /*
  * responsive-carousel auto-init extension
