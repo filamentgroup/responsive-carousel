@@ -1,4 +1,4 @@
-/*! Responsive Carousel - v0.1.0 - 2013-03-29
+/*! Responsive Carousel - v0.1.0 - 2013-04-01
 * https://github.com/filamentgroup/responsive-carousel
 * Copyright (c) 2013 Filament Group, Inc.; Licensed MIT, GPL */
 
@@ -311,6 +311,7 @@
 			
 			$( this ).one( navigator.userAgent.indexOf( "AppleWebKit" ) ? "webkitTransitionEnd" : "transitionEnd", function(){
 				activeSlides[ 0 ].add( activeSlides[ 1 ] ).css( "left", "" );
+				$( this ).trigger( "goto." + pluginName, activeSlides[ 1 ].prevAll().length );
 			});			
 				
 			if( newSlide ){

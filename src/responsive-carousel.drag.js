@@ -50,6 +50,7 @@
 			
 			$( this ).one( navigator.userAgent.indexOf( "AppleWebKit" ) ? "webkitTransitionEnd" : "transitionEnd", function(){
 				activeSlides[ 0 ].add( activeSlides[ 1 ] ).css( "left", "" );
+				$( this ).trigger( "goto." + pluginName, activeSlides[ 1 ] );
 			});			
 				
 			if( newSlide ){
