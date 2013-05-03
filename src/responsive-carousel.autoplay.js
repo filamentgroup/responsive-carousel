@@ -48,7 +48,7 @@
 	$.extend( $.fn[ pluginName ].prototype, autoPlayMethods ); 
 	
 	// DOM-ready auto-init
-	$( initSelector ).on( "create." + pluginName, function(){
+	$( document ).on( "create." + pluginName, initSelector, function(){
 		$( this )[ pluginName ]( "_initAutoPlay" );
 	} );
 
