@@ -31,11 +31,11 @@
 		};
 		
 	// Touch handling
-	$( initSelector )
-		.on( "dragstart", function( e, data ){
+	$( document )
+		.on( "dragstart", initSelector, function( e, initSelector, data ){
 			$( this ).find( "." + topClass ).removeClass( topClass );
 		})
-		.on( "dragmove", function( e, data ){
+		.on( "dragmove", initSelector, function( e, data ){
 			if( !dragThreshold( data.xPercent ) ){
 				return;
 			}
@@ -50,7 +50,7 @@
 			activeSlides[ halfWay ? 0 : 1 ].removeClass( topClass );
 			
 		} )
-		.on( "dragend", function( e, data ){
+		.on( "dragend", initSelector, function( e, data ){
 			if( !dragThreshold( data.xPercent ) ){
 				return;
 			}
