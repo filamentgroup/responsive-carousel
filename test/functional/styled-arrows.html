@@ -13,6 +13,8 @@
   <script src="../../src/responsive-carousel.autoinit.js"></script>
 </head>
 <body>
+
+	<p>This demo simply adds some styles to hide the next and previous link text accessibly and replace them with a background image. Explaination below.</p>
 	<div class="carousel arrows">
 	    <div>
 	        <img src="../assets/large.jpg">
@@ -25,6 +27,40 @@
 	    </div>
 		
 	</div>
+
+	<p>The following styles are added via a <code>arrows</code> class on the carousel container element.</p>
+	
+	<pre><code>
+/* styled arrows */
+.arrows .carousel-nav {
+  bottom: auto;
+  top: 50%;
+}
+.arrows .carousel-nav a {
+  text-indent: -9999px;
+  width: 2em;
+  height: 2em;
+  background: #fff;
+  opacity: .5;
+  overflow: hidden;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  border-radius: 100%;
+}
+.arrows .carousel-nav a:hover,
+.arrows .carousel-nav a:focus {
+  opacity: 1;
+}
+.arrows .carousel-nav a.next {
+  background-image: url(arrow-right.png);
+  right: 1em;
+}
+.arrows .carousel-nav a.prev {
+  background-image: url(arrow-left.png);
+  left: 1em;
+}
+</code></pre>
+
 
 
 </body>
