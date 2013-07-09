@@ -97,7 +97,7 @@
 	$.extend( $.fn[ pluginName ].prototype, dynamicContainers ); 
 	
 	// DOM-ready auto-init
-	$( initSelector ).on( "create." + pluginName, function(){
+	$( document ).on( "create." + pluginName, initSelector, function(){
 		$( this )[ pluginName ]( "_dynamicContainerEvents" );
 	} );
 

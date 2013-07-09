@@ -30,9 +30,9 @@
 		};
 
 	// Touch handling
-	$( navSelector )
-		.on( "click", function( e ) {
+	$( document )
+		.on( "click", navSelector, function( e ) {
 			$( e.target )[ 0 ].focus();
 		})
-		.on( "keydown", keyNav );
+		.on( "keydown", navSelector, keyNav );
 }(jQuery));

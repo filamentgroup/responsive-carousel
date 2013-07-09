@@ -30,8 +30,8 @@
 		};
 		
 	// Touch handling
-	$( initSelector )
-		.on( "dragmove", function( e, data ){
+	$( document )
+		.on( "dragmove", initSelector, function( e, data ){
 
 			if( !dragThreshold( data.deltaX ) ){
 				return;
@@ -41,7 +41,7 @@
 			activeSlides[ 0 ].css( "left", data.deltaX + "px" );
 			activeSlides[ 1 ].css( "left", data.deltaX < 0 ? data.w + data.deltaX + "px" : -data.w + data.deltaX + "px" );
 		} )
-		.on( "dragend", function( e, data ){
+		.on( "dragend", initSelector, function( e, data ){
 			if( !dragThreshold( data.deltaX ) ){
 				return;
 			}

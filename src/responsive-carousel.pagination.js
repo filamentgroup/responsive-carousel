@@ -73,13 +73,13 @@
 	$.extend( $.fn[ pluginName ].prototype, paginationMethods ); 
 	
 	// create pagination on create and update
-	$( initSelector )
-		.on( "create." + pluginName, function(){
+	$( document )
+		.on( "create." + pluginName, initSelector, function(){
 			$( this )
 				[ pluginName ]( "_createPagination" )
 				[ pluginName ]( "_bindPaginationEvents" );
 		} )
-		.on( "update." + pluginName, function(){
+		.on( "update." + pluginName, initSelector, function(){
 			$( this )[ pluginName ]( "_createPagination" );
 		} );
 
