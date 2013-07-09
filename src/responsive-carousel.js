@@ -14,6 +14,8 @@
 		transitioningClass = pluginName + "-transitioning",
 		itemClass = pluginName + "-item",
 		activeClass = pluginName + "-active",
+		prevClass = pluginName + "-item-prev",
+		nextClass = pluginName + "-item-next",
 		inClass = pluginName + "-in",
 		outClass = pluginName + "-out",
 		navClass =  pluginName + "-nav",
@@ -48,7 +50,7 @@
 					cssTransitionsSupport = false;
 				}
 
-				return $( this )
+				$( this )
 					.addClass(
 						pluginName +
 						" " + ( trans ? pluginName + "-" + trans : "" ) + " "
@@ -57,6 +59,27 @@
 					.addClass( itemClass )
 					.first()
 					.addClass( activeClass );
+
+				$(this)[ pluginName ]( "_addNextPrevClasses" );
+			},
+
+			_addNextPrevClasses: function(){
+				var $items = $( this ).find( "." + itemClass ),
+					$active = $items.filter( "." + activeClass ),
+					$next = $active.next( "." + itemClass ),
+					$prev = $active.prev( "." + itemClass );
+
+				if( !$next.length ){
+					$next = $items.first().not( "." + activeClass );
+				}
+				if( !$prev.length ){
+					$prev = $items.last().not( "." + activeClass );
+				}
+
+				$items.removeClass( prevClass + " " + nextClass );
+				$prev.addClass( prevClass );
+				$next.addClass( nextClass );
+
 			},
 
 			next: function(){
@@ -120,6 +143,7 @@
 				$( this ).removeClass( reverseClass );
 				$from.removeClass( outClass + " " + activeClass );
 				$to.removeClass( inClass ).addClass( activeClass );
+				$( this )[ pluginName ]( "_addNextPrevClasses" );
 			},
 
 			_bindEventListeners: function(){
