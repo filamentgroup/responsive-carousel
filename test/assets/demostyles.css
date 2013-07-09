@@ -83,11 +83,19 @@
   top: 0;
   z-index: 1;
   -webkit-transform: scale(.6) rotate(-15deg);
+  -moz-transform: scale(.6) rotate(-15deg);
+  -o-transform: scale(.6) rotate(-15deg);
+  -ms-transform: scale(.6) rotate(-15deg);
+  transform: scale(.6) rotate(-15deg);
 }
 .carousel.peek .carousel-item-next {
   right: 0;
   left: auto;
   -webkit-transform: scale(.6) rotate(15deg);
+  -moz-transform: scale(.6) rotate(15deg);
+  -opera-transform: scale(.6) rotate(15deg);
+  -ms-transform: scale(.6) rotate(15deg);
+  transform: scale(.6) rotate(15deg);
 }
 .carousel.peek .carousel-active {
   width: 50%;
