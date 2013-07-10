@@ -7,11 +7,14 @@
  */
 
 (function($) {
-	alert("Dfs")
 	var pluginName = "carousel",
 		initSelector = "." + pluginName,
+		opacityHigh = 1,
+		opacityLow = 1,
+		nextprevScale = .6,
 		activeClass = pluginName + "-active",
 		itemClass = pluginName + "-item",
+		transitionPrefix = "-" + $.fn[ pluginName ].transitionPrefix,
 		prevClass = itemClass + "-prev",
 		nextClass = itemClass + "-next",
 		dragThreshold = function( deltaX ){
@@ -22,36 +25,44 @@
 		};
 
 	// Touch handling
-	$( initSelector )
-		.on( "dragmove", function( e, data ){
+	$( document )
+		.on( "dragstart", initSelector, function( e, data ){
+			var activeSlides = getActiveSlides( $( this ) ),
+				prevTransform = activeSlides[ 0 ].css( "-webkit-transform" );
 
-			var activeSlides = getActiveSlides( $( this ), data.deltaX );
+			opacityLow = parseFloat( activeSlides[ 0 ].css( "opacity" ) );
+			//nextprevScale = prevTransform.match( /matrix\(([d]+)/ );
 
-			activeSlides[ 0 ].css( "-webkit-transform", "translateX(" + data.deltaX + "px)" );
-			activeSlides[ 1 ].css( "-webkit-transform", "translateX(" + data.deltaX + "px)" );
-			activeSlides[ 2 ].css( "-webkit-transform", "translateX(" + data.deltaX + "px)" );
-			//activeSlides[ 1 ].css( "left", data.deltaX < 0 ? data.w + data.deltaX + "px" : -data.w + data.deltaX + "px" );
+		})
+		.on( "dragmove", initSelector, function( e, data ){
+
+			var activeSlides = getActiveSlides( $( this ) ),
+				transform = transitionPrefix + "Transform",
+				percent = data.xPercent >= 0 ? Math.min( data.xPercent, .5 ) : Math.max( data.xPercent, -.5 ),
+				posPercent = Math.abs( percent ),
+				prevScale = percent < 0 ? nextprevScale : Math.max( ( percent <= .5 ? percent : 1 - percent ) * 2, nextprevScale ),
+				nextScale = percent > 0 ? nextprevScale : Math.max( ( posPercent <= .5 ? posPercent : 1 - posPercent ) * 2, nextprevScale ),
+				activeScale = Math.max( 1 - posPercent, nextprevScale ),
+				changeX = percent * 100;
+
+			activeSlides[ 0 ].css({ "-webkit-transform": "scale(" + prevScale + ") translateX(" + ( changeX + 40 ) + "%)", opacity: opacityLow + posPercent });
+			activeSlides[ 1 ].css({ "-webkit-transform": "scale(" + activeScale + ") translateX(" + changeX + "%)"  });
+			activeSlides[ 2 ].css({ "-webkit-transform": "scale(" + nextScale + ") translateX(" + ( changeX + -40 ) + "%)", opacity: opacityLow + posPercent });
 		} )
-		.on( "dragend", function( e, data ){
-			/*if( !dragThreshold( data.deltaX ) ){
+		.on( "dragend", initSelector, function( e, data ){
+			if( !dragThreshold( data.deltaX ) ){
 				return;
 			}
-			var activeSlides = getActiveSlides( $( this ), data.deltaX ),
-				newSlide = Math.abs( data.deltaX ) > 45;
+			var activeSlides = getActiveSlides( $( this ) );
 
-			$( this ).one( navigator.userAgent.indexOf( "AppleWebKit" ) ? "webkitTransitionEnd" : "transitionEnd", function(){
-				activeSlides[ 0 ].add( activeSlides[ 1 ] ).css( "left", "" );
-				$( this ).trigger( "goto." + pluginName, activeSlides[ 1 ] );
-			});
-
-			if( newSlide ){
-				activeSlides[ 0 ].removeClass( activeClass ).css( "left", data.deltaX > 0 ? data.w  + "px" : -data.w  + "px" );
-				activeSlides[ 1 ].addClass( activeClass ).css( "left", 0 );
+			
+			function unstyle(){
+				activeSlides[ 0 ].add( activeSlides[ 1 ] ).add( activeSlides[ 2 ] ).attr("style", "");
 			}
-			else {
-				activeSlides[ 0 ].css( "left", 0);
-				activeSlides[ 1 ].css( "left", data.deltaX > 0 ? -data.w  + "px" : data.w  + "px" );
-			}*/
+
+			unstyle();
+
+			$( this ).trigger( "goto." + pluginName, activeSlides[ data.deltaX > 0 ? 0 : 2 ] );
 		} );
 
 }(jQuery));

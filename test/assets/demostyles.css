@@ -84,23 +84,39 @@
   position:  absolute;
   left: -20%;
   top: 0;
-  z-index: 1;
-  -webkit-transform: scale(.6);
-  -moz-transform: scale(.6);
-  -o-transform: scale(.6);
-  -ms-transform: scale(.6);
-  transform: scale(.6);
+  z-index: 2;
+  -webkit-transition: left -webkit-transform .2s linear;
+  -moz-transition: left -moz-transform .2s linear;
+  -o-transition: left -o-transform .2s linear;
+  -ms-transition: left -ms-transform .2s linear;
+  transition: left transform .2s linear;
+  -webkit-transform: scale(.6) translateX(0);
+  -moz-transform: scale(.6) translateX(0);
+  -o-transform: scale(.6) translateX(0);
+  -ms-transform: scale(.6) translateX(0);
+  transform: scale(.6) translateX(0);
+}
+.carousel-no-transition.peek .carousel-item {
+  -webkit-transition: none;
+  -moz-transition: none;
+  -ms-transition: none;
+  -o-transition: none;
+  transition: none;
 }
 .carousel.peek .carousel-item-next {
-  right: -20%;
-  left: auto;
+  left: 70%;
 }
 .carousel.peek .carousel-active {
   opacity: 1;
   position: relative;
   left: 25%;
-  z-index: 2;
+  z-index: 1;
   box-shadow: .2em .2em .5em #aaa;
+  -webkit-transform: scale(1) translateX(0);
+  -moz-transform: scale(1) translateX(0);
+  -o-transform: scale(1) translateX(0);
+  -ms-transform: scale(1) translateX(0);
+  transform: scale(1) translateX(0);
 }
 .carousel.peek .carousel-nav {
   position: absolute;
