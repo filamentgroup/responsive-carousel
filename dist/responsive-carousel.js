@@ -1,4 +1,4 @@
-/*! Responsive Carousel - v0.1.0 - 2013-04-01
+/*! Responsive Carousel - v0.1.0 - 2013-07-10
 * https://github.com/filamentgroup/responsive-carousel
 * Copyright (c) 2013 Filament Group, Inc.; Licensed MIT, GPL */
 
@@ -18,6 +18,8 @@
 		transitioningClass = pluginName + "-transitioning",
 		itemClass = pluginName + "-item",
 		activeClass = pluginName + "-active",
+		prevClass = pluginName + "-item-prev",
+		nextClass = pluginName + "-item-next",
 		inClass = pluginName + "-in",
 		outClass = pluginName + "-out",
 		navClass =  pluginName + "-nav",
@@ -52,7 +54,7 @@
 					cssTransitionsSupport = false;
 				}
 
-				return $( this )
+				$( this )
 					.addClass(
 						pluginName +
 						" " + ( trans ? pluginName + "-" + trans : "" ) + " "
@@ -61,6 +63,27 @@
 					.addClass( itemClass )
 					.first()
 					.addClass( activeClass );
+
+				$(this)[ pluginName ]( "_addNextPrevClasses" );
+			},
+
+			_addNextPrevClasses: function(){
+				var $items = $( this ).find( "." + itemClass ),
+					$active = $items.filter( "." + activeClass ),
+					$next = $active.next( "." + itemClass ),
+					$prev = $active.prev( "." + itemClass );
+
+				if( !$next.length ){
+					$next = $items.first().not( "." + activeClass );
+				}
+				if( !$prev.length ){
+					$prev = $items.last().not( "." + activeClass );
+				}
+
+				$items.removeClass( prevClass + " " + nextClass );
+				$prev.addClass( prevClass );
+				$next.addClass( nextClass );
+
 			},
 
 			next: function(){
@@ -124,6 +147,7 @@
 				$( this ).removeClass( reverseClass );
 				$from.removeClass( outClass + " " + activeClass );
 				$to.removeClass( inClass ).addClass( activeClass );
+				$( this )[ pluginName ]( "_addNextPrevClasses" );
 			},
 
 			_bindEventListeners: function(){
@@ -254,7 +278,7 @@
 	$.extend( $.fn[ pluginName ].prototype, touchMethods ); 
 	
 	// DOM-ready auto-init
-	$( initSelector ).on( "create." + pluginName, function(){
+	$( document ).on( "create." + pluginName, initSelector, function(){
 		$( this )[ pluginName ]( "_dragBehavior" );
 	} );
 
@@ -291,8 +315,8 @@
 		};
 		
 	// Touch handling
-	$( initSelector )
-		.on( "dragmove", function( e, data ){
+	$( document )
+		.on( "dragmove", initSelector, function( e, data ){
 
 			if( !dragThreshold( data.deltaX ) ){
 				return;
@@ -302,7 +326,7 @@
 			activeSlides[ 0 ].css( "left", data.deltaX + "px" );
 			activeSlides[ 1 ].css( "left", data.deltaX < 0 ? data.w + data.deltaX + "px" : -data.w + data.deltaX + "px" );
 		} )
-		.on( "dragend", function( e, data ){
+		.on( "dragend", initSelector, function( e, data ){
 			if( !dragThreshold( data.deltaX ) ){
 				return;
 			}
@@ -311,7 +335,7 @@
 			
 			$( this ).one( navigator.userAgent.indexOf( "AppleWebKit" ) ? "webkitTransitionEnd" : "transitionEnd", function(){
 				activeSlides[ 0 ].add( activeSlides[ 1 ] ).css( "left", "" );
-				$( this ).trigger( "goto." + pluginName, activeSlides[ 1 ].prevAll().length );
+				$( this ).trigger( "goto." + pluginName, activeSlides[ 1 ] );
 			});			
 				
 			if( newSlide ){
@@ -400,13 +424,13 @@
 	$.extend( $.fn[ pluginName ].prototype, paginationMethods ); 
 	
 	// create pagination on create and update
-	$( initSelector )
-		.on( "create." + pluginName, function(){
+	$( document )
+		.on( "create." + pluginName, initSelector, function(){
 			$( this )
 				[ pluginName ]( "_createPagination" )
 				[ pluginName ]( "_bindPaginationEvents" );
 		} )
-		.on( "update." + pluginName, function(){
+		.on( "update." + pluginName, initSelector, function(){
 			$( this )[ pluginName ]( "_createPagination" );
 		} );
 
