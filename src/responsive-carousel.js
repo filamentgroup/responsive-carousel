@@ -25,10 +25,11 @@
 				property;
 
 			while( prefixes.length ){
-				property = prefixes.shift() + "Transition";
+				var prefix = prefixes.shift();
+				property = prefix + "Transition";
 
 				if ( property in document.documentElement.style !== undefined && property in document.documentElement.style !== false ) {
-					supported = true;
+					supported = prefix;
 					break;
 				}
 			}
@@ -192,5 +193,6 @@
 	
 	// add methods
 	$.extend( $.fn[ pluginName ].prototype, methods ); 
+	$.fn[ pluginName ].transitionPrefix = cssTransitionsSupport;
 
 }(jQuery));
