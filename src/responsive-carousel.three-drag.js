@@ -11,7 +11,7 @@
 		initSelector = "." + pluginName,
 		opacityHigh = 1,
 		opacityLow = 1,
-		nextprevScale = .6,
+		nextprevScale = 0.6,
 		activeClass = pluginName + "-active",
 		itemClass = pluginName + "-item",
 		transitionPrefix = "-" + $.fn[ pluginName ].transitionPrefix,
@@ -38,10 +38,10 @@
 
 			var activeSlides = getActiveSlides( $( this ) ),
 				transform = transitionPrefix + "Transform",
-				percent = data.xPercent >= 0 ? Math.min( data.xPercent, .5 ) : Math.max( data.xPercent, -.5 ),
+				percent = data.xPercent >= 0 ? Math.min( data.xPercent, 0.5 ) : Math.max( data.xPercent, -0.5 ),
 				posPercent = Math.abs( percent ),
-				prevScale = percent < 0 ? nextprevScale : Math.max( ( percent <= .5 ? percent : 1 - percent ) * 2, nextprevScale ),
-				nextScale = percent > 0 ? nextprevScale : Math.max( ( posPercent <= .5 ? posPercent : 1 - posPercent ) * 2, nextprevScale ),
+				prevScale = percent < 0 ? nextprevScale : Math.max( ( percent <= 0.5 ? percent : 1 - percent ) * 2, nextprevScale ),
+				nextScale = percent > 0 ? nextprevScale : Math.max( ( posPercent <= 0.5 ? posPercent : 1 - posPercent ) * 2, nextprevScale ),
 				activeScale = Math.max( 1 - posPercent, nextprevScale ),
 				changeX = percent * 100;
 
