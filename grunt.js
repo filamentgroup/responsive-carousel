@@ -23,6 +23,13 @@ module.exports = function(grunt) {
 				dest: 'dist/<%= pkg.name %>.min.js'
 			}
 		},
+		mincss: {
+			compress: {
+				files: {
+					'dist/responsive-carousel.min.css': ['src/responsive-carousel.css', 'src/responsive-carousel.fade.css', 'src/responsive-carousel.flip.css', 'src/responsive-carousel.pagination.css', 'src/responsive-carousel.slide.css']
+				}
+			}
+		},
 		qunit: {
 			files: ['test/unit/**/*.html']
 		},
@@ -53,6 +60,8 @@ module.exports = function(grunt) {
 		},
 		uglify: {}
 	});
+
+	grunt.loadNpmTasks('grunt-contrib-mincss');
 
 	// Default task.
 	grunt.registerTask('default', 'lint qunit concat min');

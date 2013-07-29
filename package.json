@@ -36,7 +36,8 @@
 		"jquery": "~1.7.2"
 	},
 	"devDependencies":{
-		"grunt": "~0.3.17"
+		"grunt": "~0.3.17",
+		"grunt-contrib-mincss": "~0.3.2"
 	},
 	"keywords": []
 }
