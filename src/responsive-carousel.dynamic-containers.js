@@ -53,6 +53,7 @@
 				}
 				
 				$self[ pluginName ]( "update" )
+					[ pluginName ]( "_addNextPrevClasses" )
 					// initialize pagination
 					.trigger( "goto." + pluginName );
 				
