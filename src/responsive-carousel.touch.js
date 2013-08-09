@@ -48,11 +48,6 @@
 						setData( e );
 						if( data.touches.length === 1 ){
 							$( e.target ).closest( initSelector ).trigger( "drag" + e.type.split( "touch" )[ 1], data );
-							if(data.deltaX > 1 || data.deltaX < -1){
-								e.preventDefault();
-							} else {
-								return true;
-							}
 						}
 					};
 
