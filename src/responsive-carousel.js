@@ -117,16 +117,16 @@
 					}
 
 					if( index === carouselItems.length - 1 ){
-						$self.find( "a.next" ).hide();
+						$self.find( "a.next" ).addClass( "disabled" );
 					}
 
 					if( index === 0 ){
-						$self.find( "a.prev" ).hide();
+						$self.find( "a.prev" ).addClass( "disabled" );
 					}
 
 					if( index > 0 && index < carouselItems.length - 1 ) {
-						$self.find( "a.next" ).show();
-						$self.find( "a.prev" ).show();
+						$self.find( "a.next" ).removeClass( "disabled" );
+						$self.find( "a.prev" ).removeClass( "disabled" );
 					}
 				}
 
