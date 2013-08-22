@@ -55,7 +55,7 @@ There are other extensions in the `src` folder, such as flip and fade transition
 Check out the [`test/functional/`](http://filamentgroup.github.com/responsive-carousel/test/functional/) directory for demos.
 
 ## Documentation
-_(Coming soon)_
+Coming soon
 
 ## Examples
 
