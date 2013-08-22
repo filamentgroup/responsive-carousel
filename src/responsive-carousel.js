@@ -184,7 +184,7 @@
 			},
 
 			_addNextPrev: function(){
-				var $nav, $this = $( this ), $items, active;
+				var $nav, $this = $( this ), $items, $active;
 
 				$nav = $("<nav class='"+ navClass +"'>" +
 					"<a href='#prev' class='prev' aria-hidden='true' title='Previous'>Prev</a>" +
@@ -193,15 +193,15 @@
 
 				$items = $this.find( "." + itemClass );
 
-				active = $items.filter( "." + activeClass )[0];
+				$active = $items.filter( "." + activeClass );
 
 				// if this is not a looped carousel and the first
 				if( !prototype._isLooped(this) ) {
-					if( active === $items[0]) {
+					if( $active[0] === $items[0]) {
 						prototype._disableNav($nav, "prev");
 					}
 
-					if( active === $items.last()[0]) {
+					if( $active.last()[0] === $items.last()[0]) {
 						prototype._disableNav($nav, "next");
 					}
 				}
