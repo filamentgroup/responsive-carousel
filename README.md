@@ -63,7 +63,7 @@ The default carousel (`responsive-carousel.js`) returns to the initial active it
 ```html
 <div class="carousel" data-loop="false">
   <div>
-	  <img src="../assets/large.jpg">
+	  <img src="...">
   </div>
 
   ...
