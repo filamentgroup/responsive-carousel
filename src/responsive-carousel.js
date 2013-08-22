@@ -195,7 +195,7 @@
 
 				$active = $items.filter( "." + activeClass );
 
-				// if this is not a looped carousel and the first
+				// if this is not a looped carousel enable and disable nav appropriately
 				if( !prototype._isLooped(this) ) {
 					if( $active[0] === $items[0]) {
 						prototype._disableNav($nav, "prev");
