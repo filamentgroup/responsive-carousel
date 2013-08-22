@@ -70,7 +70,7 @@ The default carousel (`responsive-carousel.js`) returns to the initial active it
 </div>
 ```
 
-When it reaches the end or beginning of the list the inserted navigation links (`a.next` and `a.prev`) will be decorated with an additional `disabled` class. This class receives no properties from the library by default.
+When it reaches the end or beginning of the list, the inserted navigation links (`a.next` and `a.prev`) will be decorated with an additional `disabled` class. This class receives no properties from the library by default.
 
 For a demo see `test/functional/no-loop.html`.
 
