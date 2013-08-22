@@ -193,7 +193,7 @@
 
 				// TODO this is silly
 				if( !prototype._isWrapped( this ) ) {
-					nav = nav.replace( /class='prev'/, "style='display: none' class='prev'");
+					nav = nav.replace( /class='prev'/, "class='prev disabled'");
 				}
 
 				return $this.append( nav )[ pluginName ]( "_bindEventListeners" );
