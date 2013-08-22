@@ -109,7 +109,7 @@
 					$to = carouselItems.eq( index ),
 					reverse = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : reverseClass;
 
-				if( !prototype._isWrapped( this ) ) {
+				if( !prototype._isLooped( this ) ) {
 					// if the request index is larger than the set of carousel items or smaller than zero
 					// and the carousel has been anotated correctly, prevent wrapping
 					if( (index < 0 || index > (carouselItems.length - 1))) {
@@ -191,15 +191,16 @@
 					"<a href='#next' class='next' aria-hidden='true' title='Next'>Next</a>" +
 					"</nav>";
 
-				// TODO this is silly
-				if( !prototype._isWrapped( this ) ) {
+
+				if( !prototype._isLooped( this ) && $(this)) {
+					// TODO this is silly
 					nav = nav.replace( /class='prev'/, "class='prev disabled'");
 				}
 
 				return $this.append( nav )[ pluginName ]( "_bindEventListeners" );
 			},
 
-			_isWrapped: function( element ) {
+			_isLooped: function( element ) {
 				return $( element ).attr( "data-loop" ) !== "false";
 			},
 
