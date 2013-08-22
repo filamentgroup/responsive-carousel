@@ -2,28 +2,21 @@
 /*global start:false, stop:false ok:false, equal:false, notEqual:false, deepEqual:false*/
 /*global notDeepEqual:false, strictEqual:false, notStrictEqual:false, raises:false*/
 (function($) {
+  var $carousel = $( "[data-carousel]" );
 
-	/*
-		======== A Handy Little QUnit Reference ========
-		http://docs.jquery.com/QUnit
+	module( "no-loop", {
+		setup: function() {
+			$carousel = $( "[data-carousel]" ).attr( "data-loop", false ).carousel();
+		}
+	});
 
-		Test methods:
-			expect(numAssertions)
-			stop(increment)
-			start(decrement)
-		Test assertions:
-			ok(value, [message])
-			equal(actual, expected, [message])
-			notEqual(actual, expected, [message])
-			deepEqual(actual, expected, [message])
-			notDeepEqual(actual, expected, [message])
-			strictEqual(actual, expected, [message])
-			notStrictEqual(actual, expected, [message])
-			raises(block, [expected], [message])
-	
- */
-	test( "Only test", function() {
-		ok( true );
+	test( "prev disabled initially", function() {
+		ok( $carousel.find( "a.prev" ).is( ".disabled" ), "previous is disabled" );
+	});
+
+	test( "next disabled when the last item is active", function() {
+		$carousel.carousel( "goTo", $carousel.find( ".carousel-item" ).length );
+		ok( $carousel.find( "a.next" ).is( ".disabled" ), "next is disabled" );
 	});
 
   /*
@@ -67,7 +60,7 @@ $(function(){
 			start();
 		}, 200);
 	});
-	
+
 	test( "goTo sets margin according to which position it is in" , function(){
 		stop();
 		var $items = $( "[data-carousel] [data-carousel-item]" ),
@@ -147,7 +140,7 @@ $(function(){
 			start();
 		}, 200);
 	});
-	
+
 	test( "if current slide is first, prev should do nothing" , function(){
 		var $items = $( "[data-carousel] [data-carousel-item]" ),
 				amt = $items.length,
