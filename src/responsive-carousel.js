@@ -200,7 +200,7 @@
 			},
 
 			_isWrapped: function( element ) {
-				return $( element ).attr( "data-wrap" ) !== "false";
+				return $( element ).attr( "data-loop" ) !== "false";
 			},
 
 			destroy: function(){
