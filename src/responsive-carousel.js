@@ -103,8 +103,31 @@
 					prevs = $from.index(),
 					activeNum = ( prevs < 0 ? 0 : prevs ) + 1,
 					nextNum = typeof( num ) === "number" ? num : activeNum + parseFloat(num),
-					$to = $( this ).find( ".carousel-item" ).eq( nextNum - 1 ),
+					index = nextNum - 1,
+					carouselItems = $( this ).find( ".carousel-item" ),
+					$to = carouselItems.eq( index ),
 					reverse = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : reverseClass;
+
+				if( $self.attr( "data-wrap") === "false" ) {
+					// if the request index is larger than the set of carousel items or smaller than zero
+					// and the carousel has been anotated correctly, prevent wrapping
+					if( (index < 0 || index > (carouselItems.length - 1))) {
+						return;
+					}
+
+					if( index == carouselItems.length - 1 ){
+						$(this).find( "a.next" ).hide();
+					}
+
+					if( index == 0 ){
+						$(this).find( "a.prev" ).hide();
+					}
+
+					if( index > 0 && index < carouselItems.length - 1 ) {
+						$(this).find( "a.next" ).show();
+						$(this).find( "a.prev" ).show();
+					}
+				}
 
 				if( !$to.length ){
 					$to = $( this ).find( "." + itemClass )[ reverse.length ? "last" : "first" ]();
@@ -160,9 +183,19 @@
 			},
 
 			_addNextPrev: function(){
-				return $( this )
-					.append( "<nav class='"+ navClass +"'><a href='#prev' class='prev' aria-hidden='true' title='Previous'>Prev</a><a href='#next' class='next' aria-hidden='true' title='Next'>Next</a></nav>" )
-					[ pluginName ]( "_bindEventListeners" );
+				var $this = $( this ), nav;
+
+				nav = "<nav class='"+ navClass +"'>" +
+					"<a href='#prev' class='prev' aria-hidden='true' title='Previous'>Prev</a>" +
+					"<a href='#next' class='next' aria-hidden='true' title='Next'>Next</a>" +
+					"</nav>";
+
+				// TODO this is silly
+				if( $this.attr( "data-wrap" ) === "false" ) {
+					nav = nav.replace( /class='prev'/, "style='display: none' class='prev'");
+				}
+
+				return $this.append( nav )[ pluginName ]( "_bindEventListeners" );
 			},
 
 			destroy: function(){
@@ -186,11 +219,11 @@
 
 			// otherwise, init
 			$( this ).data( pluginName + "active", true );
-			$.fn[ pluginName ].prototype._create.call( this );
+			$.fn[ pluginName ].prototype._create.apply( this, arguments);
 		});
 	};
-	
+
 	// add methods
-	$.extend( $.fn[ pluginName ].prototype, methods ); 
+	$.extend( $.fn[ pluginName ].prototype, methods );
 
 }(jQuery));
