@@ -242,7 +242,7 @@
 
 			// otherwise, init
 			$( this ).data( pluginName + "active", true );
-			$.fn[ pluginName ].prototype._create.apply( this, arguments);
+			$.fn[ pluginName ].prototype._create.call( this );
 		});
 	};
 
