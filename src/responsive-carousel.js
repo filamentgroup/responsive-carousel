@@ -19,6 +19,7 @@
 		inClass = pluginName + "-in",
 		outClass = pluginName + "-out",
 		navClass =  pluginName + "-nav",
+		prototype,
 		cssTransitionsSupport = (function(){
 			var prefixes = "webkit Moz O Ms".split( " " ),
 				supported = false,
@@ -108,18 +109,18 @@
 					$to = carouselItems.eq( index ),
 					reverse = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : reverseClass;
 
-				if( $self.attr( "data-wrap") === "false" ) {
+				if( !prototype._isWrapped( this ) ) {
 					// if the request index is larger than the set of carousel items or smaller than zero
 					// and the carousel has been anotated correctly, prevent wrapping
 					if( (index < 0 || index > (carouselItems.length - 1))) {
 						return;
 					}
 
-					if( index == carouselItems.length - 1 ){
+					if( index === carouselItems.length - 1 ){
 						$self.find( "a.next" ).hide();
 					}
 
-					if( index == 0 ){
+					if( index === 0 ){
 						$self.find( "a.prev" ).hide();
 					}
 
@@ -191,11 +192,15 @@
 					"</nav>";
 
 				// TODO this is silly
-				if( $this.attr( "data-wrap" ) === "false" ) {
+				if( !prototype._isWrapped( this ) ) {
 					nav = nav.replace( /class='prev'/, "style='display: none' class='prev'");
 				}
 
 				return $this.append( nav )[ pluginName ]( "_bindEventListeners" );
+			},
+
+			_isWrapped: function( element ) {
+				return $( element ).attr( "data-wrap" ) !== "false";
 			},
 
 			destroy: function(){
@@ -224,6 +229,5 @@
 	};
 
 	// add methods
-	$.extend( $.fn[ pluginName ].prototype, methods );
-
+	prototype = $.extend( $.fn[ pluginName ].prototype, methods );
 }(jQuery));
