@@ -184,20 +184,29 @@
 			},
 
 			_addNextPrev: function(){
-				var $this = $( this ), nav;
+				var $nav, $this = $( this ), $items, active;
 
-				nav = "<nav class='"+ navClass +"'>" +
+				$nav = $("<nav class='"+ navClass +"'>" +
 					"<a href='#prev' class='prev' aria-hidden='true' title='Previous'>Prev</a>" +
 					"<a href='#next' class='next' aria-hidden='true' title='Next'>Next</a>" +
-					"</nav>";
+					"</nav>");
 
+				$items = $this.find( "." + itemClass );
 
-				if( !prototype._isLooped( this ) && $(this)) {
-					// TODO this is silly
-					nav = nav.replace( /class='prev'/, "class='prev disabled'");
+				active = $items.filter( "." + activeClass )[0];
+
+				// if this is not a looped carousel and the first
+				if( !prototype._isLooped(this) ) {
+					if( active === $items[0]) {
+						$nav.find( "a.prev" ).addClass( "disabled" );
+					}
+
+					if( active === $items.last()[0]) {
+						$nav.find( "a.next" ).addClass( "disabled" );
+					}
 				}
 
-				return $this.append( nav )[ pluginName ]( "_bindEventListeners" );
+				return $this.append( $nav )[ pluginName ]( "_bindEventListeners" );
 			},
 
 			_isLooped: function( element ) {
