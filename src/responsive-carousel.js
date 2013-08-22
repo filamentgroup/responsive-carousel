@@ -117,16 +117,16 @@
 					}
 
 					if( index === carouselItems.length - 1 ){
-						$self.find( "a.next" ).addClass( "disabled" );
+						prototype._disableNav( $self, "next" );
 					}
 
 					if( index === 0 ){
-						$self.find( "a.prev" ).addClass( "disabled" );
+						prototype._disableNav( $self, "prev" );
 					}
 
 					if( index > 0 && index < carouselItems.length - 1 ) {
-						$self.find( "a.next" ).removeClass( "disabled" );
-						$self.find( "a.prev" ).removeClass( "disabled" );
+						prototype._enableNav( $self, "next" );
+						prototype._enableNav( $self, "prev" );
 					}
 				}
 
@@ -198,15 +198,23 @@
 				// if this is not a looped carousel and the first
 				if( !prototype._isLooped(this) ) {
 					if( active === $items[0]) {
-						$nav.find( "a.prev" ).addClass( "disabled" );
+						prototype._disableNav($nav, "prev");
 					}
 
 					if( active === $items.last()[0]) {
-						$nav.find( "a.next" ).addClass( "disabled" );
+						prototype._disableNav($nav, "next");
 					}
 				}
 
 				return $this.append( $nav )[ pluginName ]( "_bindEventListeners" );
+			},
+
+			_disableNav: function( element, direction ) {
+				$( element ).find( "a." + direction ).addClass( "disabled" );
+			},
+
+			_enableNav: function( element, direction ) {
+				$( element ).find( "a." + direction ).removeClass( "disabled" );
 			},
 
 			_isLooped: function( element ) {
