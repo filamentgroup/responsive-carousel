@@ -116,16 +116,16 @@
 					}
 
 					if( index == carouselItems.length - 1 ){
-						$(this).find( "a.next" ).hide();
+						$self.find( "a.next" ).hide();
 					}
 
 					if( index == 0 ){
-						$(this).find( "a.prev" ).hide();
+						$self.find( "a.prev" ).hide();
 					}
 
 					if( index > 0 && index < carouselItems.length - 1 ) {
-						$(this).find( "a.next" ).show();
-						$(this).find( "a.prev" ).show();
+						$self.find( "a.next" ).show();
+						$self.find( "a.prev" ).show();
 					}
 				}
 
