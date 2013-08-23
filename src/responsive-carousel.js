@@ -105,29 +105,18 @@
 					activeNum = ( prevs < 0 ? 0 : prevs ) + 1,
 					nextNum = typeof( num ) === "number" ? num : activeNum + parseFloat(num),
 					index = nextNum - 1,
-					carouselItems = $( this ).find( ".carousel-item" ),
+					carouselItems = $( this ).find( "." + itemClass ),
+					beforeGoto = $.Event( "beforegoto." + pluginName ),
 					$to = carouselItems.eq( index ),
 					reverse = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : reverseClass;
 
-				if( !prototype._isLooped( this ) ) {
-					// if the request index is larger than the set of carousel items or smaller than zero
-					// and the carousel has been anotated correctly, prevent wrapping
-					if( (index < 0 || index > (carouselItems.length - 1))) {
-						return;
-					}
+				$self.trigger( beforeGoto, {
+					nextIndex: index,
+					items: carouselItems
+				});
 
-					if( index === carouselItems.length - 1 ){
-						prototype._disableNav( $self, "next" );
-					}
-
-					if( index === 0 ){
-						prototype._disableNav( $self, "prev" );
-					}
-
-					if( index > 0 && index < carouselItems.length - 1 ) {
-						prototype._enableNav( $self, "next" );
-						prototype._enableNav( $self, "prev" );
-					}
+				if( beforeGoto.isDefaultPrevented() ) {
+					return;
 				}
 
 				if( !$to.length ){
@@ -191,34 +180,9 @@
 					"<a href='#next' class='next' aria-hidden='true' title='Next'>Next</a>" +
 					"</nav>");
 
-				$items = $this.find( "." + itemClass );
-
-				$active = $items.filter( "." + activeClass );
-
-				// if this is not a looped carousel enable and disable nav appropriately
-				if( !prototype._isLooped(this) ) {
-					if( $active[0] === $items[0]) {
-						prototype._disableNav($nav, "prev");
-					}
-
-					if( $active.last()[0] === $items.last()[0]) {
-						prototype._disableNav($nav, "next");
-					}
-				}
+				$this.trigger( "beforecreatenav." + pluginName, { $nav: $nav });
 
 				return $this.append( $nav )[ pluginName ]( "_bindEventListeners" );
-			},
-
-			_disableNav: function( element, direction ) {
-				$( element ).find( "a." + direction ).addClass( "disabled" );
-			},
-
-			_enableNav: function( element, direction ) {
-				$( element ).find( "a." + direction ).removeClass( "disabled" );
-			},
-
-			_isLooped: function( element ) {
-				return $( element ).attr( "data-loop" ) !== "false";
 			},
 
 			destroy: function(){
