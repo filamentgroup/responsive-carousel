@@ -19,6 +19,22 @@
 		ok( $carousel.find( "a.next" ).is( ".disabled" ), "next is disabled" );
 	});
 
+	test( "both are enabled when an inner item is active", function() {
+		$carousel.carousel( "goTo", $carousel.find( ".carousel-item" ).length - 1);
+		ok( !$carousel.find( "a.next" ).is( ".disabled" ), "next is enabled" );
+		ok( !$carousel.find( "a.prev" ).is( ".disabled" ), "prev is enabled" );
+	});
+
+	// TODO temporary until the other tests are working, they should cover this negative case
+	module( "without no-loop" );
+
+	test( "both are enabled when an inner item is active", function() {
+		$carousel = $( "[data-carousel]" ).carousel();
+		$carousel.carousel( "goTo", $carousel.find( ".carousel-item" ).length - 1);
+
+		ok( !$carousel.find( "a.next" ).is( ".disabled" ), "next is enabled" );
+		ok( !$carousel.find( "a.prev" ).is( ".disabled" ), "next is enabled" );
+	});
   /*
 // DOM readiness needed for all tests
 $(function(){
