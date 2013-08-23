@@ -58,9 +58,14 @@ Check out the [`test/functional/`](http://filamentgroup.github.com/responsive-ca
 
 ### Preventing Content Looping
 
-The default carousel (`responsive-carousel.js`) returns to the initial active item(s) once it reaches the end of its list. This behavior can be disabled by annotating the carousel DOM element with `data-loop='false'`. For example:
+The default carousel (`responsive-carousel.js`) returns to the initial active item(s) once it reaches the end of its list. This behavior can be disabled by annotating the carousel DOM element with `data-loop='false'` and including `responsive-carousel.loop.js` directly after the core carousel JS. For example:
 
 ```html
+...
+<script src="path/to/responsive-carousel.js"></script>
+<script src="path/to/responsive-carousel.loop.js"></script>
+...
+
 <div class="carousel" data-loop="false">
   <div>
 	  <img src="...">
