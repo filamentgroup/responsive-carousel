@@ -8,7 +8,8 @@
 	<!-- Load local QUnit (grunt requires v1.0.0 or newer). -->
 	<link rel="stylesheet" href="../../libs/qunit/qunit.css" media="screen">
 	<link rel="stylesheet" href="../../src/responsive-carousel.css" media="screen">
-	 <link rel="stylesheet" href="../../src/responsive-carousel.slide.css" media="screen">
+	<link rel="stylesheet" href="../../src/responsive-carousel.slide.css" media="screen">
+	<script src="../../libs/jquery/jquery.js"></script>
 	<style>
 	.carousel-item img {
 		width: 100%;
@@ -19,6 +20,7 @@
 	<script src="../../libs/qunit/qunit.js"></script>
 	<!-- Load local lib and tests. -->
 	<script src="../../src/responsive-carousel.js"></script>
+	<script src="../../src/responsive-carousel.loop.js"></script>
 	<script src="responsive-carousel_test.js"></script>
 </head>
 	<body>
@@ -27,13 +29,16 @@
 		<div id="qunit-testrunner-toolbar"></div>
 		<h2 id="qunit-userAgent"></h2>
 		<ol id="qunit-tests"></ol>
-		<div data-carousel>
+
+		<div id="qunit-fixture">
+			<div data-carousel>
 				<div data-carousel-item>
 				</div>
 				<div data-carousel-item>
 				</div>
 				<div data-carousel-item>
 				</div>
+			</div>
 		</div>
 	</body>
 </html>
