@@ -19,6 +19,7 @@
 		inClass = pluginName + "-in",
 		outClass = pluginName + "-out",
 		navClass =  pluginName + "-nav",
+		prototype,
 		cssTransitionsSupport = (function(){
 			var prefixes = "webkit Moz O Ms".split( " " ),
 				supported = false,
@@ -103,8 +104,20 @@
 					prevs = $from.index(),
 					activeNum = ( prevs < 0 ? 0 : prevs ) + 1,
 					nextNum = typeof( num ) === "number" ? num : activeNum + parseFloat(num),
-					$to = $( this ).find( ".carousel-item" ).eq( nextNum - 1 ),
+					index = nextNum - 1,
+					carouselItems = $( this ).find( "." + itemClass ),
+					beforeGoto = $.Event( "beforegoto." + pluginName ),
+					$to = carouselItems.eq( index ),
 					reverse = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : reverseClass;
+
+				$self.trigger( beforeGoto, {
+					nextIndex: index,
+					items: carouselItems
+				});
+
+				if( beforeGoto.isDefaultPrevented() ) {
+					return;
+				}
 
 				if( !$to.length ){
 					$to = $( this ).find( "." + itemClass )[ reverse.length ? "last" : "first" ]();
@@ -160,9 +173,16 @@
 			},
 
 			_addNextPrev: function(){
-				return $( this )
-					.append( "<nav class='"+ navClass +"'><a href='#prev' class='prev' aria-hidden='true' title='Previous'>Prev</a><a href='#next' class='next' aria-hidden='true' title='Next'>Next</a></nav>" )
-					[ pluginName ]( "_bindEventListeners" );
+				var $nav, $this = $( this ), $items, $active;
+
+				$nav = $("<nav class='"+ navClass +"'>" +
+					"<a href='#prev' class='prev' aria-hidden='true' title='Previous'>Prev</a>" +
+					"<a href='#next' class='next' aria-hidden='true' title='Next'>Next</a>" +
+					"</nav>");
+
+				$this.trigger( "beforecreatenav." + pluginName, { $nav: $nav });
+
+				return $this.append( $nav )[ pluginName ]( "_bindEventListeners" );
 			},
 
 			destroy: function(){
@@ -189,8 +209,7 @@
 			$.fn[ pluginName ].prototype._create.call( this );
 		});
 	};
-	
-	// add methods
-	$.extend( $.fn[ pluginName ].prototype, methods ); 
 
+	// add methods
+	prototype = $.extend( $.fn[ pluginName ].prototype, methods );
 }(jQuery));

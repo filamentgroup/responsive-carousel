@@ -55,7 +55,34 @@ There are other extensions in the `src` folder, such as flip and fade transition
 Check out the [`test/functional/`](http://filamentgroup.github.com/responsive-carousel/test/functional/) directory for demos.
 
 ## Documentation
-_(Coming soon)_
+
+### Preventing Content Looping
+
+The default carousel (`responsive-carousel.js`) returns to the initial active item(s) once it reaches the end of its list. This behavior can be disabled by annotating the carousel DOM element with `data-loop='false'` and including `responsive-carousel.loop.js` directly after the core carousel JS. For example:
+
+```html
+...
+<script src="path/to/responsive-carousel.js"></script>
+<script src="path/to/responsive-carousel.loop.js"></script>
+...
+
+<div class="carousel" data-loop="false">
+  <div>
+	  <img src="...">
+  </div>
+
+  ...
+</div>
+```
+
+When it reaches the end or beginning of the list, the inserted navigation links (`a.next` and `a.prev`) will be decorated with an additional `disabled` class. This class receives no properties from the library by default.
+
+For a demo see `test/functional/no-loop.html`.
+
+### More
+
+More coming soon.
+
 
 ## Examples
 
@@ -70,5 +97,5 @@ _Also, please don't edit files in the "dist" subdirectory as they are generated 
 _(Nothing yet)_
 
 ## License
-Copyright (c) 2012 Filament Group, Inc.  
+Copyright (c) 2012 Filament Group, Inc.
 Licensed under the MIT, GPL licenses.
