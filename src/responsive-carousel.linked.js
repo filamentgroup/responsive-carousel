@@ -17,7 +17,11 @@
 				return;
 			}
 
+			// mirror the master carousel's movements
 			$( selector ).on( "goto." + pluginName, $.proxy(prototype._linkedGoto, this));
+
+			// TODO possibly disable goto's from outside this plugin?
+
 			$this.find( "." + pluginName + "-nav" ).addClass( "disabled" );
 		},
 

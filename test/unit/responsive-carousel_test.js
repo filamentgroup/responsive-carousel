@@ -35,7 +35,36 @@
 		ok( !$carousel.find( "a.next" ).is( ".disabled" ), "next is enabled" );
 		ok( !$carousel.find( "a.prev" ).is( ".disabled" ), "next is enabled" );
 	});
-  /*
+
+	var $master, $slave;
+	module( "linked", {
+		setup: function() {
+			$master = $( "[data-carousel-master]" ).carousel();
+			$slave = $( "[data-carousel-slave]" ).carousel();
+		}
+	});
+
+	test( "slave nav is disabled", function() {
+		ok( $slave.find( ".carousel-nav" ).hasClass( "disabled" ), "has disabled class" );
+	});
+
+	test( "advancing master advances the slave", function() {
+		$master.carousel( "goTo", "+1" );
+
+		equal( $master.find(".carousel-active").prev().length,
+		 $slave.find(".carousel-active").prev().length,
+		 "the number of items before the active item is the same");
+	});
+
+	test( "setting the master advances the slave", function() {
+		$master.carousel( "goTo", "3" );
+
+		equal( $master.find(".carousel-active").prev().length,
+		 $slave.find(".carousel-active").prev().length,
+		 "the number of items before the active item is the same");
+	});
+
+/*
 // DOM readiness needed for all tests
 $(function(){
 

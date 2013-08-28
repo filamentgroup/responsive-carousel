@@ -21,6 +21,7 @@
 	<!-- Load local lib and tests. -->
 	<script src="../../src/responsive-carousel.js"></script>
 	<script src="../../src/responsive-carousel.loop.js"></script>
+	<script src="../../src/responsive-carousel.linked.js"></script>
 	<script src="responsive-carousel_test.js"></script>
 </head>
 	<body>
@@ -32,6 +33,24 @@
 
 		<div id="qunit-fixture">
 			<div data-carousel>
+				<div data-carousel-item>
+				</div>
+				<div data-carousel-item>
+				</div>
+				<div data-carousel-item>
+				</div>
+			</div>
+
+			<div data-carousel-master>
+				<div data-carousel-item>
+				</div>
+				<div data-carousel-item>
+				</div>
+				<div data-carousel-item>
+				</div>
+			</div>
+
+			<div data-carousel-slave data-linked="[data-carousel-master]">
 				<div data-carousel-item>
 				</div>
 				<div data-carousel-item>
