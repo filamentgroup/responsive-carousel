@@ -11,7 +11,7 @@
 			var $this = $(this),
 				prototype = $.fn[pluginName].prototype;
 
-			$( $this.attr("data-linked")	 ).on( "goto." + pluginName, $.proxy(prototype._linkedGoto, this));
+			$( $this.attr("data-linked") ).on( "goto." + pluginName, $.proxy(prototype._linkedGoto, this));
 		},
 
 		_linkedGoto: function( event, to ) {
