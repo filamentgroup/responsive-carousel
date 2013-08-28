@@ -20,13 +20,18 @@
 			// mirror the master carousel's movements
 			$( selector ).on( "goto." + pluginName, $.proxy(prototype._linkedGoto, this));
 
-			// TODO possibly disable goto's from outside this plugin?
+			// disable goto on this, the slave carousel
+			$( this ).on( "beforegoto." + pluginName, $.proxy(function( event ) {
+				if( !$this.data('gotoPermitted') ) {
+					event.preventDefault();
+				}
+			}, this));
 
 			$this.find( "." + pluginName + "-nav" ).addClass( "disabled" );
 		},
 
 		_linkedGoto: function( event, to ) {
-			var index = 0;
+			var index = 0, $this = $(this);
 
 			// NOTE the choice to do the index work here is to avoid alterations
 			//			to the core carousel code
@@ -37,7 +42,16 @@
 				}
 			});
 
-			$( this )[pluginName]( 'goTo', index + 1 );
+			$this[pluginName]( '_permitGoTo', function() {
+				$this[pluginName]( 'goTo', index + 1 );
+			});
+		},
+
+		_permitGoTo: function( callback ) {
+			var $this = $(this);
+			$this.data( 'gotoPermitted', true );
+			callback.call(this);
+			$this.data( 'gotoPermitted', false );
 		}
 	});
 })(jQuery);

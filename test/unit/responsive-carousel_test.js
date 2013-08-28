@@ -64,6 +64,12 @@
 		 "the number of items before the active item is the same");
 	});
 
+	test( "advancing the slave is not possible", function() {
+		$slave.carousel( "goTo", "+1" );
+
+		equal( $slave.find(".carousel-active").prev().length, 0, "remains at initial item" );
+	});
+
 /*
 // DOM readiness needed for all tests
 $(function(){
