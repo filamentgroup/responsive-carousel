@@ -9,9 +9,16 @@
 	$.extend( $.fn[pluginName].prototype, {
 		_linkedInit: function() {
 			var $this = $(this),
-				prototype = $.fn[pluginName].prototype;
+				prototype = $.fn[pluginName].prototype, selector;
 
-			$( $this.attr("data-linked") ).on( "goto." + pluginName, $.proxy(prototype._linkedGoto, this));
+      selector = $this.attr("data-linked");
+
+      if( !selector ){
+        return;
+      }
+
+			$( selector ).on( "goto." + pluginName, $.proxy(prototype._linkedGoto, this));
+      $this.find( ".carousel-nav" ).addClass( "disabled" );
 		},
 
 		_linkedGoto: function( event, to ) {
