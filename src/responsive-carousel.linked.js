@@ -11,27 +11,27 @@
 			var $this = $(this),
 				prototype = $.fn[pluginName].prototype, selector;
 
-      selector = $this.attr("data-linked");
+			selector = $this.attr("data-linked");
 
-      if( !selector ){
-        return;
-      }
+			if( !selector ){
+				return;
+			}
 
 			$( selector ).on( "goto." + pluginName, $.proxy(prototype._linkedGoto, this));
-      $this.find( ".carousel-nav" ).addClass( "disabled" );
+			$this.find( "." + pluginName + "-nav" ).addClass( "disabled" );
 		},
 
 		_linkedGoto: function( event, to ) {
-      var index = 0;
+			var index = 0;
 
-      // NOTE the choice to do the index work here is to avoid alterations
-      //      to the core carousel code
-      $(event.target).children().each(function(i, elem) {
-        if( elem === to ){
-          index = i;
-          return false;
-        }
-      });
+			// NOTE the choice to do the index work here is to avoid alterations
+			//			to the core carousel code
+			$(event.target).children().each(function(i, elem) {
+				if( elem === to ){
+					index = i;
+					return false;
+				}
+			});
 
 			$( this )[pluginName]( 'goTo', index + 1 );
 		}
