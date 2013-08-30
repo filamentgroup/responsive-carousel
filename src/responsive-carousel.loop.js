@@ -22,12 +22,14 @@
 		},
 
 		_loopBeforeGoto: function( event, data ) {
-			var $this = $(event.target), index = data.nextIndex, items = data.items;
+			var $this = $(event.target), items = data.items, index;
 
 			// if this carousel is supposed to loop, skip
 			if( isLooped( $this ) ) {
 				return;
 			}
+
+			index = data.$to.prevAll().length;
 
 			// if the request index is greater than the # of items or smaller than zero
 			if( (index < 0 || index > (items.length - 1))) {
