@@ -8,11 +8,13 @@
   <script src="../../libs/jquery/jquery.js"></script>
   <link rel="stylesheet" href="../../src/responsive-carousel.css" media="screen">
   <link rel="stylesheet" href="../../src/responsive-carousel.fade.css" media="screen">
+  <link rel="stylesheet" href="../../src/responsive-carousel.slide.css" media="screen">
   <link rel="stylesheet" href="../assets/demostyles.css">
   <!-- Load local lib and tests. -->
   <script src="../../src/responsive-carousel.js"></script>
   <script src="../../src/responsive-carousel.loop.js"></script>
   <script src="../../src/responsive-carousel.touch.js"></script>
+  <script src="../../src/responsive-carousel.drag.js"></script>
   <script src="../../src/responsive-carousel.autoinit.js"></script>
   <script src="../../src/responsive-carousel.linked.js"></script>
   <style>
@@ -27,7 +29,7 @@
   </style>
 </head>
 <body>
-	<div class="carousel first" data-loop="false">
+	<div class="carousel first" data-loop="false" data-transition="fade">
 	    <div>
 	        <img src="../assets/large.jpg">
 	    </div>
@@ -39,7 +41,7 @@
 	    </div>
 	</div>
 
-	<div class="carousel second" data-linked=".carousel.first">
+	<div class="carousel second" data-linked=".carousel.first" data-transition="fade">
 	    <div>
 	        <img src="../assets/large.jpg">
 	    </div>
