@@ -51,7 +51,12 @@ module.exports = function(grunt) {
 				jQuery: true
 			}
 		},
-		uglify: {}
+
+		uglify: {},
+
+		qunit: {
+			all: [ "test/unit/responsive-carousel.html" ]
+		}
 	});
 
 	// Default task.
@@ -59,5 +64,5 @@ module.exports = function(grunt) {
 
 	// Travis
 	grunt.registerTask('travis', 'lint qunit');
-	
+
 };
