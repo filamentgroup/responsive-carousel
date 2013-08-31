@@ -1,4 +1,3 @@
-
 (function($) {
 	var pluginName = "carousel",
 			itemClass = pluginName + "-item",
@@ -17,35 +16,45 @@
 			var $this = $(this),
 				prototype = $.fn[pluginName].prototype;
 
-			$this.on( "beforegoto." + pluginName, prototype._loopBeforeGoto);
+			// prevent carousel movement on nav clicks
+			$this.on( "beforegoto." + pluginName, prototype._loopBefore);
+
+			// prevent drag movement on the carousel at either end
+			$this.on( "beforedrag." + pluginName, prototype._loopBefore);
+			$this.on( "drag." + pluginName, prototype._loopBefore);
+
+			// hook into creation to style the nav
 			$this.on( "beforecreatenav." + pluginName, prototype._loopBeforeCreateNav);
 		},
 
-		_loopBeforeGoto: function( event, data ) {
-			var $this = $(event.target), items = data.items, index;
+		_loopBefore: function( event, data ) {
+			var $this = $(event.target), newIndex, currentIndex, items;
 
 			// if this carousel is supposed to loop, skip
 			if( isLooped( $this ) ) {
 				return;
 			}
 
-			index = data.$to.prevAll().length;
+			newIndex = data.$to.index();
+			currentIndex = data.$from.index();
+			items = $this.find( "." + itemClass );
 
 			// if the request index is greater than the # of items or smaller than zero
-			if( (index < 0 || index > (items.length - 1))) {
+			if( (currentIndex == 0 && data.direction == "backward") ||
+					(currentIndex == items.length - 1 && data.direction == "forward" )) {
 				event.preventDefault();
 				return;
 			}
 
-			if( index === items.length - 1 ){
+			if( newIndex === items.length - 1 ){
 				$this[pluginName]( '_disableNav', 'next' );
 			}
 
-			if( index === 0 ){
+			if( newIndex === 0 ){
 				$this[pluginName]( '_disableNav', 'prev' );
 			}
 
-			if( index > 0 && index < items.length - 1 ) {
+			if( newIndex > 0 && newIndex < items.length - 1 ) {
 				$this[pluginName]( '_enableNav', 'next' );
 				$this[pluginName]( '_enableNav', 'prev' );
 			}
