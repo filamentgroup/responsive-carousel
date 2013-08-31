@@ -5,5 +5,6 @@ branches:
   only:
     - master
     - grunt-update
+# TODO s/qunit// once the linter passes
 script: "node node_modules/.bin/grunt qunit"
 before_script: "npm install"
