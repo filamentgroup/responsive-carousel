@@ -29,11 +29,19 @@
 .carousel-fade .carousel-active {
 	position: relative;
 }
-.carousel-fade .carousel-item,
+
+.carousel-item {
+	opacity: 0;
+}
+
+.carousel-active {
+	opacity: 1;
+}
+
 .carousel-fade .carousel-out {
 	opacity: 0;
 }
-.carousel-fade .carousel-active,
+
 .carousel-fade .carousel-in {
 	opacity: 1;
 }
