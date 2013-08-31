@@ -111,8 +111,9 @@
 					reverse = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : reverseClass;
 
 				$self.trigger( beforeGoto, {
+          $from: $from,
 					$to: $to,
-					items: carouselItems
+          direction: nextNum > activeNum ? "forward" : "backward"
 				});
 
 				if( beforeGoto.isDefaultPrevented() ) {
