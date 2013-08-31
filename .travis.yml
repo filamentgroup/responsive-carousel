@@ -1,6 +1,9 @@
 language: node_js
 node_js:
-  - 0.10
+  - 0.10.17
 branches:
   only:
     - master
+    - grunt-update
+script: "node node_modules/.bin/grunt qunit"
+before_script: "npm install"
