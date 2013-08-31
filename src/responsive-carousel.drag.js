@@ -29,15 +29,15 @@
 			return [ $from, $to ];
 		},
 		isDragPrevented = function( element, event, slides, delta ) {
-			var beforeGoto = $.Event( event + "." + pluginName );
+			var before = $.Event( event + "." + pluginName );
 
-			$( element ).trigger( beforeGoto, {
+			$( element ).trigger( before, {
 				$from: $( slides[0] ),
 				$to: $( slides[1] ),
 				direction: delta < 0 ? "forward" : "backward"
 			});
 
-			if( beforeGoto.isDefaultPrevented() ) {
+			if( before.isDefaultPrevented() ) {
 				return true;
 			}
 
