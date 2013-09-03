@@ -1,5 +1,6 @@
 /*global module:false*/
 module.exports = function(grunt) {
+	var lintFiles = ['Gruntfile.js', 'src/*.js', 'test/**/*.js'];
 
 	// Project configuration.
 	grunt.initConfig({
@@ -30,12 +31,12 @@ module.exports = function(grunt) {
 		},
 
 		watch: {
-			files: '<config:lint.files>',
-			tasks: 'lint qunit'
+			files: lintFiles,
+			tasks: 'jshint qunit'.split( " " )
 		},
 
 		jshint: {
-			all: ['grunt.js', 'src/*.js', 'test/**/*.js']
+			all: lintFiles
 		},
 
 		qunit: {
@@ -47,6 +48,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-watch');
 
 	// Default task.
 	grunt.registerTask('default', 'jshint qunit concat uglify'.split( " " ));
