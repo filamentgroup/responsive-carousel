@@ -21,7 +21,7 @@
 	});
 
 	test( "next disabled when the last item is active", function() {
-		$carousel.carousel( "goTo", $carousel.find( ".carousel-item" ).length );
+		$carousel.carousel( "goTo", $items.length );
 		ok( $carousel.find( "a.next" ).is( ".disabled" ), "next is disabled" );
 	});
 
@@ -40,14 +40,14 @@
 	});
 
 	test( "both are enabled when an inner item is active", function() {
-		$carousel.carousel( "goTo", $carousel.find( ".carousel-item" ).length - 1);
+		$carousel.carousel( "goTo", $items.length - 1);
 		ok( !$carousel.find( "a.next" ).is( ".disabled" ), "next is enabled" );
 		ok( !$carousel.find( "a.prev" ).is( ".disabled" ), "prev is enabled" );
 	});
 
 	test( "nav is enabled when an inner item is active", function() {
 		$carousel = $( "[data-carousel]" ).carousel();
-		$carousel.carousel( "goTo", $carousel.find( ".carousel-item" ).length - 1);
+		$carousel.carousel( "goTo", $items.length - 1);
 
 		ok( !$carousel.find( "a.next" ).is( ".disabled" ), "next is enabled" );
 		ok( !$carousel.find( "a.prev" ).is( ".disabled" ), "next is enabled" );
