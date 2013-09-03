@@ -2,7 +2,7 @@
 /*global start:false, stop:false ok:false, equal:false, notEqual:false, deepEqual:false*/
 /*global notDeepEqual:false, strictEqual:false, notStrictEqual:false, raises:false*/
 (function($) {
-  var $carousel = $( "[data-carousel]" );
+  var $carousel = $( "[data-carousel]" ), $items;
 
 	module( "no-loop", {
 		setup: function() {
@@ -37,14 +37,12 @@
 	});
 
 
-	var $items;
+	function setup() {
+		$carousel = $( "[data-carousel]" ).carousel();
+		$items = $carousel.find("[data-carousel-item]");
+	}
 
-	module( "core", {
-		setup: function() {
-			$carousel = $( "[data-carousel]" ).carousel();
-			$items = $carousel.find("[data-carousel-item]");
-		}
-	});
+	module( "core", {setup: setup});
 
 	test( "child-items have carousel-item class", function() {
 		$items.each(function(i, item) {
@@ -52,143 +50,40 @@
 		});
 	});
 
-	// test( "container width is set based upon the amount of carousel-items there are" , function() {
-	// 	var $items = $( "[[data-carousel-item]" ),
-	// 			amt = $items.length,
-	// 			$contain = $( ".carousel-contain" ),
-	// 			$carousel = $( ".carousel" ),
-	// 			width = Math.round($contain.width()/$carousel.width());
-	// 	equal( width, amt, "The width is correctly set" );
-	// });
+	module("goTo", {setup: setup});
 
-	// module("goTo", {
-	// 	setup: function() {
-	// 		$( ".carousel" ).carousel( "goTo", 1 );
-	// 	}
-	// });
+	test( "shows the right carousel item" , function(){
+		var position = 2;
 
-	// test( "sets margin according to which position it is in" , function(){
-	// 	stop();
-	// 	var $items = $( "[data-carousel] [data-carousel-item]" ),
-	// 			amt = $items.length,
-	// 			$contain = $( ".carousel-contain" ),
-	// 			$carousel = $( ".carousel" ),
-	// 			position = 1;
-	// 	$( ".carousel" ).carousel( "goTo", position );
-	// 	setTimeout(function(){
-	// 		var marg = parseFloat($contain.css( "margin-left" ), 10),
-	// 				carouselWidth = $carousel.width(),
-	// 				actual = Math.round(Math.abs(marg/carouselWidth)+1);
-	// 		equal( actual, position, "The margin is at the correct position" );
-	// 		start();
-	// 	}, 200);
-	// });
+		$carousel.carousel( "goTo", position );
+		ok( $items.eq(position - 1).is(":visible") );
+	});
 
-	// test( "goTo sets margin according to which position it is in" , function(){
-	// 	stop();
-	// 	var $items = $( "[data-carousel] [data-carousel-item]" ),
-	// 			amt = $items.length,
-	// 			$contain = $( ".carousel-contain" ),
-	// 			$carousel = $( ".carousel" ),
-	// 			position = 2;
-	// 	$( ".carousel" ).carousel( "goTo", position );
-	// 	setTimeout(function(){
-	// 		var marg = parseFloat($contain.css( "margin-left" ), 10),
-	// 				carouselWidth = $carousel.width(),
-	// 				actual = Math.round(Math.abs(marg/carouselWidth)+1);
-	// 		equal( actual, position, "The margin is at the correct position" );
-	// 		start();
-	// 	}, 200);
-	// });
+	test( "+1 advances by one position", function() {
+		var position = 2;
 
-	// test( "next sets margin to next spot according to the current margin" , function(){
-	// 	$( ".carousel" ).carousel( "goTo", 1 );
-	// 	stop();
-	// 	var $items = $( "[data-carousel] [data-carousel-item]" ),
-	// 			amt = $items.length,
-	// 			$contain = $( ".carousel-contain" ),
-	// 			expectedMargin = -100;
-	// 	$( ".carousel" ).carousel( "next" );
-	// 	setTimeout(function(){
-	// 		var marg = parseFloat($contain.css( "marginLeft" ), 10),
-	// 				actualMargin = Math.round(marg/$(window).width()) * 100;
-	// 		equal( actualMargin, expectedMargin, "The margin is at the correct position" );
-	// 		start();
-	// 	}, 200);
-	// });
+		$carousel.carousel( "goTo", position );
+		$carousel.carousel( "goTo", "+1" );
+		ok( $items.eq(position).is(":visible") );
+	});
 
-	// test( "if current slide is the last, next should do nothing" , function(){
-	// 	var $items = $( "[data-carousel] [data-carousel-item]" ),
-	// 			amt = $items.length,
-	// 			$carousel = $( ".carousel" );
-	// 	$carousel.carousel( "goTo", amt-1 );
-	// 	stop();
-	// 	var $contain = $( ".carousel-contain" ),
-	// 			expectedMargin = (amt-1)*(-100);
-	// 	$carousel.carousel( "next" );
-	// 	setTimeout(function(){
-	// 		var marg = parseFloat($contain.css( "marginLeft" ), 10),
-	// 				winWidth = $(window).width() || 1000,
-	// 				x = Math.round(marg/winWidth) * 100;
-	// 		equal( x, expectedMargin, "The margin is at the correct position" );
-	// 		start();
-	// 	}, 200);
-	// });
+	test( "-1 retreats by one position", function() {
+		var position = 2;
 
-	// test( "if current slide is last, next link should not be showing", function(){
-	// 	var $items = $( "[data-carousel] [data-carousel-item]" ),
-	// 			amt = $items.length,
-	// 			$carousel = $( ".carousel" );
-	// 	$carousel.carousel( "goTo", amt-1 );
-	// 	stop();
-	// 	setTimeout(function(){
-	// 		ok( $( "[href='#next']" ).is( ".disabled" ), "The next button is disabled" );
-	// 		start();
-	// 	}, 200);
-	// });
+		$carousel.carousel( "goTo", position );
+		$carousel.carousel( "goTo", "-1" );
+		ok( $items.eq(0).is(":visible") );
+	});
 
-	// test( "prev sets margin to prev spot according to the current margin" , function(){
-	// 	$( ".carousel" ).carousel( "goTo", 2 );
-	// 	stop();
-	// 	var $items = $( "[data-carousel] [data-carousel-item]" ),
-	// 			amt = $items.length,
-	// 			$contain = $( ".carousel-contain" ),
-	// 			expectedMargin = 0;
-	// 	$( ".carousel" ).carousel( "prev" );
-	// 	setTimeout(function(){
-	// 		var marg = parseFloat($contain.css( "marginLeft" ), 10),
-	// 				winWidth = $(window).width() || 1000,
-	// 				x = Math.round(marg/winWidth) * 100;
-	// 		equal( x, expectedMargin, "The margin is at the correct position" );
-	// 		start();
-	// 	}, 200);
-	// });
+	test( "-1 at the first item returns to the last item", function() {
+		$carousel.carousel( "goTo", 1 );
+		$carousel.carousel( "goTo", "-1" );
+		ok( $items.last().is(":visible") );
+	});
 
-	// test( "if current slide is first, prev should do nothing" , function(){
-	// 	var $items = $( "[data-carousel] [data-carousel-item]" ),
-	// 			amt = $items.length,
-	// 			$carousel = $( ".carousel" );
-	// 	$carousel.carousel( "goTo", 1 );
-	// 	stop();
-	// 	var $contain = $( ".carousel-contain" ),
-	// 			expectedMargin = 0;
-	// 	$carousel.carousel( "prev" );
-	// 	setTimeout(function(){
-	// 		var marg = parseFloat($contain.css( "marginLeft" ), 10),
-	// 				winWidth = $(window).width() || 1000,
-	// 				x = Math.round(marg/winWidth) * 100;
-	// 		equal( x, expectedMargin, "The margin is at the correct position" );
-	// 		start();
-	// 	}, 200);
-	// });
-
-	// test( "if current slide is first, prev link should not be showing", function(){
-	// 	var $carousel = $( ".carousel" );
-	// 	$carousel.carousel( "goTo", 1 );
-	// 	stop();
-	// 	setTimeout(function(){
-	// 		ok( $( "[href='#prev']" ).is( ".disabled" ), "The previous button is disabled" );
-	// 		start();
-	// 	}, 200);
-	// });
+	test( "+1 at the last item returns to the first item", function() {
+		$carousel.carousel( "goTo", $items.length );
+		$carousel.carousel( "goTo", "+1" );
+		ok( $items.first().is(":visible") );
+	});
 }(jQuery));
