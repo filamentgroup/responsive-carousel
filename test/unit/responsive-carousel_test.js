@@ -68,7 +68,7 @@
 
 		$carousel.carousel( "goTo", position );
 		$carousel.carousel( "goTo", "-1" );
-		ok( $items.eq(0).is(":visible") );
+		ok( $items.first().is(":visible") );
 	});
 
 	test( "-1 at the first item returns to the last item", function() {
