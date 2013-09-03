@@ -4,9 +4,15 @@
 (function($) {
   var $carousel = $( "[data-carousel]" ), $items;
 
+	function setup() {
+		$carousel = $( "[data-carousel]" ).carousel();
+		$items = $carousel.find("[data-carousel-item]");
+	}
+
 	module( "no-loop", {
 		setup: function() {
 			$carousel = $( "[data-carousel]" ).attr( "data-loop", false ).carousel();
+			$items = $carousel.find("[data-carousel-item]");
 		}
 	});
 
@@ -17,6 +23,20 @@
 	test( "next disabled when the last item is active", function() {
 		$carousel.carousel( "goTo", $carousel.find( ".carousel-item" ).length );
 		ok( $carousel.find( "a.next" ).is( ".disabled" ), "next is disabled" );
+	});
+
+	test( "next using goto on the last item is prevented", function() {
+		$carousel.carousel( "goTo", $items.length );
+		ok( $items.last().is( ":visible" ), "last item focused" );
+		$carousel.carousel( "goTo", "+1" );
+		ok( $items.last().is( ":visible" ), "last item focused" );
+	});
+
+	test( "next using goto on the last item is prevented", function() {
+		$carousel.carousel( "goTo", 1 );
+		ok( $items.first().is( ":visible" ), "first item focused" );
+		$carousel.carousel( "goTo", "-1" );
+		ok( $items.first().is( ":visible" ), "first item focused" );
 	});
 
 	test( "both are enabled when an inner item is active", function() {
@@ -32,11 +52,6 @@
 		ok( !$carousel.find( "a.next" ).is( ".disabled" ), "next is enabled" );
 		ok( !$carousel.find( "a.prev" ).is( ".disabled" ), "next is enabled" );
 	});
-
-	function setup() {
-		$carousel = $( "[data-carousel]" ).carousel();
-		$items = $carousel.find("[data-carousel-item]");
-	}
 
 	module( "core", {setup: setup});
 
