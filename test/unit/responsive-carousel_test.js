@@ -25,17 +25,13 @@
 		ok( !$carousel.find( "a.prev" ).is( ".disabled" ), "prev is enabled" );
 	});
 
-	// TODO temporary until the other tests are working, they should cover this negative c1ase
-	module( "without no-loop" );
-
-	test( "both are enabled when an inner item is active", function() {
+	test( "nav is enabled when an inner item is active", function() {
 		$carousel = $( "[data-carousel]" ).carousel();
 		$carousel.carousel( "goTo", $carousel.find( ".carousel-item" ).length - 1);
 
 		ok( !$carousel.find( "a.next" ).is( ".disabled" ), "next is enabled" );
 		ok( !$carousel.find( "a.prev" ).is( ".disabled" ), "next is enabled" );
 	});
-
 
 	function setup() {
 		$carousel = $( "[data-carousel]" ).carousel();
@@ -50,7 +46,7 @@
 		});
 	});
 
-	module("goTo", {setup: setup});
+	module( "goTo", {setup: setup});
 
 	test( "shows the right carousel item" , function(){
 		var position = 2;
