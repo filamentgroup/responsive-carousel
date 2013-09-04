@@ -1,9 +1,10 @@
 /*global module:false*/
 module.exports = function(grunt) {
+	var lintFiles = ['Gruntfile.js', 'src/*.js', 'test/**/*.js'];
 
 	// Project configuration.
 	grunt.initConfig({
-		pkg: '<json:package.json>',
+		pkg: grunt.file.readJSON('package.json'),
 		meta: {
 			banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
 				'<%= grunt.template.today("yyyy-mm-dd") %>\n' +
@@ -17,47 +18,41 @@ module.exports = function(grunt) {
 				dest: 'dist/<%= pkg.name %>.js'
 			}
 		},
-		min: {
-			dist: {
-				src: ['<banner:meta.banner>', '<config:concat.dist.dest>'],
-				dest: 'dist/<%= pkg.name %>.min.js'
-			}
-		},
-		qunit: {
-			files: ['test/unit/**/*.html']
-		},
-		lint: {
-			files: ['grunt.js', 'src/*.js', 'test/**/*.js']
-		},
-		watch: {
-			files: '<config:lint.files>',
-			tasks: 'lint qunit'
-		},
-		jshint: {
+		uglify: {
 			options: {
-				curly: true,
-				eqeqeq: true,
-				immed: true,
-				latedef: true,
-				newcap: true,
-				noarg: true,
-				sub: true,
-				undef: true,
-				boss: true,
-				eqnull: true,
-				browser: true
+				banner: '<banner:meta.banner>'
 			},
-			globals: {
-				jQuery: true
+
+			dist: {
+				files: {
+					'dist/<%= pkg.name %>.min.js': [ 'dist/<%= pkg.name %>.js' ]
+				}
 			}
 		},
-		uglify: {}
+
+		watch: {
+			files: lintFiles,
+			tasks: 'jshint qunit'.split( " " )
+		},
+
+		jshint: {
+			all: lintFiles
+		},
+
+		qunit: {
+			all: [ "test/unit/responsive-carousel.html" ]
+		}
 	});
 
+	grunt.loadNpmTasks('grunt-contrib-qunit');
+	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-watch');
+
 	// Default task.
-	grunt.registerTask('default', 'lint qunit concat min');
+	grunt.registerTask('default', 'jshint qunit concat uglify'.split( " " ));
 
 	// Travis
-	grunt.registerTask('travis', 'lint qunit');
-	
+	grunt.registerTask('travis', 'jshint qunit'.split( " " ));
 };

@@ -111,9 +111,9 @@
 					reverse = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : reverseClass;
 
 				$self.trigger( beforeGoto, {
-          $from: $from,
+					$from: $from,
 					$to: $to,
-          direction: nextNum > activeNum ? "forward" : "backward"
+					direction: nextNum > activeNum ? "forward" : "backward"
 				});
 
 				if( beforeGoto.isDefaultPrevented() ) {
