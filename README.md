@@ -85,6 +85,46 @@ When the carousel reaches the end or beginning of the list, the inserted navigat
 
 For a demo see `test/functional/no-loop.html`.
 
+### Linked Carousels
+
+Two carousels can be linked in a master/slave relationship where the slave carousel's navigation is disabled and dictated solely by navigation operations on the master carousel.
+
+```html
+...
+
+<script src="../../src/responsive-carousel.js"></script>
+<script src="../../src/responsive-carousel.loop.js"></script>
+<script src="../../src/responsive-carousel.linked.js"></script>
+
+...
+	<div class="carousel master" data-loop="false">
+	    <div>
+	        <img src="../assets/large.jpg">
+	    </div>
+
+			...
+
+	</div>
+
+	<div class="carousel slave" data-linked=".carousel.first">
+	    <div>
+	        <img src="../assets/large.jpg">
+	    </div>
+
+			...
+
+
+	</div>
+```
+
+The slave carousel designates it's master using a selector string value for the `data-linked` attribute. Otherwise the carousels can be initialized as normal.
+
+```javascript
+$( ".carousel .master, .carousel .slave" ).carousel();
+```
+
+**NOTE** There is no special accounting for different numbers of slides in each carousel. Without `data-loop=false` on the slave carousel it will simply wrap to the first slide when it's master has a greater number of slides. Adding the `data-loop=false` stops the slave at it's final slide.
+
 ### More
 
 More coming soon.
