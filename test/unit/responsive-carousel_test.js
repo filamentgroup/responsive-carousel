@@ -69,16 +69,16 @@
 		$master.carousel( "goTo", "+1" );
 
 		equal( $master.find(".carousel-active").prev().length,
-		 $slave.find(".carousel-active").prev().length,
-		 "the number of items before the active item is the same");
+			$slave.find(".carousel-active").prev().length,
+			"the number of items before the active item is the same");
 	});
 
 	test( "setting the master advances the slave", function() {
 		$master.carousel( "goTo", "3" );
 
 		equal( $master.find(".carousel-active").prev().length,
-		 $slave.find(".carousel-active").prev().length,
-		 "the number of items before the active item is the same");
+			$slave.find(".carousel-active").prev().length,
+			"the number of items before the active item is the same");
 	});
 
 	test( "advancing the slave is not possible", function() {
