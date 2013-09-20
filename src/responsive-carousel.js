@@ -132,7 +132,7 @@
 				}
 
 				// added to allow pagination to track
-				$self.trigger( "goto." + pluginName, $to );
+				$self.trigger( "goto." + pluginName, [ $to, index ] );
 			},
 
 			update: function(){

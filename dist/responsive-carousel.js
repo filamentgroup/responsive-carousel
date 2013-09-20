@@ -1,7 +1,3 @@
-/*! Responsive Carousel - v0.1.0 - 2013-07-15
-* https://github.com/filamentgroup/responsive-carousel
-* Copyright (c) 2013 Filament Group, Inc.; Licensed MIT, GPL */
-
 /*
  * responsive-carousel
  * https://github.com/filamentgroup/responsive-carousel
@@ -23,6 +19,7 @@
 		inClass = pluginName + "-in",
 		outClass = pluginName + "-out",
 		navClass =  pluginName + "-nav",
+		prototype,
 		cssTransitionsSupport = (function(){
 			var prefixes = "webkit Moz O Ms".split( " " ),
 				supported = false,
@@ -107,8 +104,21 @@
 					prevs = $from.index(),
 					activeNum = ( prevs < 0 ? 0 : prevs ) + 1,
 					nextNum = typeof( num ) === "number" ? num : activeNum + parseFloat(num),
-					$to = $( this ).find( ".carousel-item" ).eq( nextNum - 1 ),
+					index = nextNum - 1,
+					carouselItems = $( this ).find( "." + itemClass ),
+					beforeGoto = $.Event( "beforegoto." + pluginName ),
+					$to = carouselItems.eq( index ),
 					reverse = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : reverseClass;
+
+				$self.trigger( beforeGoto, {
+					$from: $from,
+					$to: $to,
+					direction: nextNum > activeNum ? "forward" : "backward"
+				});
+
+				if( beforeGoto.isDefaultPrevented() ) {
+					return;
+				}
 
 				if( !$to.length ){
 					$to = $( this ).find( "." + itemClass )[ reverse.length ? "last" : "first" ]();
@@ -122,7 +132,7 @@
 				}
 
 				// added to allow pagination to track
-				$self.trigger( "goto." + pluginName, $to );
+				$self.trigger( "goto." + pluginName, [ $to, index ] );
 			},
 
 			update: function(){
@@ -164,9 +174,16 @@
 			},
 
 			_addNextPrev: function(){
-				return $( this )
-					.append( "<nav class='"+ navClass +"'><a href='#prev' class='prev' aria-hidden='true' title='Previous'>Prev</a><a href='#next' class='next' aria-hidden='true' title='Next'>Next</a></nav>" )
-					[ pluginName ]( "_bindEventListeners" );
+				var $nav, $this = $( this ), $items, $active;
+
+				$nav = $("<nav class='"+ navClass +"'>" +
+					"<a href='#prev' class='prev' aria-hidden='true' title='Previous'>Prev</a>" +
+					"<a href='#next' class='next' aria-hidden='true' title='Next'>Next</a>" +
+					"</nav>");
+
+				$this.trigger( "beforecreatenav." + pluginName, { $nav: $nav });
+
+				return $this.append( $nav )[ pluginName ]( "_bindEventListeners" );
 			},
 
 			destroy: function(){
@@ -193,10 +210,9 @@
 			$.fn[ pluginName ].prototype._create.call( this );
 		});
 	};
-	
-	// add methods
-	$.extend( $.fn[ pluginName ].prototype, methods ); 
 
+	// add methods
+	prototype = $.extend( $.fn[ pluginName ].prototype, methods );
 }(jQuery));
 
 /*
@@ -292,7 +308,7 @@
  */
 
 (function($) {
-	
+
 	var pluginName = "carousel",
 		initSelector = "." + pluginName,
 		activeClass = pluginName + "-active",
@@ -306,14 +322,30 @@
 				forward = deltaX < 0,
 				nextNum = activeNum + (forward ? 1 : -1),
 				$to = $carousel.find( "." + itemClass ).eq( nextNum - 1 );
-				
+
 			if( !$to.length ){
 				$to = $carousel.find( "." + itemClass )[ forward ? "first" : "last" ]();
 			}
-			
+
 			return [ $from, $to ];
+		},
+		isDragPrevented = function( element, event, slides, delta ) {
+			var before = $.Event( event + "." + pluginName );
+
+			$( element ).trigger( before, {
+				$from: $( slides[0] ),
+				$to: $( slides[1] ),
+				direction: delta < 0 ? "forward" : "backward"
+			});
+
+			if( before.isDefaultPrevented() ) {
+				return true;
+			}
+
+			return false;
 		};
-		
+
+
 	// Touch handling
 	$( document )
 		.on( "dragmove", initSelector, function( e, data ){
@@ -321,8 +353,13 @@
 			if( !dragThreshold( data.deltaX ) ){
 				return;
 			}
+
 			var activeSlides = getActiveSlides( $( this ), data.deltaX );
-			
+
+			if ( isDragPrevented( this, "beforedrag", activeSlides, data.deltaX) ) {
+				return;
+			}
+
 			activeSlides[ 0 ].css( "left", data.deltaX + "px" );
 			activeSlides[ 1 ].css( "left", data.deltaX < 0 ? data.w + data.deltaX + "px" : -data.w + data.deltaX + "px" );
 		} )
@@ -332,22 +369,26 @@
 			}
 			var activeSlides = getActiveSlides( $( this ), data.deltaX ),
 				newSlide = Math.abs( data.deltaX ) > 45;
-			
+
+			if ( isDragPrevented(this, "drag", activeSlides, data.deltaX) ) {
+				return;
+			}
+
 			$( this ).one( navigator.userAgent.indexOf( "AppleWebKit" ) ? "webkitTransitionEnd" : "transitionEnd", function(){
 				activeSlides[ 0 ].add( activeSlides[ 1 ] ).css( "left", "" );
 				$( this ).trigger( "goto." + pluginName, activeSlides[ 1 ] );
-			});			
-				
+			});
+
 			if( newSlide ){
 				activeSlides[ 0 ].removeClass( activeClass ).css( "left", data.deltaX > 0 ? data.w  + "px" : -data.w  + "px" );
 				activeSlides[ 1 ].addClass( activeClass ).css( "left", 0 );
 			}
 			else {
 				activeSlides[ 0 ].css( "left", 0);
-				activeSlides[ 1 ].css( "left", data.deltaX > 0 ? -data.w  + "px" : data.w  + "px" );	
+				activeSlides[ 1 ].css( "left", data.deltaX > 0 ? -data.w  + "px" : data.w  + "px" );
 			}
 		} );
-		
+
 }(jQuery));
 /*
  * responsive-carousel pagination extension
