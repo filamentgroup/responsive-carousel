@@ -7,7 +7,7 @@
  */
 
 (function($) {
-	
+
 	var pluginName = "carousel",
 		initSelector = "." + pluginName,
 		noTrans = pluginName + "-no-transition",
@@ -21,12 +21,12 @@
 					xPerc,
 					yPerc,
 					setData = function( e ){
-						
+
 						var touches = e.touches || e.originalEvent.touches,
 							$elem = $( e.target ).closest( initSelector );
-						
+
 						if( e.type === "touchstart" ){
-							origin = { 
+							origin = {
 								x : touches[ 0 ].pageX,
 								y: touches[ 0 ].pageY
 							};
@@ -47,7 +47,7 @@
 					emitEvents = function( e ){
 						setData( e );
 						if( data.touches.length === 1 ){
-							$( e.target ).closest( initSelector ).trigger( "drag" + e.type.split( "touch" )[ 1], data );
+							$( e.target ).closest( initSelector ).trigger( "touch.drag" + e.type.split( "touch" )[ 1], data );
 						}
 					};
 
@@ -62,20 +62,20 @@
 						if( !iOS ){
 							e.preventDefault();
 							window.scrollBy( 0, -data.deltaY );
-						}					
+						}
 					} )
 					.bind( "touchend", function( e ){
 						$( this ).removeClass( noTrans );
 						emitEvents( e );
 					} );
-					
-					
+
+
 			}
 		};
-			
+
 	// add methods
-	$.extend( $.fn[ pluginName ].prototype, touchMethods ); 
-	
+	$.extend( $.fn[ pluginName ].prototype, touchMethods );
+
 	// DOM-ready auto-init
 	$( document ).on( "create." + pluginName, initSelector, function(){
 		$( this )[ pluginName ]( "_dragBehavior" );

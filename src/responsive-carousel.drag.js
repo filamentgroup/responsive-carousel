@@ -7,7 +7,7 @@
  */
 
 (function($) {
-
+	
 	var pluginName = "carousel",
 		initSelector = "." + pluginName,
 		activeClass = pluginName + "-active",
@@ -21,71 +21,46 @@
 				forward = deltaX < 0,
 				nextNum = activeNum + (forward ? 1 : -1),
 				$to = $carousel.find( "." + itemClass ).eq( nextNum - 1 );
-
+				
 			if( !$to.length ){
 				$to = $carousel.find( "." + itemClass )[ forward ? "first" : "last" ]();
 			}
-
-			return [ $from, $to ];
-		},
-		isDragPrevented = function( element, event, slides, delta ) {
-			var before = $.Event( event + "." + pluginName );
-
-			$( element ).trigger( before, {
-				$from: $( slides[0] ),
-				$to: $( slides[1] ),
-				direction: delta < 0 ? "forward" : "backward"
-			});
-
-			if( before.isDefaultPrevented() ) {
-				return true;
-			}
-
-			return false;
+			
+			return [ $from, $to, nextNum-1 ];
 		};
-
-
+		
 	// Touch handling
 	$( document )
-		.on( "dragmove", initSelector, function( e, data ){
+		.on( "touch.dragmove", initSelector, function( e, data ){
 
 			if( !dragThreshold( data.deltaX ) ){
 				return;
 			}
-
 			var activeSlides = getActiveSlides( $( this ), data.deltaX );
-
-			if ( isDragPrevented( this, "beforedrag", activeSlides, data.deltaX) ) {
-				return;
-			}
-
+			
 			activeSlides[ 0 ].css( "left", data.deltaX + "px" );
 			activeSlides[ 1 ].css( "left", data.deltaX < 0 ? data.w + data.deltaX + "px" : -data.w + data.deltaX + "px" );
 		} )
-		.on( "dragend", initSelector, function( e, data ){
+		.on( "touch.dragend", initSelector, function( e, data ){
 			if( !dragThreshold( data.deltaX ) ){
 				return;
 			}
 			var activeSlides = getActiveSlides( $( this ), data.deltaX ),
 				newSlide = Math.abs( data.deltaX ) > 45;
-
-			if ( isDragPrevented(this, "drag", activeSlides, data.deltaX) ) {
-				return;
-			}
-
+			
 			$( this ).one( navigator.userAgent.indexOf( "AppleWebKit" ) ? "webkitTransitionEnd" : "transitionEnd", function(){
 				activeSlides[ 0 ].add( activeSlides[ 1 ] ).css( "left", "" );
-				$( this ).trigger( "goto." + pluginName, activeSlides[ 1 ] );
+				$( this ).trigger( "goto." + pluginName, [ activeSlides[ 1 ], activeSlides[ 2 ] ] );
 			});
-
+				
 			if( newSlide ){
 				activeSlides[ 0 ].removeClass( activeClass ).css( "left", data.deltaX > 0 ? data.w  + "px" : -data.w  + "px" );
 				activeSlides[ 1 ].addClass( activeClass ).css( "left", 0 );
 			}
 			else {
 				activeSlides[ 0 ].css( "left", 0);
-				activeSlides[ 1 ].css( "left", data.deltaX > 0 ? -data.w  + "px" : data.w  + "px" );
+				activeSlides[ 1 ].css( "left", data.deltaX > 0 ? -data.w  + "px" : data.w  + "px" );	
 			}
 		} );
-
+		
 }(jQuery));
