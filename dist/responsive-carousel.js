@@ -333,8 +333,7 @@
 		
 	// Touch handling
 	$( document )
-		.on( "touch.dragmove", initSelector, function( e, data ){
-
+		.on( pluginName + ".dragmove", initSelector, function( e, data ){
 			if( !dragThreshold( data.deltaX ) ){
 				return;
 			}
@@ -343,7 +342,7 @@
 			activeSlides[ 0 ].css( "left", data.deltaX + "px" );
 			activeSlides[ 1 ].css( "left", data.deltaX < 0 ? data.w + data.deltaX + "px" : -data.w + data.deltaX + "px" );
 		} )
-		.on( "touch.dragend", initSelector, function( e, data ){
+		.on( pluginName + ".dragend", initSelector, function( e, data ){
 			if( !dragThreshold( data.deltaX ) ){
 				return;
 			}

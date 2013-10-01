@@ -47,7 +47,7 @@
 					emitEvents = function( e ){
 						setData( e );
 						if( data.touches.length === 1 ){
-							$( e.target ).closest( initSelector ).trigger( "touch.drag" + e.type.split( "touch" )[ 1], data );
+							$( e.target ).closest( initSelector ).trigger( pluginName + ".drag" + e.type.split( "touch" )[ 1 ], data );
 						}
 					};
 

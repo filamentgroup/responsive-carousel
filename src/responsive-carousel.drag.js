@@ -30,8 +30,13 @@
 		};
 		
 	// Touch handling
+<<<<<<< HEAD
 	$( document )
 		.on( "touch.dragmove", initSelector, function( e, data ){
+=======
+	$( initSelector )
+		.live( pluginName + ".dragmove", function( e, data ){
+>>>>>>> Prefixes carousel events (dragend appears to be a drag-and-drop event in Chrome, now).
 
 			if( !dragThreshold( data.deltaX ) ){
 				return;
@@ -41,7 +46,11 @@
 			activeSlides[ 0 ].css( "left", data.deltaX + "px" );
 			activeSlides[ 1 ].css( "left", data.deltaX < 0 ? data.w + data.deltaX + "px" : -data.w + data.deltaX + "px" );
 		} )
+<<<<<<< HEAD
 		.on( "touch.dragend", initSelector, function( e, data ){
+=======
+		.live(  pluginName + ".dragend", function( e, data ){
+>>>>>>> Prefixes carousel events (dragend appears to be a drag-and-drop event in Chrome, now).
 			if( !dragThreshold( data.deltaX ) ){
 				return;
 			}
