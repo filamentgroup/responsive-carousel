@@ -5,10 +5,7 @@ A jQuery-based script for responsive carousels that work with mouse, touch, and 
 [![Build Status](https://travis-ci.org/filamentgroup/responsive-carousel.png)](https://travis-ci.org/filamentgroup/responsive-carousel)
 
 ## Getting Started
-Download the [production version][min] or the [development version][max].
-
-[min]: https://raw.github.com/filamentgroup/responsive-carousel/master/dist/responsive-carousel.min.js
-[max]: https://raw.github.com/filamentgroup/responsive-carousel/master/dist/responsive-carousel.js
+Get the production version (.min.js) or the development version (.js) from the [releases page](https://github.com/filamentgroup/responsive-carousel/releases). Click the `dist-<version>.tar.gz` download.
 
 In your web page:
 
