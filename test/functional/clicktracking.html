@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Responsive Carousel Demo Page</title>
+  <!-- Load local jQuery, removing access to $ (use jQuery, not $). -->
+  <script src="../../libs/jquery/jquery.js"></script>
+  <link rel="stylesheet" href="../../src/responsive-carousel.css" media="screen">
+  <link rel="stylesheet" href="../assets/demostyles.css">
+  <!-- Load local lib and tests. -->
+  <script src="../../src/responsive-carousel.js"></script>
+  <script src="../../src/responsive-carousel.autoinit.js"></script>
+  <script src="../../src/responsive-carousel.clicktracking.js"></script>
+  <script type="text/javascript">
+    window._gaq = []; /* mocked Google Analytics tracking array, on a real
+                       * system this will be an object
+                      */
+    // override the array push to output log entries to our list
+    window._gaq.push = function( array ) {
+      $( '#log' ).append( '<li>' + array.join( ', ' ) + '</li>' );
+    }
+  </script>
+</head>
+<body>
+	<div class="carousel" data-click-tracking data-click-tracking-next="User action,image_arrow,next" data-click-tracking-prev="User action,image_arrow,prev">
+	    <div>
+	        <img src="../assets/large.jpg">
+	    </div>
+	    <div>
+	        <img src="../assets/monks.jpg">
+	    </div>
+	    <div>
+	        <img src="../assets/monkey.jpg">
+	    </div>
+	</div>
+    <p>Press Prev/Next to see events added to the click tracker below</p>
+    <h3>Events are added to the Google Analytics _gaq:</h3>
+    <ul id=log></ul>
+</body>
+</html>
