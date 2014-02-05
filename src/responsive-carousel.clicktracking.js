@@ -70,7 +70,7 @@
 	$.extend( $.fn[ pluginName ].prototype, methods ); 
 	
 	// DOM-ready auto-init
-	$( initSelector ).on( "create." + pluginName, function(){
+	$( document ).on( "create." + pluginName, initSelector, function(){
 		$( this )[ pluginName ]( "_clickTrackingInit" );
 	} );
 }(jQuery));
