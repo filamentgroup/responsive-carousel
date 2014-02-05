@@ -17,19 +17,17 @@
 		trackParametersPrev = [ '_trackEvent' ],
 		methods = {
 			trackEvent: function( trackParameters ) {
-				if( _gaq !== undefined && _gaq.length ) {
+				if( window._gaq !== undefined ) {
 					_gaq.push( trackParameters );
 				}
 			},
 
-			m_next: function(){
+			c_next: function(){
 				$( this )[ pluginName ]( "trackEvent", trackParametersNext );
-				$( this )[ pluginName ]( "m_goTo", "+1" );
 			},
 
-			m_prev: function(){
+			c_prev: function(){
 				$( this )[ pluginName ]( "trackEvent", trackParametersPrev );
-				$( this )[ pluginName ]( "m_goTo", "-1" );
 			},
 
 			_bindClickTrackingEventListeners: function(){
@@ -37,7 +35,7 @@
 					.bind( "click", function( e ){
 						var targ = $( e.target ).closest( "a[href='#next'],a[href='#prev']" );
 						if( targ.length ){
-							$elem[ pluginName ]( targ.is( "[href='#next']" ) ? "m_next" : "m_prev" );
+							$elem[ pluginName ]( targ.is( "[href='#next']" ) ? "c_next" : "c_prev" );
 							e.preventDefault();
 						}
 					});
