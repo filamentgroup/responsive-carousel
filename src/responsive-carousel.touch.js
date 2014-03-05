@@ -20,6 +20,7 @@
 					data = {},
 					xPerc,
 					yPerc,
+					stopMove,
 					setData = function( e ){
 
 						var touches = e.touches || e.originalEvent.touches,
@@ -31,7 +32,7 @@
 								y: touches[ 0 ].pageY
 							};
 						}
-
+						stopMove = false;
 						if( touches[ 0 ] && touches[ 0 ].pageX ){
 							data.touches = touches;
 							data.deltaX = touches[ 0 ].pageX - origin.x;
@@ -57,11 +58,15 @@
 						emitEvents( e );
 					} )
 					.bind( "touchmove", function( e ){
-						setData( e );
-						emitEvents( e );
-						if( !iOS ){
+						if( Math.abs( data.deltaX ) > 10 ){
 							e.preventDefault();
-							window.scrollBy( 0, -data.deltaY );
+						}
+						else if( Math.abs( data.deltaY ) > 3 ){
+							stopMove = true;
+						}
+						if( !stopMove ){
+							setData( e );
+							emitEvents( e );
 						}
 					} )
 					.bind( "touchend", function( e ){
