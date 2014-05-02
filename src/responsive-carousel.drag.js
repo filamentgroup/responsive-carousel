@@ -49,7 +49,7 @@
 			
 			$( this ).one( navigator.userAgent.indexOf( "AppleWebKit" ) ? "webkitTransitionEnd" : "transitionEnd", function(){
 				activeSlides[ 0 ].add( activeSlides[ 1 ] ).css( "left", "" );
-				$( this ).trigger( "goto." + pluginName, [ activeSlides[ 1 ], activeSlides[ 2 ] ] );
+				$( this ).trigger( "goto." + pluginName, activeSlides[ newSlide ? 1 : 0 ] );
 			});
 				
 			if( newSlide ){
