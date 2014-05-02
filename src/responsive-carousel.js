@@ -62,6 +62,7 @@
 					.addClass( activeClass );
 
 				$(this)[ pluginName ]( "_addNextPrevClasses" );
+				$( this ).data( pluginName + "data", "init"  );
 			},
 
 			_addNextPrevClasses: function(){
