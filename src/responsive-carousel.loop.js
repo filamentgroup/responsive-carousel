@@ -42,7 +42,7 @@
 			// if the request index is greater than the # of items or smaller than zero
 			if( (currentIndex === 0 && data.direction == "backward") ||
 					(currentIndex == items.length - 1 && data.direction == "forward" )) {
-				event.preventDefault();
+				data.isDefaultPrevented = true;
 				return;
 			}
 

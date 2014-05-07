@@ -107,17 +107,21 @@
 					nextNum = typeof( num ) === "number" ? num : activeNum + parseFloat(num),
 					index = nextNum - 1,
 					carouselItems = $( this ).find( "." + itemClass ),
-					beforeGoto = $.Event( "beforegoto." + pluginName ),
+					beforeGoto = "beforegoto." + pluginName,
 					$to = carouselItems.eq( index ),
-					reverse = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : reverseClass;
+					reverse = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : reverseClass,
+					data;
 
-				$self.trigger( beforeGoto, {
+				$self.trigger( beforeGoto, data = {
 					$from: $from,
 					$to: $to,
 					direction: nextNum > activeNum ? "forward" : "backward"
 				});
 
-				if( beforeGoto.isDefaultPrevented() ) {
+
+				// NOTE this is a quick hack to approximate the api that jQuery provides
+				//      without depending on the API (for use with similarly shaped apis)
+				if( data.isDefaultPrevented ) {
 					return;
 				}
 
