@@ -1,14 +1,11 @@
-# Responsive Carousel
+# Responsive Carousel [![Build Status](https://travis-ci.org/filamentgroup/responsive-carousel.png)](https://travis-ci.org/filamentgroup/responsive-carousel)
+
+[![Filament Group](http://filamentgroup.com/images/fg-logo-positive-sm-crop.png) ](http://www.filamentgroup.com/)
 
 A jQuery-based script for responsive carousels that work with mouse, touch, and keyboard
 
-[![Build Status](https://travis-ci.org/filamentgroup/responsive-carousel.png)](https://travis-ci.org/filamentgroup/responsive-carousel)
-
 ## Getting Started
-Download the [production version][min] or the [development version][max].
-
-[min]: https://raw.github.com/filamentgroup/responsive-carousel/master/dist/responsive-carousel.min.js
-[max]: https://raw.github.com/filamentgroup/responsive-carousel/master/dist/responsive-carousel.js
+Get the production version (.min.js) or the development version (.js) from the [releases page](https://github.com/filamentgroup/responsive-carousel/releases). Click the `dist-<version>.tar.gz` download.
 
 In your web page:
 
@@ -75,7 +72,13 @@ The default carousel (`responsive-carousel.js`) returns to the initial active it
 </div>
 ```
 
-When it reaches the end or beginning of the list, the inserted navigation links (`a.next` and `a.prev`) will be decorated with an additional `disabled` class. This class receives no properties from the library by default.
+Then, after both the carousel and plugin have loaded you can initialize as normal.
+
+```javascript
+$( ".carousel" ).carousel();
+```
+
+When the carousel reaches the end or beginning of the list, the inserted navigation links (`a.next` and `a.prev`) will be decorated with an additional `disabled` class. This class receives no properties from the library by default.
 
 For a demo see `test/functional/no-loop.html`.
 

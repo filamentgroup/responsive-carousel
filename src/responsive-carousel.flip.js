@@ -32,10 +32,10 @@
 		
 	// Touch handling
 	$( document )
-		.on( "dragstart", initSelector, function( e, data ){
+		.on( pluginName + ".dragstart", initSelector, function( e, data ){
 			$( this ).find( "." + topClass ).removeClass( topClass );
 		})
-		.on( "dragmove", function( e, data ){
+		.on( pluginName + ".dragmove", function( e, data ){
 			if( !dragThreshold( data.xPercent ) ){
 				return;
 			}
@@ -50,7 +50,7 @@
 			activeSlides[ halfWay ? 0 : 1 ].removeClass( topClass );
 			
 		} )
-		.on( "dragend", initSelector, function( e, data ){
+		.on( pluginName + ".dragend", initSelector, function( e, data ){
 			if( !dragThreshold( data.xPercent ) ){
 				return;
 			}

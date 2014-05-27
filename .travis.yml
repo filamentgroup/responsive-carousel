@@ -4,3 +4,7 @@ node_js:
 branches:
   only:
     - master
+    - grunt-update
+# TODO s/qunit// once the linter passes
+script: "node node_modules/.bin/grunt travis"
+before_script: "npm install"

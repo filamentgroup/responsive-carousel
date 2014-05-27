@@ -7,7 +7,7 @@
  */
 
 (function($) {
-	
+
 	var pluginName = "carousel",
 		initSelector = "." + pluginName,
 		noTrans = pluginName + "-no-transition",
@@ -20,18 +20,19 @@
 					data = {},
 					xPerc,
 					yPerc,
+					stopMove,
 					setData = function( e ){
-						
+
 						var touches = e.touches || e.originalEvent.touches,
 							$elem = $( e.target ).closest( initSelector );
-						
+
 						if( e.type === "touchstart" ){
-							origin = { 
+							origin = {
 								x : touches[ 0 ].pageX,
 								y: touches[ 0 ].pageY
 							};
 						}
-
+						stopMove = false;
 						if( touches[ 0 ] && touches[ 0 ].pageX ){
 							data.touches = touches;
 							data.deltaX = touches[ 0 ].pageX - origin.x;
@@ -47,7 +48,7 @@
 					emitEvents = function( e ){
 						setData( e );
 						if( data.touches.length === 1 ){
-							$( e.target ).closest( initSelector ).trigger( "drag" + e.type.split( "touch" )[ 1], data );
+							$( e.target ).closest( initSelector ).trigger( pluginName + ".drag" + e.type.split( "touch" )[ 1 ], data );
 						}
 					};
 
@@ -57,25 +58,29 @@
 						emitEvents( e );
 					} )
 					.bind( "touchmove", function( e ){
-						setData( e );
-						emitEvents( e );
-						if( !iOS ){
+						if( Math.abs( data.deltaX ) > 10 ){
 							e.preventDefault();
-							window.scrollBy( 0, -data.deltaY );
-						}					
+						}
+						else if( Math.abs( data.deltaY ) > 3 ){
+							stopMove = true;
+						}
+						if( !stopMove ){
+							setData( e );
+							emitEvents( e );
+						}
 					} )
 					.bind( "touchend", function( e ){
 						$( this ).removeClass( noTrans );
 						emitEvents( e );
 					} );
-					
-					
+
+
 			}
 		};
-			
+
 	// add methods
-	$.extend( $.fn[ pluginName ].prototype, touchMethods ); 
-	
+	$.extend( $.fn[ pluginName ].prototype, touchMethods );
+
 	// DOM-ready auto-init
 	$( document ).on( "create." + pluginName, initSelector, function(){
 		$( this )[ pluginName ]( "_dragBehavior" );

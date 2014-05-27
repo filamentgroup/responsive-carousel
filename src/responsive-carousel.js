@@ -62,6 +62,7 @@
 					.addClass( activeClass );
 
 				$(this)[ pluginName ]( "_addNextPrevClasses" );
+				$( this ).data( pluginName + "data", "init"  );
 			},
 
 			_addNextPrevClasses: function(){
@@ -106,16 +107,21 @@
 					nextNum = typeof( num ) === "number" ? num : activeNum + parseFloat(num),
 					index = nextNum - 1,
 					carouselItems = $( this ).find( "." + itemClass ),
-					beforeGoto = $.Event( "beforegoto." + pluginName ),
+					beforeGoto = "beforegoto." + pluginName,
 					$to = carouselItems.eq( index ),
-					reverse = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : reverseClass;
+					reverse = ( typeof( num ) === "string" && !(parseFloat(num)) ) || nextNum > activeNum ? "" : reverseClass,
+					data;
 
-				$self.trigger( beforeGoto, {
-					nextIndex: index,
-					items: carouselItems
+				$self.trigger( beforeGoto, data = {
+					$from: $from,
+					$to: $to,
+					direction: nextNum > activeNum ? "forward" : "backward"
 				});
 
-				if( beforeGoto.isDefaultPrevented() ) {
+
+				// NOTE this is a quick hack to approximate the api that jQuery provides
+				//      without depending on the API (for use with similarly shaped apis)
+				if( data.isDefaultPrevented ) {
 					return;
 				}
 
@@ -131,7 +137,7 @@
 				}
 
 				// added to allow pagination to track
-				$self.trigger( "goto." + pluginName, $to );
+				$self.trigger( "goto." + pluginName, [ $to, index ] );
 			},
 
 			update: function(){

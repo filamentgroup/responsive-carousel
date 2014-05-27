@@ -26,13 +26,12 @@
 				$to = $carousel.find( "." + itemClass )[ forward ? "first" : "last" ]();
 			}
 			
-			return [ $from, $to ];
+			return [ $from, $to, nextNum-1 ];
 		};
 		
 	// Touch handling
 	$( document )
-		.on( "dragmove", initSelector, function( e, data ){
-
+		.on( pluginName + ".dragmove", initSelector, function( e, data ){
 			if( !dragThreshold( data.deltaX ) ){
 				return;
 			}
@@ -41,7 +40,7 @@
 			activeSlides[ 0 ].css( "left", data.deltaX + "px" );
 			activeSlides[ 1 ].css( "left", data.deltaX < 0 ? data.w + data.deltaX + "px" : -data.w + data.deltaX + "px" );
 		} )
-		.on( "dragend", initSelector, function( e, data ){
+		.on( pluginName + ".dragend", initSelector, function( e, data ){
 			if( !dragThreshold( data.deltaX ) ){
 				return;
 			}
@@ -50,8 +49,8 @@
 			
 			$( this ).one( navigator.userAgent.indexOf( "AppleWebKit" ) ? "webkitTransitionEnd" : "transitionEnd", function(){
 				activeSlides[ 0 ].add( activeSlides[ 1 ] ).css( "left", "" );
-				$( this ).trigger( "goto." + pluginName, activeSlides[ 1 ] );
-			});			
+				$( this ).trigger( "goto." + pluginName, activeSlides[ newSlide ? 1 : 0 ] );
+			});
 				
 			if( newSlide ){
 				activeSlides[ 0 ].removeClass( activeClass ).css( "left", data.deltaX > 0 ? data.w  + "px" : -data.w  + "px" );
