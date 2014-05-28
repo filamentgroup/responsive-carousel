@@ -82,8 +82,8 @@
 	$.extend( $.fn[ pluginName ].prototype, touchMethods );
 
 	// DOM-ready auto-init
-	$( document ).on( "create." + pluginName, initSelector, function(){
-		$( this )[ pluginName ]( "_dragBehavior" );
+	$( document ).bind( "create." + pluginName, function( e ){
+		$( e.target )[ pluginName ]( "_dragBehavior" );
 	} );
 
 }(jQuery));
