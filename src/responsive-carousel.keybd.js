@@ -15,8 +15,8 @@
 			clearTimeout( buffer );
 			buffer = setTimeout(function() {
 				var $carousel = $( e.target ).closest( initSelector );
-				
-				if( e.keyCode === 39 || e.keyCode === 40 ){ 
+
+				if( e.keyCode === 39 || e.keyCode === 40 ){
 					$carousel[ pluginName ]( "next" );
 				}
 				else if( e.keyCode === 37 || e.keyCode === 38 ){
@@ -31,8 +31,10 @@
 
 	// Touch handling
 	$( document )
-		.on( "click", navSelector, function( e ) {
-			$( e.target )[ 0 ].focus();
+		.bind( "click", function( e ) {
+			if( $( e.target ).closest( initSelector ).length ){
+				$( e.target )[ 0 ].focus();
+			}
 		})
-		.on( "keydown", navSelector, keyNav );
+		.bind( "keydown", keyNav );
 }(jQuery));
