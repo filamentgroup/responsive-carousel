@@ -50,7 +50,7 @@
 
 						pagLink = pagLink.closest( "a" );
 						var href = pagLink.attr( "href" );
-						
+
 						if( pagLink.closest( "." + paginationClass ).length && href ){
 							$( this )[ pluginName ]( "goTo", parseFloat( href.split( "#" )[ 1 ] ) );
 							e.preventDefault();
@@ -59,7 +59,7 @@
 					// update pagination on page change
 					.bind( "goto." + pluginName, function( e, to  ){
 						var index = to ? $( this ).find( "div.carousel-item" ).index( to ) : 0;
-						
+
 						$( this ).find( "ol." + paginationClass + " li" )
 							.removeClass( activeClass )
 							.eq( index )
@@ -69,19 +69,19 @@
 					.trigger( "goto." + pluginName );
 			}
 		};
-			
+
 	// add methods
-	$.extend( $.fn[ pluginName ].prototype, paginationMethods ); 
-	
+	$.extend( $.fn[ pluginName ].prototype, paginationMethods );
+
 	// create pagination on create and update
 	$( document )
-		.on( "create." + pluginName, initSelector, function(){
-			$( this )
+		.bind( "create." + pluginName, function( e ){
+			$( e.target )
 				[ pluginName ]( "_createPagination" )
 				[ pluginName ]( "_bindPaginationEvents" );
 		} )
-		.on( "update." + pluginName, initSelector, function(){
-			$( this )[ pluginName ]( "_createPagination" );
+		.bind( "update." + pluginName, function( e ){
+			$( e.target )[ pluginName ]( "_createPagination" );
 		} );
 
 }(jQuery));
