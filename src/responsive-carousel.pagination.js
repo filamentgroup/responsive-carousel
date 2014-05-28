@@ -16,7 +16,7 @@
 				var nav = $( this ).find( "." + pluginName + "-nav" ),
 					items = $( this ).find( "." + pluginName + "-item" ),
 					pNav = $( "<ol class='" + paginationClass + "'></ol>" ),
-					num, thumb, content;
+					num, thumb, content, itemType;
 
 				// remove any existing nav
 				nav.find( "." + paginationClass ).remove();
@@ -24,12 +24,17 @@
 				items.each(function(i){
 						num = i + 1;
 						thumb = $( this ).attr( "data-thumb" );
+						itemType = $( this ).attr( "data-type" );
 						content = num;
 						if( thumb ){
 							content = "<img src='" + thumb + "' alt=''>";
 						}
-						pNav.append( "<li><a href='#" + num + "' title='Go to slide " + num + "'>" + content + "</a>" );
+						pNav.append( "<li" + ( itemType ? " class='carousel-" + itemType + "'" : "" ) + "><a href='#" + num + "' title='Go to slide " + num + "'>" + (itemType ? itemType : content )+ "</a>" );
+					if( itemType ){
+						nav.addClass( "has-" + itemType );
+					}
 				});
+
 
 				if( thumb ){
 					pNav.addClass( pluginName + "-nav-thumbs" );
@@ -38,6 +43,7 @@
 				nav
 					.addClass( pluginName + "-nav-paginated" )
 					.find( "a" ).first().after( pNav );
+
 			},
 			_bindPaginationEvents: function(){
 				$( this )
