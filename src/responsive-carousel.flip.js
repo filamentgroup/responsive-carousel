@@ -7,7 +7,7 @@
  */
 
 (function($) {
-	
+
 	var pluginName = "carousel",
 		initSelector = "." + pluginName,
 		activeClass = pluginName + "-active",
@@ -22,41 +22,41 @@
 				forward = deltaX < 0,
 				nextNum = activeNum + (forward ? 1 : -1),
 				$to = $carousel.find( "." + itemClass ).eq( nextNum - 1 );
-				
+
 			if( !$to.length ){
 				$to = $carousel.find( "." + itemClass )[ forward ? "first" : "last" ]();
 			}
-			
+
 			return [ $from, $to ];
 		};
-		
+
 	// Touch handling
 	$( document )
-		.on( pluginName + ".dragstart", initSelector, function( e, data ){
-			$( this ).find( "." + topClass ).removeClass( topClass );
+		.bind( pluginName + ".dragstart", function( e, data ){
+			$( e.target ).find( "." + topClass ).removeClass( topClass );
 		})
-		.on( pluginName + ".dragmove", function( e, data ){
+		.bind( pluginName + ".dragmove", function( e, data ){
 			if( !dragThreshold( data.xPercent ) ){
 				return;
 			}
-			var activeSlides = getActiveSlides( $( this ), data.deltaX ),
+			var activeSlides = getActiveSlides( $( e.target ), data.deltaX ),
 				degs = data.xPercent * 180,
 				halfWay = Math.abs(data.xPercent) > 0.5;
-				
+
 			activeSlides[ 0 ].css( "-webkit-transform", "rotateY("+ degs +"deg)" );
 			activeSlides[ 1 ].css( "-webkit-transform", "rotateY("+ ( ( degs > 0 ? -180 : 180 ) + degs ) +"deg)");
-			
+
 			activeSlides[ halfWay ? 1 : 0 ].addClass( topClass );
 			activeSlides[ halfWay ? 0 : 1 ].removeClass( topClass );
-			
+
 		} )
-		.on( pluginName + ".dragend", initSelector, function( e, data ){
+		.bind( pluginName + ".dragend", function( e, data ){
 			if( !dragThreshold( data.xPercent ) ){
 				return;
 			}
-			var activeSlides = getActiveSlides( $( this ), data.deltaX ),
+			var activeSlides = getActiveSlides( $( e.target ), data.deltaX ),
 				newSlide = Math.abs( data.xPercent ) > 0.5;
-			
+
 			if( newSlide ){
 				activeSlides[ 0 ].removeClass( activeClass );
 				activeSlides[ 1 ].addClass( activeClass );
@@ -65,9 +65,9 @@
 				activeSlides[ 0 ].addClass( activeClass );
 				activeSlides[ 1 ].removeClass( activeClass );
 			}
-			
+
 			activeSlides[ 0 ].add( activeSlides[ 1 ] ).removeClass( topClass ).css( "-webkit-transform", "" );
-			
+
 		} );
-		
+
 }(jQuery));
