@@ -7,8 +7,8 @@
 			};
 
 	// DOM-ready auto-init
-	$( document ).on( "beforecreate." + pluginName, function(){
-		$( this )[ pluginName ]( "_loopInit" );
+	$( document ).bind( "beforecreate." + pluginName, function(){
+		$( e.target )[ pluginName ]( "_loopInit" );
 	});
 
 	$.extend( $.fn[pluginName].prototype, {
