@@ -36,5 +36,9 @@
 				$( e.target )[ 0 ].focus();
 			}
 		})
-		.bind( "keydown", keyNav );
+		.bind( "keydown", function( e ){
+			if( $( e.target ).closest( initSelector ) .length ){
+				keyNav( e );
+			}
+		} );
 }(jQuery));
