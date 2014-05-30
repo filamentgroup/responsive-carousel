@@ -12,6 +12,10 @@
 		navSelector = "." + pluginName + "-nav a",
 		buffer,
 		keyNav = function( e ) {
+			if( e.keyCode  < 37 || e.keyCode > 40 ) {
+				return;
+			}
+			e.preventDefault();
 			clearTimeout( buffer );
 			buffer = setTimeout(function() {
 				var $carousel = $( e.target ).closest( initSelector );
@@ -23,10 +27,6 @@
 					$carousel[ pluginName ]( "prev" );
 				}
 			}, 200 );
-
-			if( 37 <= e.keyCode <= 40 ) {
-				e.preventDefault();
-			}
 		};
 
 	// Touch handling
