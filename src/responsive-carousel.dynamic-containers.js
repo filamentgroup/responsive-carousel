@@ -27,7 +27,7 @@
 					$kids = $( this ).find( "." + itemClass );
 				}
 				else{
-					$kids.appendTo( $self );
+					$kids.prependTo( $self );
 					$rows.remove();
 				}
 				
