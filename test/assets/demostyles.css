@@ -1,3 +1,57 @@
+body {
+	font-family:sans-serif
+}
+.nav-container:before,
+.nav-container:after {
+	content: " "; /* 1 */
+	display: table; /* 2 */
+}
+.nav-container:after {
+	clear: both;
+}
+.nav-container {
+	*zoom: 1;
+}
+.docs-globalnav {
+	list-style-type: none;
+	float: left;
+	width: 100%;
+	background-color: #F2F1ED;
+	margin: 0;
+	padding: 0;
+}
+.docs-globalnav a {
+	padding: 0.6em 1.5em 0.5em;
+	display: block;
+	border-bottom: 1px solid #DDD;
+}
+.docs-nav a {
+	font-size: 0.9em;
+}
+@media screen and (min-width: 50em) {
+	.docs-globalnav .docs-nav {
+		border: none;
+		padding: .25em 0 0 0;
+	}
+	.docs-globalnav a {
+		padding: .8em 1.5em;
+		float: left;
+		border-bottom: none;
+	}
+
+}
+a.current {
+	background: #fff;
+}
+a:link,
+a:visited {
+	color:#38c;
+	text-decoration:none;
+}
+a:hover {
+	color:#37b;
+	text-decoration:underline;
+}
 .carousel {
  margin: 10px auto;
  max-width: 400px;
@@ -5,32 +59,32 @@
  position: relative;
 }
 .carousel-item img {
-  width: 100%;
-  height: auto;
-  display: block;
+	width: 100%;
+	height: auto;
+	display: block;
 }
 .carousel-nav {
-  position: absolute;
-  bottom: 0;
-  z-index: 4;
-  width: 100%;
+	position: absolute;
+	bottom: 0;
+	z-index: 4;
+	width: 100%;
 }
 .carousel-nav a {
-  text-decoration: none;
-  font-size: .8em;
-  background: #fff;
-  color: #333;
-  opacity: .8;
-  padding: .5em;
-  position: absolute;
-  bottom: 0;
-  font-weight: bold;
+	text-decoration: none;
+	font-size: .8em;
+	background: #fff;
+	color: #333;
+	opacity: .8;
+	padding: .5em;
+	position: absolute;
+	bottom: 0;
+	font-weight: bold;
 }
 .carousel-nav a.prev {
-  left: 0;
+	left: 0;
 }
 .carousel-nav a.next {
-  right: 0;
+	right: 0;
 }
 .carousel-nav-paginated .carousel-active-page a {
 	background: #333;
@@ -41,103 +95,86 @@
 
 /* styled arrows */
 .arrows .carousel-nav {
-  bottom: auto;
-  top: 50%;
+	bottom: auto;
+	top: 50%;
 }
 .arrows .carousel-nav a {
-  text-indent: -9999px;
-  width: 2em;
-  height: 2em;
-  background: #fff;
-  opacity: .5;
-  overflow: hidden;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  border-radius: 100%;
+	text-indent: -9999px;
+	width: 2em;
+	height: 2em;
+	background: #fff;
+	opacity: .5;
+	overflow: hidden;
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	border-radius: 100%;
 }
 .arrows .carousel-nav a:hover,
 .arrows .carousel-nav a:focus {
-  opacity: 1;
+	opacity: 1;
 }
 .arrows .carousel-nav a.next {
-  background-image: url(arrow-right.png);
-  right: 1em;
+	background-image: url(arrow-right.png);
+	right: 1em;
 }
 .arrows .carousel-nav a.prev {
-  background-image: url(arrow-left.png);
-  left: 1em;
+	background-image: url(arrow-left.png);
+	left: 1em;
 }
 
 
 /* peek */
 .carousel.peek {
-   max-width: 500px;
+	 max-width: 500px;
 }
 .carousel.peek .carousel-item-prev,
 .carousel.peek .carousel-item-next {
-  width: 50%;
-  display: block;
-  opacity: .5;
-  position:  absolute;
-  left: 0;
-  top: 0;
-  z-index: 1;
-  -webkit-transform: scale(.6) rotate(-15deg);
-  -moz-transform: scale(.6) rotate(-15deg);
-  -o-transform: scale(.6) rotate(-15deg);
-  -ms-transform: scale(.6) rotate(-15deg);
-  transform: scale(.6) rotate(-15deg);
+	width: 50%;
+	display: block;
+	opacity: .5;
+	position:  absolute;
+	left: 0;
+	top: 0;
+	z-index: 1;
+	-webkit-transform: scale(.6) rotate(-15deg);
+	-moz-transform: scale(.6) rotate(-15deg);
+	-o-transform: scale(.6) rotate(-15deg);
+	-ms-transform: scale(.6) rotate(-15deg);
+	transform: scale(.6) rotate(-15deg);
 }
 .carousel.peek .carousel-item-next {
-  right: 0;
-  left: auto;
-  -webkit-transform: scale(.6) rotate(15deg);
-  -moz-transform: scale(.6) rotate(15deg);
-  -opera-transform: scale(.6) rotate(15deg);
-  -ms-transform: scale(.6) rotate(15deg);
-  transform: scale(.6) rotate(15deg);
+	right: 0;
+	left: auto;
+	-webkit-transform: scale(.6) rotate(15deg);
+	-moz-transform: scale(.6) rotate(15deg);
+	-opera-transform: scale(.6) rotate(15deg);
+	-ms-transform: scale(.6) rotate(15deg);
+	transform: scale(.6) rotate(15deg);
 }
 .carousel.peek .carousel-active {
-  width: 50%;
-  opacity: 1;
-  position: relative;
-  left: 25%;
-  z-index: 2;
-  box-shadow: .2em .2em .5em #aaa;
+	width: 50%;
+	opacity: 1;
+	position: relative;
+	left: 25%;
+	z-index: 2;
+	box-shadow: .2em .2em .5em #aaa;
 }
 .carousel.peek .carousel-nav {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 3;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 3;
 }
 .carousel.peek .carousel-nav a {
-  width: 20%;
-  height: 100%;
-  background: #fff;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  left: 0;
+	width: 20%;
+	height: 100%;
+	background: #fff;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	left: 0;
 }
 .carousel.peek .carousel-nav a.next {
-  left: auto;
-  right: 0;
-}
-/* Logo */
-.header {
-	background: #247201 url(http://filamentgroup.com/images/headerbg-new.jpg) no-repeat bottom left;
-}
-#fg-logo {
-	text-indent: -9999px;
-	margin: 0 auto;
-	width: 287px;
-	height: 52px;
-	background-image: url(http://filamentgroup.com/images/fg-logo-icon.png);
-}
-@media (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5){
-	#fg-logo {
-		background-size: 287px 52px;
-		background-image: url(http://filamentgroup.com/images/fg-logo-icon-lrg.png);
-	}
+	left: auto;
+	right: 0;
 }
