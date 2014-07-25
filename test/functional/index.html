@@ -4,9 +4,15 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Responsive Carousel Demos</title>
-	<link href="/demo-head/demohead.css" rel="stylesheet">
-	<link href="../assets/demostyles.css" rel="stylesheet">
-	<script src="/demo-head/loadfont.js"></script>
+	<link href="https://filamentgroup.github.io/demo-head/demohead.css" rel="stylesheet">
+	<script src="https://filamentgroup.github.io/demo-head/loadfont.js"></script>
+  <script src="../../libs/jquery/jquery.js"></script>
+	<script src="https://filamentgroup.github.io/demo-head/loadfont.js"></script>
+	<style>
+body {
+	font-family:sans-serif
+}
+	</style>
 </head>
 <body>
 	<div class="demo-header">
@@ -23,9 +29,8 @@
 			</ul>
 		</div>
 	</div>
-	<h1>Responsive Carousel variations</h1>
 	<div class="nav-container">
-		<div class="docs-globalnav">
+		<div class="docs-globalnav docs-globalnav-large">
 			<nav class="docs-nav">
 			<a href="default.html">Default, no transitions</a>
 			<a href="no-loop.html">Default, no revolving content</a>
@@ -44,5 +49,14 @@
 			</nav>
 		</div>
 	</div>
+	<script>
+		jQuery(function($) {
+			$( ".docs-globalnav" ).bind("click keyup", function( e ){
+				if( $(e.target).is(this) && ( e.type === "click" || e.keyCode === 13 ) ){
+					$(this).toggleClass( "menuopen" );
+				}
+			});
+		});
+	</script>
 </body>
 </html>
