@@ -1,39 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Responsive Carousel Demo Page</title>
-  <!-- Load local jQuery, removing access to $ (use jQuery, not $). -->
-  <script src="../../libs/jquery/jquery.js"></script>
-  <script src="../../libs/ajaxInclude/ajaxinclude.jquery.js"></script>
-  <link rel="stylesheet" href="../../src/responsive-carousel.css" media="screen">
-  <link rel="stylesheet" href="../../src/responsive-carousel.slide.css" media="screen">
-  <link rel="stylesheet" href="../assets/demostyles.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Responsive Carousel Demo Page</title>
+	<!-- Load local jQuery, removing access to $ (use jQuery, not $). -->
+	<script src="../../libs/jquery/jquery.js"></script>
+	<script src="../../libs/ajaxInclude/ajaxinclude.jquery.js"></script>
+	<link rel="stylesheet" href="../../src/responsive-carousel.css" media="screen">
+	<link rel="stylesheet" href="../../src/responsive-carousel.slide.css" media="screen">
+	<link rel="stylesheet" href="../assets/demostyles.css">
 	<link rel="stylesheet" href="https://filamentgroup.github.io/demo-head/demohead.css">
-  <style>
-  .carousel .carousel-item {
-  	counter-increment: section;
-  }
-  .carousel .carousel-item:after {
-	  content: counter(section);
-	  position: absolute;
-	  margin: 1em 0 0 1em;
-	  font-family: sans-serif;
-	  background: #fff;
-	  padding: .2em .5em;
-	  font-size: .8em;
-	  top: 0;
-  }
-  </style>
-  <!-- Load local lib and tests. -->
-  <script src="../../src/responsive-carousel.js"></script>
-  <script src="../../src/responsive-carousel.touch.js"></script>
-  <script src="../../src/responsive-carousel.drag.js"></script>
-  <script src="../../src/responsive-carousel.ajax.js"></script>
-  <script src="../../src/responsive-carousel.autoinit.js"></script>
+	<style>
+	.carousel .carousel-item {
+		counter-increment: section;
+	}
+	.carousel .carousel-item:after {
+		content: counter(section);
+		position: absolute;
+		margin: 1em 0 0 1em;
+		font-family: sans-serif;
+		background: #fff;
+		padding: .2em .5em;
+		font-size: .8em;
+		top: 0;
+	}
+	</style>
+	<!-- Load local lib and tests. -->
+	<script src="../../src/responsive-carousel.js"></script>
+	<script src="../../src/responsive-carousel.touch.js"></script>
+	<script src="../../src/responsive-carousel.drag.js"></script>
+	<script src="../../src/responsive-carousel.ajax.js"></script>
+	<script src="../../src/responsive-carousel.autoinit.js"></script>
 	<script src="https://filamentgroup.github.io/demo-head/loadfont.js"></script>
-  
+	
 </head>
 <body>
 	<div class="demo-header">
@@ -72,16 +72,16 @@
 		</div>
 	</div>
 	<div class="carousel" data-transition="slide">
-	    <div data-after="ajax-more.html">
-	        <img src="../assets/large.jpg">
-	    </div>		
+			<div data-after="ajax-more.html">
+					<img src="../assets/large.jpg">
+			</div>		
 	</div>
 
 
 	<div class="carousel" data-transition="slide">
-	    <div data-before="ajax-more.html">
-	        <img src="../assets/large.jpg">
-	    </div>		
+			<div data-before="ajax-more.html">
+					<img src="../assets/large.jpg">
+			</div>		
 	</div>
 	
 
