@@ -33,8 +33,7 @@
 			</ul>
 		</div>
 	</div>
-	<h1>Responsive Carousel variations</h1>
-	<div class="nav-container">
+	<div class="nav-container nav-container-large">
 		<div class="docs-globalnav docs-globalnav-large">
 			<nav class="docs-nav">
 			<a href="default.html">Default, no transitions</a>
@@ -54,18 +53,28 @@
 			</nav>
 		</div>
 	</div>
-	<div class="carousel" data-transition="slide">
+	<div class="docs-main">
+		<div class="carousel" data-transition="slide">
 			<div>
-					<img src="../assets/large.jpg">
+				<img src="../assets/large.jpg">
 			</div>
 			<div>
-					<img src="../assets/monks.jpg">
+				<img src="../assets/monks.jpg">
 			</div>
 			<div>
-					<img src="../assets/monkey.jpg">
+				<img src="../assets/monkey.jpg">
 			</div>
-		
+		</div>
 	</div>
+	<script>
+		jQuery(function($) {
+			$( ".docs-globalnav" ).bind("click keyup", function( e ){
+				if( $(e.target).is(this) && ( e.type === "click" || e.keyCode === 13 ) ){
+					$(this).toggleClass( "menuopen" );
+				}
+			});
+		});
+	</script>
 
 
 </body>

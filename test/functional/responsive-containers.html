@@ -18,38 +18,35 @@
 	<script src="../../src/responsive-carousel.autoinit.js"></script>
 	<script src="https://filamentgroup.github.io/demo-head/loadfont.js"></script>
 
- <style>
- .carousel {
-	 min-width: 100%;
- }
- .carousel-item {
-	 width: 100%;
-	 background: #fff;
- }
- img {
-	 max-width: 100%;
- }
- /* any old class name would do here */
- .slag {
-	 float: left;
-	 width: 50%;
- }
- @media (min-width: 30em){
-	 .slag {
-		 width: 33.333333333333333333%;
-	 }
- 
- }
- @media (min-width: 50em){
-	 .slag {
-		 width: 25%;
-	 }
- 
- }
- 
- </style>
- 
- 
+	<style>
+		.carousel {
+			min-width: 100%;
+		}
+		.carousel-item {
+			width: 100%;
+			background: #fff;
+		}
+		img {
+			max-width: 100%;
+		}
+		/* any old class name would do here */
+		.slag {
+			float: left;
+			width: 50%;
+		}
+		@media (min-width: 30em){
+			.slag {
+				width: 33.333333333333333333%;
+			}
+		}
+		@media (min-width: 50em){
+			.slag {
+				width: 25%;
+			}
+		}
+	</style>
+
+
 </head>
 <body>
 	<div class="demo-header">
@@ -66,8 +63,7 @@
 			</ul>
 		</div>
 	</div>
-	<h1>Responsive Carousel variations</h1>
-	<div class="nav-container">
+	<div class="nav-container nav-container-large">
 		<div class="docs-globalnav docs-globalnav-large">
 			<nav class="docs-nav">
 			<a href="default.html">Default, no transitions</a>
@@ -87,47 +83,56 @@
 			</nav>
 		</div>
 	</div>
-	<div class="carousel" data-transition="slide">
+	<div class="docs-main">
+		<div class="carousel" data-transition="slide">
 			<div class="slag">
-					<img src="../assets/large.jpg">
+				<img src="../assets/large.jpg">
 			</div>
 			<div class="slag">
-					<img src="../assets/monks.jpg">
+				<img src="../assets/monks.jpg">
 			</div>
 			<div class="slag">
-					<img src="../assets/monkey.jpg">
+				<img src="../assets/monkey.jpg">
 			</div>
 			<div class="slag">
-					<img src="../assets/large.jpg">
+				<img src="../assets/large.jpg">
 			</div>
 			<div class="slag">
-					<img src="../assets/monks.jpg">
+				<img src="../assets/monks.jpg">
 			</div>
 			<div class="slag">
-					<img src="../assets/monkey.jpg">
+				<img src="../assets/monkey.jpg">
 			</div>
-		
+
 			<div class="slag">
-					<img src="../assets/large.jpg">
-			</div>
-			<div class="slag">
-					<img src="../assets/monks.jpg">
+				<img src="../assets/large.jpg">
 			</div>
 			<div class="slag">
-					<img src="../assets/monkey.jpg">
+				<img src="../assets/monks.jpg">
 			</div>
 			<div class="slag">
-					<img src="../assets/monks.jpg">
+				<img src="../assets/monkey.jpg">
 			</div>
 			<div class="slag">
-					<img src="../assets/monkey.jpg">
+				<img src="../assets/monks.jpg">
 			</div>
 			<div class="slag">
-					<img src="../assets/monkey.jpg">
+				<img src="../assets/monkey.jpg">
 			</div>
-		
-		
+			<div class="slag">
+				<img src="../assets/monkey.jpg">
+			</div>
+		</div>
 	</div>
+	<script>
+		jQuery(function($) {
+			$( ".docs-globalnav" ).bind("click keyup", function( e ){
+				if( $(e.target).is(this) && ( e.type === "click" || e.keyCode === 13 ) ){
+					$(this).toggleClass( "menuopen" );
+				}
+			});
+		});
+	</script>
 
 
 </body>

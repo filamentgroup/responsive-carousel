@@ -29,8 +29,7 @@
 			</ul>
 		</div>
 	</div>
-	<h1>Responsive Carousel variations</h1>
-	<div class="nav-container">
+	<div class="nav-container nav-container-large">
 		<div class="docs-globalnav docs-globalnav-large">
 			<nav class="docs-nav">
 			<a href="default.html">Default, no transitions</a>
@@ -50,53 +49,62 @@
 			</nav>
 		</div>
 	</div>
+	<div class="docs-main">
+		<p>This demo simply adds some styles to hide the next and previous link text accessibly and replace them with a background image. Explaination below.</p>
+		<div class="carousel arrows">
+			<div>
+				<img src="../assets/large.jpg">
+			</div>
+			<div>
+				<img src="../assets/monks.jpg">
+			</div>
+			<div>
+				<img src="../assets/monkey.jpg">
+			</div>
+		</div>
 
-	<p>This demo simply adds some styles to hide the next and previous link text accessibly and replace them with a background image. Explaination below.</p>
-	<div class="carousel arrows">
-			<div>
-					<img src="../assets/large.jpg">
-			</div>
-			<div>
-					<img src="../assets/monks.jpg">
-			</div>
-			<div>
-					<img src="../assets/monkey.jpg">
-			</div>
-		
-	</div>
+		<p>The following styles are added via a <code>arrows</code> class on the carousel container element.</p>
 
-	<p>The following styles are added via a <code>arrows</code> class on the carousel container element.</p>
-	
-	<pre><code>
+		<pre><code>
 /* styled arrows */
 .arrows .carousel-nav {
-	bottom: auto;
-	top: 50%;
+&nbsp;&nbsp;&nbsp;&nbsp;bottom: auto;
+&nbsp;&nbsp;&nbsp;&nbsp;top: 50%;
 }
 .arrows .carousel-nav a {
-	text-indent: -9999px;
-	width: 2em;
-	height: 2em;
-	background: #fff;
-	opacity: .5;
-	overflow: hidden;
-	background-position: 50% 50%;
-	background-repeat: no-repeat;
-	border-radius: 100%;
+&nbsp;&nbsp;&nbsp;&nbsp;text-indent: -9999px;
+&nbsp;&nbsp;&nbsp;&nbsp;width: 2em;
+&nbsp;&nbsp;&nbsp;&nbsp;height: 2em;
+&nbsp;&nbsp;&nbsp;&nbsp;background: #fff;
+&nbsp;&nbsp;&nbsp;&nbsp;opacity: .5;
+&nbsp;&nbsp;&nbsp;&nbsp;overflow: hidden;
+&nbsp;&nbsp;&nbsp;&nbsp;background-position: 50% 50%;
+&nbsp;&nbsp;&nbsp;&nbsp;background-repeat: no-repeat;
+&nbsp;&nbsp;&nbsp;&nbsp;border-radius: 100%;
 }
 .arrows .carousel-nav a:hover,
 .arrows .carousel-nav a:focus {
-	opacity: 1;
+&nbsp;&nbsp;&nbsp;&nbsp;opacity: 1;
 }
 .arrows .carousel-nav a.next {
-	background-image: url(arrow-right.png);
-	right: 1em;
+&nbsp;&nbsp;&nbsp;&nbsp;background-image: url(arrow-right.png);
+&nbsp;&nbsp;&nbsp;&nbsp;right: 1em;
 }
 .arrows .carousel-nav a.prev {
-	background-image: url(arrow-left.png);
-	left: 1em;
+&nbsp;&nbsp;&nbsp;&nbsp;background-image: url(arrow-left.png);
+&nbsp;&nbsp;&nbsp;&nbsp;left: 1em;
 }
 </code></pre>
+	</div>
+	<script>
+		jQuery(function($) {
+			$( ".docs-globalnav" ).bind("click keyup", function( e ){
+				if( $(e.target).is(this) && ( e.type === "click" || e.keyCode === 13 ) ){
+					$(this).toggleClass( "menuopen" );
+				}
+			});
+		});
+	</script>
 
 
 

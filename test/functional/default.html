@@ -29,9 +29,8 @@
 			</ul>
 		</div>
 	</div>
-	<h1>Responsive Carousel variations</h1>
-	<div class="nav-container">
-		<div class="docs-globalnav docs-globalnav-large">
+	<div class="nav-container nav-container-large">
+		<div class="docs-globalnav">
 			<nav class="docs-nav">
 			<a href="default.html" class="current">Default, no transitions</a>
 			<a href="no-loop.html">Default, no revolving content</a>
@@ -50,7 +49,8 @@
 			</nav>
 		</div>
 	</div>
-	<div class="carousel">
+	<div class="docs-main">
+		<div class="carousel">
 			<div>
 				<img src="../assets/large.jpg">
 			</div>
@@ -60,6 +60,16 @@
 			<div>
 				<img src="../assets/monkey.jpg">
 			</div>
+		</div>
 	</div>
+	<script>
+		jQuery(function($) {
+			$( ".docs-globalnav" ).bind("click keyup", function( e ){
+				if( $(e.target).is(this) && ( e.type === "click" || e.keyCode === 13 ) ){
+					$(this).toggleClass( "menuopen" );
+				}
+			});
+		});
+	</script>
 </body>
 </html>
