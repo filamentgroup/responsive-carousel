@@ -82,6 +82,22 @@ When the carousel reaches the end or beginning of the list, the inserted navigat
 
 For a demo see `test/functional/no-loop.html`.
 
+### Set the Carousel Speed
+
+To declaratively set the speed of the carousel, add a <code>data-interval</code> to the carousel container with a value set in milliseconds.
+
+````html
+<!-- set the carousel to change every 5 seconds -->
+<div class="carousel" data-autoplay data-interval="5000">
+  <div>
+	  <img src="...">
+  </div>
+
+  ...
+</div>
+```
+For a demo see `test/functional/flip-auto.html`.
+
 ### More
 
 More coming soon.
