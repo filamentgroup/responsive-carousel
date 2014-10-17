@@ -35,10 +35,9 @@
 
 			_initAutoPlay: function(){
 				var autoplayAttr = $( this ).attr( "data-autoplay" ),
-					autoplay = ( autoplayAttr !== undefined ) ?
-						( autoplayAttr.toLowerCase() !== "false" ) :
-						false;
-				if( autoplay === true ){
+					autoplay = (typeof autoplayAttr !== "undefined" &&
+								autoplayAttr.toLowerCase() !== "false");
+				if( autoplay ){
 					$( this )
 						[ pluginName ]( "_bindStopListener" )
 						[ pluginName ]( "play" );
