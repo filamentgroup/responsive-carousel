@@ -45,7 +45,7 @@ The default build includes the slide/drag transition that you can apply by addin
 
 ### Extended features
 
-There are other extensions in the `src` folder, such as flip and fade transitions, autoplay, keyboard handling, pagination, and more. If you'd like to create a build that includes certain extensions, just add them to the JS files listed under `concat` in the `/grunt.js` file, and run `grunt` from a command line.
+There are other extensions in the `src` folder, such as flip and fade transitions, autoplay, keyboard handling, pagination, and more. If you'd like to create a build that includes certain extensions, just add them to the JS files listed under `concat` in the `Gruntfile.js` file, and run `grunt` from a command line.
 
 ### Demos
 
