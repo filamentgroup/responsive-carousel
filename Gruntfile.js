@@ -32,15 +32,18 @@ module.exports = function(grunt) {
 		pkg: pkg = grunt.file.readJSON('package.json'),
 		meta: {
 			banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
-				'<%= grunt.template.today("yyyy-mm-dd") %>\n' +
-				'<%= pkg.homepage ? "* " + pkg.homepage + "\n" : "" %>' +
+				'<%= grunt.template.today("yyyy-mm-dd") %>\\n' +
+				'<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
 				'* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
 				' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
 		},
 
 		concat: {
 			dist: {
-				src: ['<banner:meta.banner>', 'src/responsive-carousel.js', 'src/responsive-carousel.touch.js', 'src/responsive-carousel.drag.js', 'src/responsive-carousel.pagination.js', 'src/responsive-carousel.autoinit.js' ],
+				options: {
+					banner: '<%= meta.banner %>'
+				},
+				src: ['src/responsive-carousel.js', 'src/responsive-carousel.touch.js', 'src/responsive-carousel.drag.js', 'src/responsive-carousel.pagination.js', 'src/responsive-carousel.autoinit.js' ],
 				dest: 'dist/<%= pkg.name %>.js'
 			}
 		},
@@ -70,7 +73,7 @@ module.exports = function(grunt) {
 
 		uglify: {
 			options: {
-				banner: '<banner:meta.banner>'
+				banner: '<%= meta.banner %>'
 			},
 
 			dist: {
