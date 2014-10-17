@@ -2,7 +2,7 @@
 	"name": "responsive-carousel",
 	"title": "Responsive Carousel",
 	"description": "A jQuery-based script for responsive carousels that work with mouse, touch, and keyboard",
-	"version": "0.2.1",
+	"version": "0.2.2",
 	"homepage": "https://github.com/filamentgroup/responsive-carousel",
 	"author": {
 		"name": "Filament Group, Inc.",
