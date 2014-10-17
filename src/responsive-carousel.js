@@ -206,7 +206,7 @@
 			}
 
 			// don't re-init
-			if( $( this ).data( pluginName + "data" ) ){
+			if( $( this ).data( pluginName + "active" ) ){
 				return $( this );
 			}
 
