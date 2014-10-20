@@ -145,7 +145,10 @@
 			},
 
 			update: function(){
-				$(this).children().not( "." + navClass ).addClass( itemClass );
+				$(this).children().not( "." + navClass )
+					.addClass( itemClass )
+					.first()
+					.addClass( activeClass );
 
 				return $(this).trigger( "update." + pluginName );
 			},

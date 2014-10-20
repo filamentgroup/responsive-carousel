@@ -11,6 +11,8 @@
 	var pluginName = "carousel",
 		initSelector = "." + pluginName,
 		itemClass = pluginName + "-item",
+		prevClass = itemClass + "-prev",
+		nextClass = itemClass + "-next",
 		activeClass = pluginName + "-active",
 		rowAttr = "data-" + pluginName + "-slide",
 		$win = $( window ),
@@ -32,7 +34,7 @@
 				}
 				
 				$kids
-					.removeClass( itemClass + " " + activeClass )
+					.removeClass( itemClass + " " + activeClass + " " + prevClass + " " + nextClass )
 					.each(function(){
 						var prev = $( this ).prev();
 						
@@ -53,6 +55,7 @@
 				}
 				
 				$self[ pluginName ]( "update" )
+					[ pluginName ]( "_addNextPrevClasses" )
 					// initialize pagination
 					.trigger( "goto." + pluginName );
 				
