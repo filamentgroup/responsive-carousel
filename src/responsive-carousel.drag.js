@@ -32,7 +32,7 @@
 	// Touch handling
 	$( document )
 		.bind( pluginName + ".dragmove", function( e, data ){
-			if( !dragThreshold( data.deltaX ) ){
+			if( !!data && !dragThreshold( data.deltaX ) ){
 				return;
 			}
 
@@ -42,7 +42,7 @@
 			activeSlides[ 1 ].css( "left", data.deltaX < 0 ? data.w + data.deltaX + "px" : -data.w + data.deltaX + "px" );
 		} )
 		.bind( pluginName + ".dragend", function( e, data ){
-			if( !dragThreshold( data.deltaX ) ){
+			if( !!data && !dragThreshold( data.deltaX ) ){
 				return;
 			}
 			var activeSlides = getActiveSlides( $( e.target ), data.deltaX ),
