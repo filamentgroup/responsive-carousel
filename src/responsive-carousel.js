@@ -11,6 +11,10 @@
 	var pluginName = "carousel",
 		initSelector = "." + pluginName,
 		transitionAttr = "data-transition",
+		prevAttr = "data-prev",
+		prevTitleAttr = "data-prev-title",
+		nextAttr = "data-next",
+		nextTitleAttr = "data-next-title",
 		transitioningClass = pluginName + "-transitioning",
 		itemClass = pluginName + "-item",
 		activeClass = pluginName + "-active",
@@ -181,9 +185,14 @@
 			_addNextPrev: function(){
 				var $nav, $this = $( this ), $items, $active;
 
+				var prev = $( this ).attr( prevAttr ) || "Prev",
+					next = $( this ).attr( nextAttr ) || "Next",
+					prevTitle = $( this ).attr( prevTitleAttr) || "Previous",
+					nextTitle = $( this ).attr( nextTitleAttr) || "Next";
+
 				$nav = $("<nav class='"+ navClass +"'>" +
-					"<a href='#prev' class='prev' aria-hidden='true' title='Previous'>Prev</a>" +
-					"<a href='#next' class='next' aria-hidden='true' title='Next'>Next</a>" +
+					"<a href='#prev' class='prev' aria-hidden='true' title='" + prevTitle + "'>" + prev + "</a>" +
+					"<a href='#next' class='next' aria-hidden='true' title='" + nextTitle + "'>" + next + "</a>" +
 					"</nav>");
 
 				$this.trigger( "beforecreatenav." + pluginName, { $nav: $nav });
