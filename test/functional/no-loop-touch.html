@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Responsive Carousel Demo Page</title>
+  <!-- Load local jQuery, removing access to $ (use jQuery, not $). -->
+  <script src="../../libs/jquery/jquery.js"></script>
+  <link rel="stylesheet" href="../../src/responsive-carousel.css" media="screen">
+ <link rel="stylesheet" href="../assets/demostyles.css">
+  <!-- Load local lib and tests. -->
+  <script src="../../src/responsive-carousel.js"></script>
+  <script src="../../src/responsive-carousel.touch.js"></script>
+  <script src="../../src/responsive-carousel.drag.js"></script>
+  <script src="../../src/responsive-carousel.loop.js"></script>
+  <script src="../../src/responsive-carousel.autoinit.js"></script>
+  <style>
+    a.next, a.prev {
+      opacity: 0.9;
+    }
+
+    a.next.disabled, a.prev.disabled {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+	<div class="carousel" data-loop="false">
+	    <div>
+	        <img src="../assets/large.jpg">
+	    </div>
+	    <div>
+	        <img src="../assets/monks.jpg">
+	    </div>
+	    <div>
+	        <img src="../assets/monkey.jpg">
+	    </div>
+	</div>
+</body>
+</html>

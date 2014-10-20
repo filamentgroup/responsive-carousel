@@ -15,6 +15,9 @@
 		dragThreshold = function( deltaX ){
 			return Math.abs( deltaX ) > 4;
 		},
+		isLooped = function( $element ) {
+			return $element.attr( "data-loop" ) !== "false";
+		},
 		getActiveSlides = function( $carousel, deltaX ){
 			var $from = $carousel.find( "." + pluginName + "-active" ),
 				activeNum = $from.prevAll().length + 1,
@@ -22,7 +25,7 @@
 				nextNum = activeNum + (forward ? 1 : -1),
 				$to = $carousel.find( "." + itemClass ).eq( nextNum - 1 );
 
-			if( !$to.length ){
+			if( !$to.length && isLooped( $carousel ) ){
 				$to = $carousel.find( "." + itemClass )[ forward ? "first" : "last" ]();
 			}
 
@@ -38,6 +41,10 @@
 
 			var activeSlides = getActiveSlides( $( e.target ), data.deltaX );
 
+			if( !!activeSlides[ 1 ] && !activeSlides[ 1 ].length ){
+				return;
+			}
+
 			activeSlides[ 0 ].css( "left", data.deltaX + "px" );
 			activeSlides[ 1 ].css( "left", data.deltaX < 0 ? data.w + data.deltaX + "px" : -data.w + data.deltaX + "px" );
 		} )
@@ -47,6 +54,10 @@
 			}
 			var activeSlides = getActiveSlides( $( e.target ), data.deltaX ),
 				newSlide = Math.abs( data.deltaX ) > 45;
+
+			if( !!activeSlides[ 1 ] && !activeSlides[ 1 ].length ){
+				return;
+			}
 
 			$( e.target ).one( navigator.userAgent.indexOf( "AppleWebKit" ) ? "webkitTransitionEnd" : "transitionEnd", function(){
 				activeSlides[ 0 ].add( activeSlides[ 1 ] ).css( "left", "" );
