@@ -22,10 +22,10 @@ In your web page:
 		<!-- carousel item content here -->
 	</div>
 </div>
-
 ```
 
 The default build includes the slide/drag transition that you can apply by adding a data attribute and including some additional CSS.
+
 ```html
 <script src="jquery.js"></script>
 <script src="dist/responsive-carousel.min.js"></script>
@@ -40,7 +40,6 @@ The default build includes the slide/drag transition that you can apply by addin
 		<!-- carousel item content here -->
 	</div>
 </div>
-
 ```
 
 ### Extended features
@@ -65,7 +64,7 @@ The default carousel (`responsive-carousel.js`) returns to the initial active it
 
 <div class="carousel" data-loop="false">
   <div>
-	  <img src="...">
+    <img src="...">
   </div>
 
   ...
@@ -90,12 +89,13 @@ To declaratively set the speed of the carousel, add a <code>data-interval</code>
 <!-- set the carousel to change every 5 seconds -->
 <div class="carousel" data-autoplay data-interval="5000">
   <div>
-	  <img src="...">
+    <img src="...">
   </div>
 
   ...
 </div>
 ```
+
 For a demo see `test/functional/flip-auto.html`.
 
 ### More
