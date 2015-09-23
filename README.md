@@ -5,7 +5,16 @@
 A jQuery-based script for responsive carousels that work with mouse, touch, and keyboard
 
 ## Getting Started
-Get the production version (.min.js) or the development version (.js) from the [releases page](https://github.com/filamentgroup/responsive-carousel/releases). Click the `dist-<version>.tar.gz` download.
+
+Install using `npm` using:
+
+```
+npm install responsive-carousel
+```
+
+This will create a copy of the project in your `node_modules` folder.
+
+Or get the production version (.min.js) or the development version (.js) from the [releases page](https://github.com/filamentgroup/responsive-carousel/releases). Click the `dist-<version>.tar.gz` download.
 
 In your web page:
 
@@ -97,10 +106,6 @@ To declaratively set the speed of the carousel, add a <code>data-interval</code>
 ```
 
 For a demo see `test/functional/flip-auto.html`.
-
-### More
-
-More coming soon.
 
 
 ## Examples
