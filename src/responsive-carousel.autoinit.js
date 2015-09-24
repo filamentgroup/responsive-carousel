@@ -8,7 +8,7 @@
 
 (function( $ ) {
 	// DOM-ready auto-init
-	$( function(){
+	$( document ).bind("enhance", function() {
 		$( ".carousel" ).carousel();
-	} );
+	});
 }( jQuery ));
