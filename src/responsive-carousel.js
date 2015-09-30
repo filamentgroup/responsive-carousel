@@ -72,8 +72,8 @@
 			_addNextPrevClasses: function(){
 				var $items = $( this ).find( "." + itemClass ),
 					$active = $items.filter( "." + activeClass ),
-					$next = $active.next( "." + itemClass ),
-					$prev = $active.prev( "." + itemClass );
+					$next = $active.next().filter( "." + itemClass ),
+					$prev = $active.prev().filter( "." + itemClass );
 
 				if( !$next.length ){
 					$next = $items.first().not( "." + activeClass );

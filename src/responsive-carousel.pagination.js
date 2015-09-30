@@ -64,7 +64,7 @@
 					} )
 					// update pagination on page change
 					.bind( "goto." + pluginName, function( e, to  ){
-						var index = to ? $( this ).find( "div.carousel-item" ).index( to ) : 0;
+						var index = to ? $( this ).find( "div.carousel-item" ).index( to.get( 0 ) ) : 0;
 
 						$( this ).find( "ol." + paginationClass + " li" )
 							.removeClass( activeClass )
