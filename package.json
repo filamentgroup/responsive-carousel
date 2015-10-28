@@ -15,7 +15,7 @@
 	"bugs": {
 		"url": "https://github.com/filamentgroup/responsive-carousel/issues"
 	},
-	"license": "(MIT or GPL-3.0)",
+	"license": "MIT",
 	"main": "dist/responsive-carousel.js",
 	"engines": {
 		"node": "~0.6"
