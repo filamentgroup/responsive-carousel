@@ -122,6 +122,10 @@
 					direction: nextNum > activeNum ? "forward" : "backward"
 				});
 
+				// NOTE this is a quick fix for the issue #15.
+				if( activeNum === nextNum ) {
+					return;
+				}
 
 				// NOTE this is a quick hack to approximate the api that jQuery provides
 				//      without depending on the API (for use with similarly shaped apis)
