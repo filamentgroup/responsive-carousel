@@ -27,7 +27,7 @@
 		"jquery": "~2.1.4"
 	},
 	"devDependencies": {
-		"grunt": "0.4.5",
+		"grunt": "1.0.0",
 		"grunt-cli": "0.1.13",
 		"grunt-contrib-qunit": "0.7.0",
 		"grunt-contrib-jshint": "0.11.3",
