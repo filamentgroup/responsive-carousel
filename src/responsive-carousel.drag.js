@@ -38,7 +38,7 @@
 			if( $( e.target ).attr( "data-transition" ) === "slide" ){
 				var activeSlides = getActiveSlides( $( e.target ), data.deltaX );
 
-				activeSlides[ 0 ].css( "left", data.deltaX + "px" );
+				activeSlides[ 0 ].css( "transform", "translate3d(" + data.deltaX + "px,0px,0px)" );
 				activeSlides[ 1 ].css( "left", data.deltaX < 0 ? data.w + data.deltaX + "px" : -data.w + data.deltaX + "px" );
 			}
 		} )
