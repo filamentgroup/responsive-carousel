@@ -1,40 +1,40 @@
 {
-	"name": "responsive-carousel",
-	"title": "Responsive Carousel",
-	"description": "A jQuery-based script for responsive carousels that work with mouse, touch, and keyboard",
-	"version": "0.2.6",
-	"homepage": "https://github.com/filamentgroup/responsive-carousel",
-	"author": {
-		"name": "Filament Group, Inc.",
-		"url": "http://filamentgroup.com"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/filamentgroup/responsive-carousel"
-	},
-	"bugs": {
-		"url": "https://github.com/filamentgroup/responsive-carousel/issues"
-	},
-	"license": "MIT",
-	"main": "dist/responsive-carousel.js",
-	"engines": {
-		"node": "~0.6"
-	},
-	"scripts": {
-		"test": "grunt travis --verbose"
-	},
-	"dependencies": {
-		"jquery": "~2.1.4"
-	},
-	"devDependencies": {
-		"grunt": "0.4.5",
-		"grunt-cli": "0.1.13",
-		"grunt-contrib-qunit": "0.7.0",
-		"grunt-contrib-jshint": "0.11.3",
-		"grunt-contrib-concat": "0.5.1",
-		"grunt-contrib-uglify": "0.10.0",
-		"grunt-contrib-copy": "0.8.2",
-		"grunt-contrib-watch": "0.6.1"
-	},
-	"keywords": []
+  "name": "responsive-carousel",
+  "title": "Responsive Carousel",
+  "description": "A jQuery-based script for responsive carousels that work with mouse, touch, and keyboard",
+  "version": "1.0.0",
+  "homepage": "https://github.com/filamentgroup/responsive-carousel",
+  "author": {
+    "name": "Filament Group, Inc.",
+    "url": "http://filamentgroup.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/filamentgroup/responsive-carousel"
+  },
+  "bugs": {
+    "url": "https://github.com/filamentgroup/responsive-carousel/issues"
+  },
+  "license": "MIT",
+  "main": "dist/responsive-carousel.js",
+  "engines": {
+    "node": "~0.6"
+  },
+  "scripts": {
+    "test": "grunt travis --verbose"
+  },
+  "dependencies": {
+    "jquery": "~2.1.4"
+  },
+  "devDependencies": {
+    "grunt": "0.4.5",
+    "grunt-cli": "0.1.13",
+    "grunt-contrib-qunit": "0.7.0",
+    "grunt-contrib-jshint": "0.11.3",
+    "grunt-contrib-concat": "0.5.1",
+    "grunt-contrib-uglify": "0.10.0",
+    "grunt-contrib-copy": "0.8.2",
+    "grunt-contrib-watch": "0.6.1"
+  },
+  "keywords": []
 }
