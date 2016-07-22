@@ -111,6 +111,9 @@ module.exports = function(grunt) {
 
 	// Default task.
 	grunt.registerTask('default', 'jshint qunit copy:plugins concat uglify'.split( " " ));
+	
+		// jenkins stage task.
+	grunt.registerTask('stage', 'jshint qunit copy:plugins concat uglify'.split( " " ));
 
 	// Travis
 	grunt.registerTask('travis', 'jshint qunit'.split( " " ));
