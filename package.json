@@ -24,7 +24,7 @@
     "test": "grunt travis --verbose"
   },
   "dependencies": {
-    "jquery": "~2.1.4"
+    "jquery": "~3.2.0"
   },
   "devDependencies": {
     "grunt": "0.4.5",
