@@ -109,7 +109,7 @@
 					prevs = $from.index(),
 					activeNum = ( prevs < 0 ? 0 : prevs ) + 1,
 					nextNum = typeof( num ) === "number" ? num : activeNum + parseFloat(num),
-					index = nextNum - 1,
+					index = (nextNum - 1) % carouselItems.length,
 					carouselItems = $( this ).find( "." + itemClass ),
 					beforeGoto = "beforegoto." + pluginName,
 					$to = carouselItems.eq( index ),
