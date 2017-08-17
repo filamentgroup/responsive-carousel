@@ -94,13 +94,12 @@ For a demo see [`test/functional/no-loop.html`](http://master.origin.responsive-
 
 To declaratively set the speed of the carousel, add a <code>data-interval</code> to the carousel container with a value set in milliseconds.
 
-````html
+```html
 <!-- set the carousel to change every 5 seconds -->
 <div class="carousel" data-autoplay data-interval="5000">
   <div>
     <img src="...">
   </div>
-
   ...
 </div>
 ```
