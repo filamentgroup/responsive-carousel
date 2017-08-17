@@ -12,13 +12,24 @@
 		navSelector = "." + pluginName + "-nav a",
 		buffer,
 		keyNav = function( e ) {
-			if( e.keyCode  < 37 || e.keyCode > 40 ) {
+
+// TODO: add tabbing
+
+			if( e.keyCode === 9 || e.keyCode > 40 ) {
 				return;
 			}
 			e.preventDefault();
 			clearTimeout( buffer );
 			buffer = setTimeout(function() {
 				var $carousel = $( e.target ).closest( initSelector );
+
+				// stop autoplay
+				var autoplayAttr = $carousel.attr( "data-autoplay" ),
+					autoplay = (typeof autoplayAttr !== "undefined" && autoplayAttr.toLowerCase() !== "false");
+				
+				if ( autoplay ) {
+					$carousel[ pluginName ]( "stop" );
+				}				
 
 				if( e.keyCode === 39 || e.keyCode === 40 ){
 					$carousel[ pluginName ]( "next" );
