@@ -134,10 +134,10 @@
 				}
 
 				if( cssTransitionsSupport ){
-					$self[ pluginName ]( "_transitionStart", $from, $to, reverse );
+					$self[ pluginName ]( "_transitionStart", $from, $to, reverse, index );
 				} else {
 					$to.addClass( activeClass );
-					$self[ pluginName ]( "_transitionEnd", $from, $to, reverse );
+					$self[ pluginName ]( "_transitionEnd", $from, $to, reverse, index );
 				}
 
 				// added to allow pagination to track
@@ -153,11 +153,11 @@
 				return $(this).trigger( "update." + pluginName );
 			},
 
-			_transitionStart: function( $from, $to, reverseClass ){
+			_transitionStart: function( $from, $to, reverseClass, index ){
 				var $self = $(this);
 
 				$to.one( navigator.userAgent.indexOf( "AppleWebKit" ) > -1 ? "webkitTransitionEnd" : "transitionend otransitionend", function(){
-					$self[ pluginName ]( "_transitionEnd", $from, $to, reverseClass );
+					$self[ pluginName ]( "_transitionEnd", $from, $to, reverseClass, index );
 				});
 
 				$(this).addClass( reverseClass );
@@ -165,11 +165,12 @@
 				$to.addClass( inClass );
 			},
 
-			_transitionEnd: function( $from, $to, reverseClass ){
+			_transitionEnd: function( $from, $to, reverseClass, index ){
 				$( this ).removeClass( reverseClass );
 				$from.removeClass( outClass + " " + activeClass );
 				$to.removeClass( inClass ).addClass( activeClass );
 				$( this )[ pluginName ]( "_addNextPrevClasses" );
+				$self.trigger( "aftergoto." + pluginName, [ $to, index ] );
 			},
 
 			_bindEventListeners: function(){
