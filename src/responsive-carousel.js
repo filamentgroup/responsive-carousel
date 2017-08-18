@@ -170,7 +170,7 @@
 				$from.removeClass( outClass + " " + activeClass );
 				$to.removeClass( inClass ).addClass( activeClass );
 				$( this )[ pluginName ]( "_addNextPrevClasses" );
-				$self.trigger( "aftergoto." + pluginName, [ $to, index ] );
+				$( this ).trigger( "aftergoto." + pluginName, [ $to, index ] );
 			},
 
 			_bindEventListeners: function(){
