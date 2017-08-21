@@ -12,32 +12,28 @@
 		navSelector = "." + pluginName + "-nav a",
 		buffer,
 		keyNav = function( e ) {
+			if ( e.keyCode === 9 || e.keyCode >= 37 && e.keyCode <= 40 ) {
+				e.preventDefault();
+				clearTimeout( buffer );
+				buffer = setTimeout(function() {
+					var $carousel = $( e.target ).closest( initSelector );
 
-// TODO: add tabbing
+					// stop autoplay
+					var autoplayAttr = $carousel.attr( "data-autoplay" ),
+							autoplay = (typeof autoplayAttr !== "undefined" && autoplayAttr.toLowerCase() !== "false");
+					
+					if ( autoplay ) {
+						$carousel[ pluginName ]( "stop" );
+					}				
 
-			if( e.keyCode === 9 || e.keyCode > 40 ) {
-				return;
+					if( e.shiftKey && e.keyCode === 9 || e.keyCode === 37 || e.keyCode === 38 ){
+						$carousel[ pluginName ]( "prev" );
+					}
+					else if( e.keyCode === 9 || e.keyCode === 39 || e.keyCode === 40 ){
+						$carousel[ pluginName ]( "next" );
+					}
+				}, 200 );
 			}
-			e.preventDefault();
-			clearTimeout( buffer );
-			buffer = setTimeout(function() {
-				var $carousel = $( e.target ).closest( initSelector );
-
-				// stop autoplay
-				var autoplayAttr = $carousel.attr( "data-autoplay" ),
-					autoplay = (typeof autoplayAttr !== "undefined" && autoplayAttr.toLowerCase() !== "false");
-				
-				if ( autoplay ) {
-					$carousel[ pluginName ]( "stop" );
-				}				
-
-				if( e.keyCode === 39 || e.keyCode === 40 ){
-					$carousel[ pluginName ]( "next" );
-				}
-				else if( e.keyCode === 37 || e.keyCode === 38 ){
-					$carousel[ pluginName ]( "prev" );
-				}
-			}, 200 );
 		};
 
 	// Touch handling
