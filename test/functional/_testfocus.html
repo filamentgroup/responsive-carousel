@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Responsive Carousel Demo Page</title>
+  <!-- Load local jQuery, removing access to $ (use jQuery, not $). -->
+  <script src="../../libs/jquery/jquery.js"></script>
+  <link rel="stylesheet" href="../../src/responsive-carousel.css" media="screen">
+  <link rel="stylesheet" href="../../src/responsive-carousel.slide.css" media="screen">
+  <link rel="stylesheet" href="../assets/demostyles.css">
+  <!-- Load local lib and tests. -->
+	<!-- <script src="../../src/responsive-carousel.js"></script>
+	<script src="../../src/responsive-carousel.keybd.js"></script>
+	<script src="../../src/responsive-carousel.touch.js"></script>
+	<script src="../../src/responsive-carousel.drag.js"></script>
+	<script src="../../src/responsive-carousel.autoplay.js"></script>
+	<script src="../../src/responsive-carousel.autoinit.js"></script>
+	<script src="../../src/globalenhance.js"></script> -->
+
+
+<style>
+.test-carousel {
+	width: 480px;
+	margin: 0 auto;
+	overflow: hidden;
+	position: relative;
+}
+.test-carousel div {
+	position: absolute;
+	top: 0;
+	z-index: 1;
+	background-color: #fff;
+}	
+.test-carousel div.test-active {
+	position: relative;
+	z-index: 99;
+}
+.test-carousel img {
+	max-width: 100%;
+	vertical-align: bottom; /* remove space under img */
+}
+.test-carousel a {
+	display: block;	
+}
+.test-carousel a:focus {
+	border: 3px solid rgba(10,88,245,1);
+	outline: none;
+}
+</style>
+
+</head>
+<body>
+
+<!-- <h2>Static images</h2>
+
+	<div class="test-carousel" data-transition="slide" data-autoplay>
+	    <div class="test-active">
+	        <img src="../assets/large.jpg" alt="Large stone statue of a face.">
+	    </div>
+	    <div>
+	        <img src="../assets/monks.jpg" alt="Monks walking down a road.">
+	    </div>
+	    <div>
+	        <img src="../assets/monkey.jpg" alt="Monkey napping on a wall.">
+	    </div>		
+	</div> -->
+
+
+<h2>Linked images</h2>
+
+	<div class="test-carousel" data-transition="slide" data-autoplay>
+	    <div class="test-active">
+	        <a href="#"><img src="../assets/large.jpg" alt="Large stone statue of a face."></a>
+	        <form>
+	        	<label>Input box</label>
+	        	<input type="text">
+	        </form>
+	    </div>
+	    <div>
+	        <a href="#"><img src="../assets/monks.jpg" alt="Monks walking down a road."></a>
+	        <a href="#">Extra link for testing</a>
+	    </div>
+	    <div>
+	        <a href="#"><img src="../assets/monkey.jpg" alt="Monkey napping on a wall."></a>
+	    </div>		
+	</div>
+	
+
+<script>
+$(function(){
+
+	$( ".test-carousel" ).each(function(){
+
+		var $carousel = $( this ),
+				$items = $carousel.find( "div" ),
+				focusables = "a, input, button, select, textarea",
+				activeClass = "test-active"; 
+
+		if ( $items.find( focusables ).length ) {
+			$items.find( focusables ).each(function( i ){
+				var el = this,
+						$el = $( el );
+
+					$el.bind( "focus", function(){
+						if ( $el.closest( "div" ).is( "." + activeClass ) ) {
+							return;
+						}
+						$carousel.find( "." + activeClass ).removeClass( activeClass );
+						$el.parent().addClass( activeClass );	
+					});				
+			});			
+		}
+
+		
+
+	});
+
+});
+
+
+</script>
+
+
+</body>
+</html>
