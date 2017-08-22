@@ -10,26 +10,43 @@
 	var pluginName = "carousel",
 		initSelector = "." + pluginName,
 		navSelector = "." + pluginName + "-nav a",
-		buffer,
+		itemClass = pluginName + "-item",
+		activeClass = pluginName + "-active",
+		nextClass = pluginName + "-item-next";
+
+		getFocusedEl = function( $el ){
+			return $el.find( document.activeElement );
+		},
+
+		stopAutoPlay = function( e ){
+			var $carousel = $( e.target ).closest( initSelector ), 
+					$focused = getFocusedEl( $carousel ),
+					autoplayAttr = $carousel.attr( "data-autoplay" ),
+					autoplay = (typeof autoplayAttr !== "undefined" && autoplayAttr.toLowerCase() !== "false");
+
+			if ( autoplay && $focused.length ) {
+				$carousel[ pluginName ]( "stop" );
+				console.log( "stop");
+			}	
+		},
+
 		keyNav = function( e ) {
-			if ( e.keyCode === 9 || e.keyCode >= 37 && e.keyCode <= 40 ) {
+			var $carousel = $( e.target ).closest( initSelector ),
+					//focusables = "a, input, textarea, select",		
+					buffer;			
+
+			if ( e.keyCode >= 37 && e.keyCode <= 40 ) {
 				e.preventDefault();
 				clearTimeout( buffer );
 				buffer = setTimeout(function() {
-					var $carousel = $( e.target ).closest( initSelector );
 
-					// stop autoplay
-					var autoplayAttr = $carousel.attr( "data-autoplay" ),
-							autoplay = (typeof autoplayAttr !== "undefined" && autoplayAttr.toLowerCase() !== "false");
-					
-					if ( autoplay ) {
-						$carousel[ pluginName ]( "stop" );
-					}				
-
-					if( e.shiftKey && e.keyCode === 9 || e.keyCode === 37 || e.keyCode === 38 ){
+					// left or up
+					if ( e.keyCode === 37 || e.keyCode === 38 ){
 						$carousel[ pluginName ]( "prev" );
 					}
-					else if( e.keyCode === 9 || e.keyCode === 39 || e.keyCode === 40 ){
+					// right or down
+					else if ( 
+						e.keyCode === 39 || e.keyCode === 40 ){
 						$carousel[ pluginName ]( "next" );
 					}
 				}, 200 );
@@ -38,14 +55,19 @@
 
 	// Touch handling
 	$( document )
-		.bind( "click", function( e ) {
+		/*.bind( "click", function( e ) {
 			if( $( e.target ).closest( initSelector ).length ){
 				$( e.target )[ 0 ].focus();
 			}
+		})*/
+		.bind( "keyup", function( e ){
+			if( $( e.target ).closest( initSelector ).length ){
+				stopAutoPlay( e );
+			}
 		})
 		.bind( "keydown", function( e ){
-			if( $( e.target ).closest( initSelector ) .length ){
+			if( $( e.target ).closest( initSelector ).length ){
 				keyNav( e );
 			}
-		} );
+		});
 }(jQuery));
