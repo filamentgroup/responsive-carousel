@@ -188,14 +188,14 @@
 			_addNextPrev: function(){
 				var $nav, $this = $( this ), $items, $active;
 
-				var prev = $( this ).attr( prevAttr ) || "Prev",
+				var prev = $( this ).attr( prevAttr ) || "Previous",
 					next = $( this ).attr( nextAttr ) || "Next",
 					prevTitle = $( this ).attr( prevTitleAttr) || "Previous",
 					nextTitle = $( this ).attr( nextTitleAttr) || "Next";
 
 				$nav = $("<nav class='"+ navClass +"'>" +
-					"<a href='#prev' class='prev' aria-hidden='true' title='" + prevTitle + "'>" + prev + "</a>" +
-					"<a href='#next' class='next' aria-hidden='true' title='" + nextTitle + "'>" + next + "</a>" +
+					"<a href='#prev' class='prev' aria-hidden='true' title='" + prevTitle + "' tabindex='-1'>" + prev + "</a>" +
+					"<a href='#next' class='next' aria-hidden='true' title='" + nextTitle + "' tabindex='-1'>" + next + "</a>" +
 					"</nav>");
 
 				$this.trigger( "beforecreatenav." + pluginName, { $nav: $nav });
