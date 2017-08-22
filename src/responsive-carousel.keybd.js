@@ -26,7 +26,6 @@
 
 			if ( autoplay && $focused.length ) {
 				$carousel[ pluginName ]( "stop" );
-				console.log( "stop");
 			}	
 		},
 
@@ -55,11 +54,11 @@
 
 	// Touch handling
 	$( document )
-		/*.bind( "click", function( e ) {
+		.bind( "click", function( e ) {
 			if( $( e.target ).closest( initSelector ).length ){
 				$( e.target )[ 0 ].focus();
 			}
-		})*/
+		})
 		.bind( "keyup", function( e ){
 			if( $( e.target ).closest( initSelector ).length ){
 				stopAutoPlay( e );
