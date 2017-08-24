@@ -61,10 +61,9 @@
 						" " + ( trans ? pluginName + "-" + trans : "" ) + " "
 					)
 					.children()
-					.addClass( itemClass )
-					.first()
-					.addClass( activeClass );
+					.addClass( itemClass );
 
+				$(this)[ pluginName ]( "update" );
 				$(this)[ pluginName ]( "_addNextPrevClasses" );
 				$( this ).data( pluginName + "data", "init"  );
 			},
@@ -147,8 +146,12 @@
 			update: function(){
 				$(this).children().not( "." + navClass )
 					.addClass( itemClass )
+					.attr( "tabindex", "-1" )
+					.attr( "aria-hidden", "true" )
 					.first()
-					.addClass( activeClass );
+					.addClass( activeClass )
+					.attr( "tabindex", "0" )
+					.attr( "aria-hidden", "false" );
 
 				return $(this).trigger( "update." + pluginName );
 			},
@@ -167,8 +170,8 @@
 
 			_transitionEnd: function( $from, $to, reverseClass, index ){
 				$( this ).removeClass( reverseClass );
-				$from.removeClass( outClass + " " + activeClass );
-				$to.removeClass( inClass ).addClass( activeClass );
+				$from.removeClass( outClass + " " + activeClass ).attr( "tabindex", "-1" );
+				$to.removeClass( inClass ).addClass( activeClass ).attr( "tabindex", "0" );
 				$( this )[ pluginName ]( "_addNextPrevClasses" );
 				$( this ).trigger( "aftergoto." + pluginName, [ $to, index ] );
 			},
