@@ -67,9 +67,15 @@
   background-image: url(arrow-left.png);
   left: 1em;
 }
-.carousel .carousel-item:focus img,
-.carousel *:focus {
+.carousel a:focus {
   outline: 1px dotted #aaa;
+}
+.carousel .carousel-item img {
+  border: 1px solid transparent;
+    box-sizing: border-box;
+}
+.carousel .carousel-item:focus img {
+  border: 1px dotted #aaa;
 }
 
 /* peek */
