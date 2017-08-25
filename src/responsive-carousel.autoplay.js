@@ -28,7 +28,7 @@
 			},
 
 			_bindStopListener: function(){
-				return $(this).bind( "mousedown", function(){
+				return $(this).bind( "click", function(){
 					$( this )[ pluginName ]( "stop" );
 				} );
 			},
