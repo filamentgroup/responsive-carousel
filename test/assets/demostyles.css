@@ -67,15 +67,20 @@
   background-image: url(arrow-left.png);
   left: 1em;
 }
-.carousel a:focus {
-  outline: 1px dotted red;
+.carousel-item {
+  position: relative;
 }
-.carousel .carousel-item img {
-  border: 1px solid transparent;
-  box-sizing: border-box;
+.carousel a:focus,
+.carousel .carousel-item:focus:after  {
+  outline: 2px dotted orange;
 }
-.carousel .carousel-item:focus img {
-  border: 1px dotted red;
+.carousel .carousel-item:focus:after {
+  content: "\20";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
 }
 
 /* peek */
