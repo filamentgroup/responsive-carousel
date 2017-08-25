@@ -68,14 +68,14 @@
   left: 1em;
 }
 .carousel a:focus {
-  outline: 1px dotted #aaa;
+  outline: 1px dotted red;
 }
 .carousel .carousel-item img {
   border: 1px solid transparent;
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 .carousel .carousel-item:focus img {
-  border: 1px dotted #aaa;
+  border: 1px dotted red;
 }
 
 /* peek */
