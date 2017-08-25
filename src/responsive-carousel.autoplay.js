@@ -28,7 +28,7 @@
 			},
 
 			_bindStopListener: function(){
-				return $(this).bind( "click", function(){
+				return $(this).bind( "click focus", function(){
 					$( this )[ pluginName ]( "stop" );
 				} );
 			},
