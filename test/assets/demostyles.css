@@ -67,7 +67,10 @@
   background-image: url(arrow-left.png);
   left: 1em;
 }
-
+.carousel .carousel-item:focus img,
+.carousel *:focus {
+  outline: 1px dotted #aaa;
+}
 
 /* peek */
 .carousel.peek {
