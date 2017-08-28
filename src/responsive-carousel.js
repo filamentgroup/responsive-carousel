@@ -23,6 +23,7 @@
 		inClass = pluginName + "-in",
 		outClass = pluginName + "-out",
 		navClass =  pluginName + "-nav",
+		focusables = "a, input, button, select, [tabindex], textarea",
 		prototype,
 		cssTransitionsSupport = (function(){
 			var prefixes = "webkit Moz O Ms".split( " " ),
@@ -65,8 +66,8 @@
 					.children()
 					.addClass( itemClass );
 
-				$(this)[ pluginName ]( "update" );
 				$(this)[ pluginName ]( "_addNextPrevClasses" );
+				$(this)[ pluginName ]( "update" );
 				$( this ).data( pluginName + "data", "init"  );
 			},
 
@@ -148,17 +149,28 @@
 			},
 
 			update: function(){
-				$(this).children().not( "." + navClass )
+				var $items = $(this).children().not( "." + navClass );
+				var $activeItem = $items.filter( "." + activeClass );
+				if( !$activeItem.length ){
+					$activeItem = $items.first();
+				}
+
+				$items
 					.addClass( itemClass )
 					.attr( "tabindex", "-1" )
 					.attr( "aria-hidden", "true" )
 					.attr( "role", "region" )
 					.each(function( i ){
 						$( this ).attr( "aria-label", "slide " + ( i + 1 ) );
-					})
-					.first()
+						$( this ).find( focusables ).attr( "tabindex", "-1" );
+					});
+
+				$activeItem
 					.addClass( activeClass )
 					.attr( "tabindex", "0" )
+					.each(function( i ){
+						$( this ).find( focusables ).attr( "tabindex", "0" );
+					})
 					.attr( "aria-hidden", "false" );
 
 				return $(this).trigger( "update." + pluginName );
@@ -178,15 +190,9 @@
 
 			_transitionEnd: function( $from, $to, reverseClass, index ){
 				$( this ).removeClass( reverseClass );
-				$from
-					.removeClass( outClass + " " + activeClass )
-					.attr( "tabindex", "-1" )
-					.attr( "aria-hidden", "true" );
-				$to
-					.removeClass( inClass )
-					.addClass( activeClass )
-					.attr( "tabindex", "0" )
-					.attr( "aria-hidden", "false" );
+				$from.removeClass( outClass + " " + activeClass );
+				$to.removeClass( inClass ).addClass( activeClass );
+				$( this )[ pluginName ]( "update" );
 				$( this )[ pluginName ]( "_addNextPrevClasses" );
 				$( this ).trigger( "aftergoto." + pluginName, [ $to, index ] );
 				if( $( document.activeElement ).closest( $from[ 0 ] ).length ){
