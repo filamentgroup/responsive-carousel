@@ -189,7 +189,7 @@
 					.attr( "aria-hidden", "false" );
 				$( this )[ pluginName ]( "_addNextPrevClasses" );
 				$( this ).trigger( "aftergoto." + pluginName, [ $to, index ] );
-				if( $from.is( document.activeElement ) ){
+				if( $( document.activeElement ).closest( $from[ 0 ] ).length ){
 					$to.focus();
 				}
 
