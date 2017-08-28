@@ -178,8 +178,15 @@
 
 			_transitionEnd: function( $from, $to, reverseClass, index, roveFocus ){
 				$( this ).removeClass( reverseClass );
-				$from.removeClass( outClass + " " + activeClass ).attr( "tabindex", "-1" );
-				$to.removeClass( inClass ).addClass( activeClass ).attr( "tabindex", "0" );
+				$from
+					.removeClass( outClass + " " + activeClass )
+					.attr( "tabindex", "-1" )
+					.attr( "aria-hidden", "true" );
+				$to
+					.removeClass( inClass )
+					.addClass( activeClass )
+					.attr( "tabindex", "0" )
+					.attr( "aria-hidden", "false" );
 				$( this )[ pluginName ]( "_addNextPrevClasses" );
 				$( this ).trigger( "aftergoto." + pluginName, [ $to, index ] );
 				if( $from.is( document.activeElement ) ){
