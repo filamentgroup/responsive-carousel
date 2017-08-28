@@ -164,11 +164,11 @@
 				return $(this).trigger( "update." + pluginName );
 			},
 
-			_transitionStart: function( $from, $to, reverseClass, index, roveFocus ){
+			_transitionStart: function( $from, $to, reverseClass, index ){
 				var $self = $(this);
 
 				$to.one( navigator.userAgent.indexOf( "AppleWebKit" ) > -1 ? "webkitTransitionEnd" : "transitionend otransitionend", function(){
-					$self[ pluginName ]( "_transitionEnd", $from, $to, reverseClass, index, roveFocus );
+					$self[ pluginName ]( "_transitionEnd", $from, $to, reverseClass, index );
 				});
 
 				$(this).addClass( reverseClass );
@@ -176,7 +176,7 @@
 				$to.addClass( inClass );
 			},
 
-			_transitionEnd: function( $from, $to, reverseClass, index, roveFocus ){
+			_transitionEnd: function( $from, $to, reverseClass, index ){
 				$( this ).removeClass( reverseClass );
 				$from
 					.removeClass( outClass + " " + activeClass )
