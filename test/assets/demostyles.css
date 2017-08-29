@@ -67,7 +67,21 @@
   background-image: url(arrow-left.png);
   left: 1em;
 }
-
+.carousel-item {
+  position: relative;
+}
+.carousel a:focus,
+.carousel .carousel-item:focus:after  {
+  outline: 2px dotted orange;
+}
+.carousel .carousel-item:focus:after {
+  content: "\20";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+}
 
 /* peek */
 .carousel.peek {
@@ -127,6 +141,14 @@
 /* Logo */
 .header {
 	background: #247201 url(http://filamentgroup.com/images/headerbg-new.jpg) no-repeat bottom left;
+}
+.sample-childlink {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px;
+  background: #fff;
+  font-size: 10px;
 }
 #fg-logo {
 	text-indent: -9999px;

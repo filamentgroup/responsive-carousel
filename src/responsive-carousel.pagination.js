@@ -63,18 +63,21 @@
 						}
 					} )
 					// update pagination on page change
-					.bind( "goto." + pluginName, function( e, to  ){
-						to = $( to );
-
-						var index = to ? $( this ).find( "div.carousel-item" ).index( to.get( 0 ) ) : 0;
+					.bind( "updateactive." + pluginName + " aftergoto." + pluginName, function( e ){
+						var index = 0;
+						$( this ).find("." + pluginName + "-item" ).each(function(i){
+							if( $( this ).is( "." + pluginName + "-active" ) ){
+								index = i;
+							}
+						});
 
 						$( this ).find( "ol." + paginationClass + " li" )
 							.removeClass( activeClass )
 							.eq( index )
 								.addClass( activeClass );
 					} )
-					// initialize pagination
-					.trigger( "goto." + pluginName );
+					.trigger( "updateactive." + pluginName );
+
 			}
 		};
 

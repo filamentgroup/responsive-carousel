@@ -23,6 +23,7 @@
 		inClass = pluginName + "-in",
 		outClass = pluginName + "-out",
 		navClass =  pluginName + "-nav",
+		focusables = "a, input, button, select, [tabindex], textarea",
 		prototype,
 		cssTransitionsSupport = (function(){
 			var prefixes = "webkit Moz O Ms".split( " " ),
@@ -60,12 +61,13 @@
 						pluginName +
 						" " + ( trans ? pluginName + "-" + trans : "" ) + " "
 					)
+					.attr( "role", "region" )
+					.attr( "aria-label", "carousel" )
 					.children()
-					.addClass( itemClass )
-					.first()
-					.addClass( activeClass );
+					.addClass( itemClass );
 
 				$(this)[ pluginName ]( "_addNextPrevClasses" );
+				$(this)[ pluginName ]( "update" );
 				$( this ).data( pluginName + "data", "init"  );
 			},
 
@@ -102,6 +104,7 @@
 					trans = $self.attr( transitionAttr ),
 					reverseClass = " " + pluginName + "-" + trans + "-reverse";
 
+
 				// clean up children
 				$( this ).find( "." + itemClass ).removeClass( [ outClass, inClass, reverseClass ].join( " " ) );
 
@@ -133,10 +136,11 @@
 					$to = $( this ).find( "." + itemClass )[ reverse.length ? "last" : "first" ]();
 				}
 
+
+
 				if( cssTransitionsSupport ){
 					$self[ pluginName ]( "_transitionStart", $from, $to, reverse, index );
 				} else {
-					$to.addClass( activeClass );
 					$self[ pluginName ]( "_transitionEnd", $from, $to, reverse, index );
 				}
 
@@ -145,10 +149,29 @@
 			},
 
 			update: function(){
-				$(this).children().not( "." + navClass )
+				var $items = $(this).children().not( "." + navClass );
+				var $activeItem = $items.filter( "." + activeClass );
+				if( !$activeItem.length ){
+					$activeItem = $items.first();
+				}
+
+				$items
 					.addClass( itemClass )
-					.first()
-					.addClass( activeClass );
+					.attr( "tabindex", "-1" )
+					.attr( "aria-hidden", "true" )
+					.attr( "role", "region" )
+					.each(function( i ){
+						$( this ).attr( "aria-label", "slide " + ( i + 1 ) );
+						$( this ).find( focusables ).attr( "tabindex", "-1" );
+					});
+
+				$activeItem
+					.addClass( activeClass )
+					.attr( "tabindex", "0" )
+					.each(function( i ){
+						$( this ).find( focusables ).attr( "tabindex", "0" );
+					})
+					.attr( "aria-hidden", "false" );
 
 				return $(this).trigger( "update." + pluginName );
 			},
@@ -169,8 +192,13 @@
 				$( this ).removeClass( reverseClass );
 				$from.removeClass( outClass + " " + activeClass );
 				$to.removeClass( inClass ).addClass( activeClass );
+				$( this )[ pluginName ]( "update" );
 				$( this )[ pluginName ]( "_addNextPrevClasses" );
 				$( this ).trigger( "aftergoto." + pluginName, [ $to, index ] );
+				if( $( document.activeElement ).closest( $from[ 0 ] ).length ){
+					$to.focus();
+				}
+
 			},
 
 			_bindEventListeners: function(){
@@ -194,9 +222,9 @@
 					prevTitle = $( this ).attr( prevTitleAttr) || "Previous",
 					nextTitle = $( this ).attr( nextTitleAttr) || "Next";
 
-				$nav = $("<nav class='"+ navClass +"'>" +
-					"<a href='#prev' class='prev' aria-hidden='true' title='" + prevTitle + "'>" + prev + "</a>" +
-					"<a href='#next' class='next' aria-hidden='true' title='" + nextTitle + "'>" + next + "</a>" +
+				$nav = $("<nav class='"+ navClass +"' role='region' aria-label='carousel controls'>" +
+					"<a href='#prev' class='prev' aria-label='" + prevTitle + "' title='" + prevTitle + " slide'>" + prev + "</a>" +
+					"<a href='#next' class='next' aria-label='" + nextTitle + "' title='" + nextTitle + " slide'>" + next + "</a>" +
 					"</nav>");
 
 				$this.trigger( "beforecreatenav." + pluginName, { $nav: $nav });
