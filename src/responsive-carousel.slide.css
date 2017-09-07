@@ -39,7 +39,7 @@
 	position: relative;
 	z-index: 3;
 }
-.carousel-slide .carousel-item-prev {
+.carousel-slide .carousel-item-next {
 	z-index: 2;
 }
 .carousel-slide .carousel-in {
