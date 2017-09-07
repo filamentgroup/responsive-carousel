@@ -37,6 +37,9 @@
 .carousel-slide .carousel-active {
 	left: 0;
 	position: relative;
+	z-index: 3;
+}
+.carousel-slide .carousel-item-prev {
 	z-index: 2;
 }
 .carousel-slide .carousel-in {
