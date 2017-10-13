@@ -104,6 +104,9 @@
 					trans = $self.attr( transitionAttr ),
 					reverseClass = " " + pluginName + "-" + trans + "-reverse";
 
+				if( $( this ).find( "." + itemClass ).filter( "." + outClass + ", ." + inClass ).length ){
+					return; // goTo doesn't work during an animation
+				}
 
 				// clean up children
 				$( this ).find( "." + itemClass ).removeClass( [ outClass, inClass, reverseClass ].join( " " ) );
