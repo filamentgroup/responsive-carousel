@@ -30,8 +30,11 @@
 				supported = false,
 				property;
 
+			prefixes.push("");
+
 			while( prefixes.length ){
-				property = prefixes.shift() + "Transition";
+				property = prefixes.shift();
+				property += (property === "" ? "t" : "T" )+ "ransition";
 
 				if ( property in document.documentElement.style !== undefined && property in document.documentElement.style !== false ) {
 					supported = true;
