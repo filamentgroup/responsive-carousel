@@ -149,9 +149,29 @@
 					$to = $( this ).find( "." + itemClass )[ reverse.length ? "last" : "first" ]();
 				}
 
-
-
 				if( cssTransitionsSupport ){
+					var self = this;
+
+					if( reverse ){
+						$to.addClass("no-transition");
+
+						// allow the dom to render the transition
+						// NOTE weak guarantees here
+						setTimeout(function(){
+
+							// let the next forward transition take place
+							$to.removeClass("no-transition");
+
+							// clean up the backward transition from the stack
+							$self[ pluginName ]( "_transitionEnd", $from, $to, reverse, index );
+
+							// we use _transitionEnd to clean up the non-transition that moves
+							// the new slide into place, so we have to disable nav for the
+							// second real transition
+							self.isNavDisabled = true;
+						});
+					}
+
 					$self[ pluginName ]( "_transitionStart", $from, $to, reverse, index );
 				} else {
 					$self[ pluginName ]( "_transitionEnd", $from, $to, reverse, index );
