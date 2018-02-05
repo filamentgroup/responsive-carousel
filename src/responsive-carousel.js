@@ -109,14 +109,9 @@
 				// disable navigation when moving from slide to slide
 				// enabled in `_transitionEnd`
 				this.isNavDisabled = true;
-
 				var $self = $(this),
 					trans = $self.attr( transitionAttr ),
 					reverseClass = " " + pluginName + "-" + trans + "-reverse";
-
-				if( $( this ).find( "." + itemClass ).filter( "." + outClass + ", ." + inClass ).length ){
-					return; // goTo doesn't work during an animation
-				}
 
 				// clean up children
 				$( this ).find( "." + itemClass ).removeClass( [ outClass, inClass, reverseClass ].join( " " ) );
@@ -148,8 +143,6 @@
 				if( !$to.length ){
 					$to = $( this ).find( "." + itemClass )[ reverse.length ? "last" : "first" ]();
 				}
-
-
 
 				if( cssTransitionsSupport ){
 					$self[ pluginName ]( "_transitionStart", $from, $to, reverse, index );
@@ -191,10 +184,23 @@
 
 			_transitionStart: function( $from, $to, reverseClass, index ){
 				var $self = $(this);
-
+				var self = this;
 				$to.one( navigator.userAgent.indexOf( "AppleWebKit" ) > -1 ? "webkitTransitionEnd" : "transitionend otransitionend", function(){
 					$self[ pluginName ]( "_transitionEnd", $from, $to, reverseClass, index );
+
+					// if we're not going in reverse this is the end of the transitions, enable nav
+					if( !reverseClass ){
+						self.isNavDisabled = false;
+					}
 				});
+
+				// if we are going in reverse we need to wait until the final transition
+				// which is the old slide $from moving out
+				if( reverseClass ){
+					$from.one( navigator.userAgent.indexOf( "AppleWebKit" ) > -1 ? "webkitTransitionEnd" : "transitionend otransitionend", function(){
+						self.isNavDisabled = false;
+					});
+				}
 
 				$(this).addClass( reverseClass );
 				$from.addClass( outClass );
@@ -226,8 +232,6 @@
 				if( $( document.activeElement ).closest( $from[ 0 ] ).length ){
 					$to.focus();
 				}
-
-				this.isNavDisabled = false;
 			},
 
 			_bindEventListeners: function(){
