@@ -162,7 +162,8 @@
 							// let the next forward transition take place
 							$to.removeClass("no-transition");
 
-							// clean up the backward transition from the stack
+							// clean up the backward transition from the stack to the front of
+							// the carousel the _transitionStart will have been called below
 							$self[ pluginName ]( "_transitionEnd", $from, $to, reverse, index );
 
 							// we use _transitionEnd to clean up the non-transition that moves
