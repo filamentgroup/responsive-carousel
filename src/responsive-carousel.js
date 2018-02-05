@@ -102,6 +102,13 @@
 			},
 
 			goTo: function( num ){
+				if( this.isNavDisabled ){
+					return;
+				}
+
+				// disable navigation when moving from slide to slide
+				// enabled in `_transitionEnd`
+				this.isNavDisabled = true;
 
 				var $self = $(this),
 					trans = $self.attr( transitionAttr ),
@@ -220,6 +227,7 @@
 					$to.focus();
 				}
 
+				this.isNavDisabled = false;
 			},
 
 			_bindEventListeners: function(){
