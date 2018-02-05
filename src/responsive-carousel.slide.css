@@ -62,3 +62,6 @@
 .carousel-slide-reverse .carousel-active {
 	left: 0;
 }
+.carousel-item.no-transition {
+  transition: none !important;
+}

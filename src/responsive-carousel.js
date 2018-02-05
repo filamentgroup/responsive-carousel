@@ -196,6 +196,21 @@
 
 			_transitionEnd: function( $from, $to, reverseClass, index ){
 				$( this ).removeClass( reverseClass );
+
+				// If the slides are moving forward prevent, the previous slide from
+				// transitioning slowly to the slide stack.
+
+				// This prevents botched transitions for 2 slide carousels because,
+				// unless there's a third slide to move into position from the right,
+				// the slow transition to the stack can leave it in an intermediate
+				// state when the user clicks "next" again.
+				if( !reverseClass ){
+					$from.addClass("no-transition");
+					setTimeout(function(){
+						$from.removeClass("no-transition");
+					});
+				}
+
 				$from.removeClass( outClass + " " + activeClass );
 				$to.removeClass( inClass ).addClass( activeClass );
 				$( this )[ pluginName ]( "update" );
