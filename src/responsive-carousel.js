@@ -185,26 +185,43 @@
 			_transitionStart: function( $from, $to, reverseClass, index ){
 				var $self = $(this);
 				var self = this;
-				$to.one( navigator.userAgent.indexOf( "AppleWebKit" ) > -1 ? "webkitTransitionEnd" : "transitionend otransitionend", function(){
-					$self[ pluginName ]( "_transitionEnd", $from, $to, reverseClass, index );
 
-					// if we're not going in reverse this is the end of the transitions, enable nav
-					if( !reverseClass ){
-						self.isNavDisabled = false;
-					}
-				});
-
-				// if we are going in reverse we need to wait until the final transition
-				// which is the old slide $from moving out
-				if( reverseClass ){
-					$from.one( navigator.userAgent.indexOf( "AppleWebKit" ) > -1 ? "webkitTransitionEnd" : "transitionend otransitionend", function(){
-						self.isNavDisabled = false;
-					});
-				}
+				var endEvent = navigator.userAgent.indexOf( "AppleWebKit" ) > -1 ? "webkitTransitionEnd" : "transitionend otransitionend";
 
 				$(this).addClass( reverseClass );
-				$from.addClass( outClass );
-				$to.addClass( inClass );
+
+				if( reverseClass ){
+					// if we are going in reverse we need to wait until the final transition,
+					// which is the old slide $from moving out, to re-enable transitions
+					$from.one( endEvent, function(){
+						self.isNavDisabled = false;
+					});
+
+					// when going in reverse we want to move the $to slide into place
+					// immediately.
+					$to.addClass("no-transition");
+					$to.addClass( inClass );
+
+					// once the $to slide is in place then we want to do the normal transition
+					// by removing no-transition and letting the removal of classes move things
+					// forward
+					setTimeout(function(){
+						$to.removeClass("no-transition");
+						$self[ pluginName ]( "_transitionEnd", $from, $to, reverseClass, index );
+					}, 20);
+				} else {
+					$to.one( endEvent, function(){
+						$self[ pluginName ]( "_transitionEnd", $from, $to, reverseClass, index );
+
+						// if we're not going in reverse this is the end of the transitions, enable nav
+						if( !reverseClass ){
+							self.isNavDisabled = false;
+						}
+					});
+
+					$from.addClass( outClass );
+					$to.addClass( inClass );
+				}
 			},
 
 			_transitionEnd: function( $from, $to, reverseClass, index ){
