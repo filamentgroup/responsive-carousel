@@ -214,9 +214,7 @@
 						$self[ pluginName ]( "_transitionEnd", $from, $to, reverseClass, index );
 
 						// if we're not going in reverse this is the end of the transitions, enable nav
-						if( !reverseClass ){
-							self.isNavDisabled = false;
-						}
+						self.isNavDisabled = false;
 					});
 
 					$from.addClass( outClass );
