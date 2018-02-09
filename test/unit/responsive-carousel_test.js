@@ -70,12 +70,19 @@
 		ok( $items.eq(position - 1).is(":visible") );
 	});
 
-	test( "+1 advances by one position", function() {
+	asyncTest( "+1 advances by one position", function() {
 		var position = 2;
 
+		$carousel.one("aftergoto.carousel", function(){
+			$carousel.one("aftergoto.carousel", function(){
+				ok( $items.eq(position).is(":visible") );
+				start();
+			});
+
+			$carousel.carousel( "goTo", "+1" );
+		});
+
 		$carousel.carousel( "goTo", position );
-		$carousel.carousel( "goTo", "+1" );
-		ok( $items.eq(position).is(":visible") );
 	});
 
 	test( "-1 retreats by one position", function() {

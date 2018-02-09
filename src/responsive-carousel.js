@@ -144,14 +144,15 @@
 					$to = $( this ).find( "." + itemClass )[ reverse.length ? "last" : "first" ]();
 				}
 
+				// added to allow pagination to track
+				$self.trigger( "goto." + pluginName, [ $to, index ] );
+
 				if( cssTransitionsSupport ){
 					$self[ pluginName ]( "_transitionStart", $from, $to, reverse, index );
 				} else {
 					$self[ pluginName ]( "_transitionEnd", $from, $to, reverse, index );
+					$self[ pluginName ]( "_postTransitionCleanup", $from, $to, index );
 				}
-
-				// added to allow pagination to track
-				$self.trigger( "goto." + pluginName, [ $to, index ] );
 			},
 
 			update: function(){
@@ -194,7 +195,7 @@
 					// if we are going in reverse we need to wait until the final transition,
 					// which is the old slide $from moving out, to re-enable transitions
 					$from.one( endEvent, function(){
-						self.isNavDisabled = false;
+						$self[ pluginName ]( "_postTransitionCleanup", $from, $to, index );
 					});
 
 					// when going in reverse we want to move the $to slide into place
@@ -212,9 +213,7 @@
 				} else {
 					$to.one( endEvent, function(){
 						$self[ pluginName ]( "_transitionEnd", $from, $to, reverseClass, index );
-
-						// if we're not going in reverse this is the end of the transitions, enable nav
-						self.isNavDisabled = false;
+						$self[ pluginName ]( "_postTransitionCleanup", $from, $to, index );
 					});
 
 					$from.addClass( outClass );
@@ -241,12 +240,19 @@
 
 				$from.removeClass( outClass + " " + activeClass );
 				$to.removeClass( inClass ).addClass( activeClass );
-				$( this )[ pluginName ]( "update" );
-				$( this )[ pluginName ]( "_addNextPrevClasses" );
-				$( this ).trigger( "aftergoto." + pluginName, [ $to, index ] );
+			},
+
+			_postTransitionCleanup: function($from, $to, index){
+				$this = $(this);
+				$this[ pluginName ]( "update" );
+				$this[ pluginName ]( "_addNextPrevClasses" );
 				if( $( document.activeElement ).closest( $from[ 0 ] ).length ){
 					$to.focus();
 				}
+
+				// if we're not going in reverse this is the end of the transitions, enable nav
+				this.isNavDisabled = false;
+				$this.trigger( "aftergoto." + pluginName, [ $to, index ] );
 			},
 
 			_bindEventListeners: function(){
