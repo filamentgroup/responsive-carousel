@@ -28,7 +28,7 @@
 			},
 
 			_bindStopListener: function(){
-				return $(this).bind( "mouseup keyup focus dragmove", function(){
+				return $(this).bind( "mouseup keyup focus touchmove", function(){
 					$( this )[ pluginName ]( "stop" );
 				} );
 			},
