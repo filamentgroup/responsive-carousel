@@ -54,7 +54,10 @@
 
 				$( this )
 					.bind( "touchstart", function( e ){
-						$( this ).addClass( noTrans );
+						// TODO move to component method
+						if( !$(e.target).is("a.next") && !$(e.target).is("a.prev") ){
+							$( this ).addClass( noTrans );
+						}
 						emitEvents( e );
 					} )
 					.bind( "touchmove", function( e ){
