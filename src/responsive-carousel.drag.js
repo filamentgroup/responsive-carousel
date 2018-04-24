@@ -38,30 +38,41 @@
 			if( $( e.target ).attr( "data-transition" ) === "slide" ){
 				var activeSlides = getActiveSlides( $( e.target ), data.deltaX );
 
+				activeSlides[ 0 ].addClass("no-transition");
+				activeSlides[ 1 ].addClass("no-transition");
+
 				activeSlides[ 0 ].css( "left", data.deltaX + "px" );
 				activeSlides[ 1 ].css( "left", data.deltaX < 0 ? data.w + data.deltaX + "px" : -data.w + data.deltaX + "px" );
 			}
-		} )
+		})
 		.bind( pluginName + ".dragend", function( e, data ){
 			if( !!data && !dragThreshold( data.deltaX ) ){
 				return;
 			}
+
 			var activeSlides = getActiveSlides( $( e.target ), data.deltaX ),
-				newSlide = Math.abs( data.deltaX ) > 45;
+					newSlide = Math.abs( data.deltaX ) > 45;
+
+			activeSlides[ 0 ].addClass("fast");
+			activeSlides[ 1 ].addClass("fast");
+			activeSlides[ 0 ].removeClass("no-transition");
+			activeSlides[ 1 ].removeClass("no-transition");
 
 			if( $( e.target ).attr( "data-transition" ) === "slide" ){
 				$( e.target ).one( navigator.userAgent.indexOf( "AppleWebKit" ) ? "webkitTransitionEnd" : "transitionEnd", function(){
 					activeSlides[ 0 ].add( activeSlides[ 1 ] ).css( "left", "" );
 					$( e.target ).trigger( "goto." + pluginName, activeSlides[ newSlide ? 1 : 0 ] );
+					activeSlides[ 0 ].removeClass("fast");
+					activeSlides[ 1 ].removeClass("fast");
 				});
 
 				if( newSlide ){
-					activeSlides[ 0 ].removeClass( activeClass ).css( "left", data.deltaX > 0 ? data.w  + "px" : -data.w  + "px" );
+					activeSlides[ 0 ].removeClass( activeClass ).css( "left", data.deltaX > 0 ? data.w	+ "px" : -data.w	+ "px" );
 					activeSlides[ 1 ].addClass( activeClass ).css( "left", 0 );
 				}
 				else {
 					activeSlides[ 0 ].css( "left", 0);
-					activeSlides[ 1 ].css( "left", data.deltaX > 0 ? -data.w  + "px" : data.w  + "px" );
+					activeSlides[ 1 ].css( "left", data.deltaX > 0 ? -data.w	+ "px" : data.w	 + "px" );
 				}
 			}
 			else if( newSlide ){
