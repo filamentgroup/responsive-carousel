@@ -109,23 +109,13 @@
 					}
 				});
 
-				if( newSlide ){
-					$left
-						.removeClass( activeClass )
-						.css( "left", data.deltaX > 0 ? data.w	+ "px" : -data.w	+ "px" );
+				(newSlide ? $left : $right)
+					.removeClass( activeClass )
+					.css( "left", data.deltaX > 0 ? data.w	+ "px" : -data.w	+ "px" );
 
-					$right
-						.addClass( activeClass )
-						.css( "left", 0 );
-				} else {
-					$left
-						.addClass( activeClass )
-						.css( "left", 0);
-
-					$right
-						.removeClass( activeClass )
-						.css( "left", data.deltaX > 0 ? -data.w	+ "px" : data.w	 + "px" );
-				}
+				(newSlide ? $right : $left)
+					.addClass( activeClass )
+					.css( "left", 0);
 			} else if( newSlide ){
 				$( e.target )[ pluginName ]( data.deltaX > 0 ? "prev" : "next" );
 			}
