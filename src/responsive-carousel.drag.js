@@ -81,8 +81,8 @@
 			if( $( e.target ).attr( "data-transition" ) === "slide" ){
 				$( e.target ).one( endEvent, function(){
 
-					// add no transition to the slide that's going out and
-					// needs to move back to the stack
+					// add no transition to the slide that's going out and needs to move
+					// back to the stack fast
 					var $out = (newSlide ? $current : $next);
 					$out.addClass("no-transition");
 					setTimeout(function(){
