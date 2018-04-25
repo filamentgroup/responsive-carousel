@@ -63,5 +63,13 @@
 	left: 0;
 }
 .carousel-item.no-transition {
-  transition: none !important;
+	transition: none !important;
+}
+.carousel-slide .carousel-item.fast-transition,
+.carousel-slide-reverse .carousel-item.fast-transition {
+	-webkit-transition: left .1s ease;
+	-moz-transition: left .1s ease;
+	-ms-transition: left .1s ease;
+	-o-transition: left .1s ease;
+	transition: left .1s ease;
 }

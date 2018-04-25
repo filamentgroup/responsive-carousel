@@ -75,7 +75,7 @@
 			// add the fast transition class to make transitions out of a drag quick
 			// remove any no-transition class so the transition out of the drag can work
 			$both
-				.addClass("fast")
+				.addClass("fast-transition")
 				.removeClass("no-transition");
 
 			if( $( e.target ).attr( "data-transition" ) === "slide" ){
@@ -93,7 +93,7 @@
 					$( e.target ).trigger( "goto." + pluginName, newSlide ? $next : $current );
 
 					// remove the fast transition class so that other transitions can be slow
-					$both.removeClass("fast");
+					$both.removeClass("fast-transition");
 
 					// do the post transition cleanup to make sure that the state in the
 					// component is sane for future transitions and navigation
