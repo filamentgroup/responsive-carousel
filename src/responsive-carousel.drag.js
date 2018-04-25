@@ -29,20 +29,31 @@
 			return [ $from, $to, nextNum-1 ];
 		};
 
+	var endEvent = navigator.userAgent.indexOf( "AppleWebKit" ) ? "webkitTransitionEnd" : "transitionEnd";
+
 	// Touch handling
 	$( document )
 		.bind( pluginName + ".dragmove", function( e, data ){
 			if( !!data && !dragThreshold( data.deltaX ) ){
 				return;
 			}
+
 			if( $( e.target ).attr( "data-transition" ) === "slide" ){
 				var activeSlides = getActiveSlides( $( e.target ), data.deltaX );
+				var $left = activeSlides[ 0 ];
+				var $right = activeSlides[ 1 ];
 
-				activeSlides[ 0 ].addClass("no-transition");
-				activeSlides[ 1 ].addClass("no-transition");
+				// remove any transition classes in case drag happened in the middle
+				// of another transition and prevent any other transitions while dragging
+				// also unbind transition end events from the main component to prevent
+				// class application and other behavior from applying after the drag ends
+				$left.add($right)
+					.removeClass("carousel-in carousel-out")
+					.addClass("no-transition")
+					.unbind(endEvent);
 
-				activeSlides[ 0 ].css( "left", data.deltaX + "px" );
-				activeSlides[ 1 ].css( "left", data.deltaX < 0 ? data.w + data.deltaX + "px" : -data.w + data.deltaX + "px" );
+				$left.css( "left", data.deltaX + "px" );
+				$right.css( "left", data.deltaX < 0 ? data.w + data.deltaX + "px" : -data.w + data.deltaX + "px" );
 			}
 		})
 		.bind( pluginName + ".dragend", function( e, data ){
@@ -53,31 +64,71 @@
 			var activeSlides = getActiveSlides( $( e.target ), data.deltaX ),
 					newSlide = Math.abs( data.deltaX ) > 45;
 
-			activeSlides[ 0 ].addClass("fast");
-			activeSlides[ 1 ].addClass("fast");
-			activeSlides[ 0 ].removeClass("no-transition");
-			activeSlides[ 1 ].removeClass("no-transition");
+			// use the absolute position from the left of the "from" slide to determine where
+			// thing should end up
+			newSlide = Math.abs(parseFloat(activeSlides[0].css("left").replace("px", ""))) > 45;
+
+			var $left = activeSlides[ 0 ];
+			var $right = activeSlides[ 1 ];
+
+			// add the fast transition class to make transitions out of a drag quick
+			$left.addClass("fast");
+			$right.addClass("fast");
+
+			// remove any no-transition class
+			$left.removeClass("no-transition");
+			$right.removeClass("no-transition");
 
 			if( $( e.target ).attr( "data-transition" ) === "slide" ){
-				$( e.target ).one( navigator.userAgent.indexOf( "AppleWebKit" ) ? "webkitTransitionEnd" : "transitionEnd", function(){
-					activeSlides[ 0 ].add( activeSlides[ 1 ] ).css( "left", "" );
-					$( e.target ).trigger( "goto." + pluginName, activeSlides[ newSlide ? 1 : 0 ] );
-					activeSlides[ 0 ].removeClass("fast");
-					activeSlides[ 1 ].removeClass("fast");
+				$( e.target ).one( endEvent, function(){
+
+					// add no transition to the slide that's going out and
+					// needs to move back to the stack
+					var $out = (newSlide ? $left : $right);
+					$out.addClass("no-transition");
+					setTimeout(function(){
+						$out.removeClass("no-transition");
+					}, 20);
+
+					$left.add( $right ).css( "left", "" );
+					$( e.target ).trigger( "goto." + pluginName, newSlide ? $right : $left );
+
+					// remove the fast transition class so that other transitions can be slow
+					$left.removeClass("fast");
+					$right.removeClass("fast");
+
+					// do the post transition cleanup to make sure that the state in the component
+					if( newSlide ) {
+						$left
+							.closest(".carousel")
+							.carousel("_postTransitionCleanup", $left, $right);
+					} else {
+						$left
+							.closest(".carousel")
+							.carousel("_postTransitionCleanup", $left, $right);
+					}
 				});
 
 				if( newSlide ){
-					activeSlides[ 0 ].removeClass( activeClass ).css( "left", data.deltaX > 0 ? data.w	+ "px" : -data.w	+ "px" );
-					activeSlides[ 1 ].addClass( activeClass ).css( "left", 0 );
+					$left
+						.removeClass( activeClass )
+						.css( "left", data.deltaX > 0 ? data.w	+ "px" : -data.w	+ "px" );
+
+					$right
+						.addClass( activeClass )
+						.css( "left", 0 );
+				} else {
+					$left
+						.addClass( activeClass )
+						.css( "left", 0);
+
+					$right
+						.removeClass( activeClass )
+						.css( "left", data.deltaX > 0 ? -data.w	+ "px" : data.w	 + "px" );
 				}
-				else {
-					activeSlides[ 0 ].css( "left", 0);
-					activeSlides[ 1 ].css( "left", data.deltaX > 0 ? -data.w	+ "px" : data.w	 + "px" );
-				}
-			}
-			else if( newSlide ){
+			} else if( newSlide ){
 				$( e.target )[ pluginName ]( data.deltaX > 0 ? "prev" : "next" );
 			}
-		} );
+		});
 
 }(jQuery));
