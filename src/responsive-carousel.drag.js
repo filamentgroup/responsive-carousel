@@ -75,7 +75,7 @@
 
 			// add the fast transition class to make transitions out of a drag quick
 			// remove any no-transition class so the transition out of the drag can work
-			$carousel.addClass("carousel-fast-transition");
+			$carousel.addClass("carousel-autoplay-stopped");
 			$both.removeClass("no-transition");
 
 			if( $( e.target ).attr( "data-transition" ) === "slide" ){
@@ -93,7 +93,7 @@
 					$( e.target ).trigger( "goto." + pluginName, newSlide ? $next : $current );
 
 					// remove the fast transition class so that other transitions can be slow
-					$carousel.removeClass("carousel-fast-transition");
+					$carousel.removeClass("carousel-autoplay-stopped");
 
 					// do the post transition cleanup to make sure that the state in the
 					// component is sane for future transitions and navigation
@@ -107,12 +107,15 @@
 				// if we're heading to a new slide move the slide out
 				(newSlide ? $current : $next)
 					.removeClass( activeClass )
-					.css( "left", data.deltaX > 0 ? data.w	+ "px" : -data.w	+ "px" );
+					.css( "left",
+								newSlide ?
+								(data.deltaX > 0 ? data.w	+ "px" : -data.w	+ "px") :
+								(data.deltaX > 0 ? -data.w	+ "px" : data.w	+ "px"));
 
 				// if we're heading to a new slide move the next one in
 				(newSlide ? $next : $current)
 					.addClass( activeClass )
-					.css( "left", 0);
+					.css( "left", 0 );
 			} else if( newSlide ){
 				$( e.target )[ pluginName ]( data.deltaX > 0 ? "prev" : "next" );
 			}

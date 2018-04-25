@@ -65,7 +65,7 @@
 .carousel-item.no-transition {
 	transition: none !important;
 }
-.carousel-slide.carousel-fast-transition .carousel-item {
+.carousel-slide.carousel-autoplay-stopped .carousel-item {
 	-webkit-transition: left .1s ease;
 	-moz-transition: left .1s ease;
 	-ms-transition: left .1s ease;
