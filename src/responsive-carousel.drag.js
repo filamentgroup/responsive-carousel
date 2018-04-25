@@ -95,15 +95,13 @@
 					// remove the fast transition class so that other transitions can be slow
 					$both.removeClass("fast");
 
-					// do the post transition cleanup to make sure that the state in the component
+					// do the post transition cleanup to make sure that the state in the
+					// component is sane for future transitions and navigation
+					var $carousel = $current.closest(".carousel");
 					if( newSlide ) {
-						$current
-							.closest(".carousel")
-							.carousel("_postTransitionCleanup", $current, $next);
+							$carousel.carousel("_postTransitionCleanup", $current, $next);
 					} else {
-						$current
-							.closest(".carousel")
-							.carousel("_postTransitionCleanup", $next, $current);
+							$carousel.carousel("_postTransitionCleanup", $next, $current);
 					}
 				});
 
