@@ -65,8 +65,7 @@
 .carousel-item.no-transition {
 	transition: none !important;
 }
-.carousel-slide .carousel-item.fast-transition,
-.carousel-slide-reverse .carousel-item.fast-transition {
+.carousel-slide.carousel-fast-transition .carousel-item {
 	-webkit-transition: left .1s ease;
 	-moz-transition: left .1s ease;
 	-ms-transition: left .1s ease;

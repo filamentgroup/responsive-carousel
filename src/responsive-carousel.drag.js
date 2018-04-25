@@ -61,22 +61,22 @@
 				return;
 			}
 
-			var activeSlides = getActiveSlides( $( e.target ), data.deltaX ),
-					newSlide = Math.abs( data.deltaX ) > 45;
+			var activeSlides = getActiveSlides( $( e.target ), data.deltaX );
+			var $current = activeSlides[ 0 ];
+			var $next = activeSlides[ 1 ];
+			var $both = $current.add($next);
+			var $carousel = $current.closest(".carousel");
+
 
 			// use the absolute position from the left of the "from" slide to determine where
 			// thing should end up
 			newSlide = Math.abs(parseFloat(activeSlides[0].css("left").replace("px", ""))) > 45;
 
-			var $current = activeSlides[ 0 ];
-			var $next = activeSlides[ 1 ];
-			var $both = $current.add($next);
 
 			// add the fast transition class to make transitions out of a drag quick
 			// remove any no-transition class so the transition out of the drag can work
-			$both
-				.addClass("fast-transition")
-				.removeClass("no-transition");
+			$carousel.addClass("carousel-fast-transition");
+			$both.removeClass("no-transition");
 
 			if( $( e.target ).attr( "data-transition" ) === "slide" ){
 				$( e.target ).one( endEvent, function(){
@@ -93,11 +93,10 @@
 					$( e.target ).trigger( "goto." + pluginName, newSlide ? $next : $current );
 
 					// remove the fast transition class so that other transitions can be slow
-					$both.removeClass("fast-transition");
+					$carousel.removeClass("carousel-fast-transition");
 
 					// do the post transition cleanup to make sure that the state in the
 					// component is sane for future transitions and navigation
-					var $carousel = $current.closest(".carousel");
 					if( newSlide ) {
 							$carousel.carousel("_postTransitionCleanup", $current, $next);
 					} else {
