@@ -107,10 +107,12 @@
 					}
 				});
 
+				// if we're heading to a new slide move the slide out
 				(newSlide ? $current : $next)
 					.removeClass( activeClass )
 					.css( "left", data.deltaX > 0 ? data.w	+ "px" : -data.w	+ "px" );
 
+				// if we're heading to a new slide move the next one in
 				(newSlide ? $next : $current)
 					.addClass( activeClass )
 					.css( "left", 0);
