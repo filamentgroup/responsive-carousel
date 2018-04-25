@@ -73,7 +73,7 @@
 			var $both = $current.add($next);
 
 			// add the fast transition class to make transitions out of a drag quick
-			// remove any no-transition class
+			// remove any no-transition class so the transition out of the drag can work
 			$both
 				.addClass("fast")
 				.removeClass("no-transition");
