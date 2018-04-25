@@ -70,14 +70,13 @@
 
 			var $left = activeSlides[ 0 ];
 			var $right = activeSlides[ 1 ];
+			var $both = $left.add($right);
 
 			// add the fast transition class to make transitions out of a drag quick
-			$left.addClass("fast");
-			$right.addClass("fast");
-
 			// remove any no-transition class
-			$left.removeClass("no-transition");
-			$right.removeClass("no-transition");
+			$both
+				.addClass("fast")
+				.removeClass("no-transition");
 
 			if( $( e.target ).attr( "data-transition" ) === "slide" ){
 				$( e.target ).one( endEvent, function(){
@@ -94,8 +93,7 @@
 					$( e.target ).trigger( "goto." + pluginName, newSlide ? $right : $left );
 
 					// remove the fast transition class so that other transitions can be slow
-					$left.removeClass("fast");
-					$right.removeClass("fast");
+					$both.removeClass("fast");
 
 					// do the post transition cleanup to make sure that the state in the component
 					if( newSlide ) {
