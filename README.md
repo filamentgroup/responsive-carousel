@@ -1,4 +1,4 @@
-# Responsive Carousel [![Build Status](https://travis-ci.org/filamentgroup/responsive-carousel.png)](https://travis-ci.org/filamentgroup/responsive-carousel)
+# Responsive Carousel 
 
 [![Filament Group](http://filamentgroup.com/images/fg-logo-positive-sm-crop.png) ](http://www.filamentgroup.com/)
 
@@ -57,7 +57,7 @@ There are other extensions in the `src` folder, such as flip and fade transition
 
 ### Demos
 
-Check out the [`test/functional/`](http://master.origin.responsive-carousel.fgview.com/test/functional/) directory for demos.
+Check out the [`test/functional/`](http://filamentgroup.github.io/responsive-carousel/test/functional/) directory for demos.
 
 ## Documentation
 
@@ -88,7 +88,7 @@ $( ".carousel" ).carousel();
 
 When the carousel reaches the end or beginning of the list, the inserted navigation links (`a.next` and `a.prev`) will be decorated with an additional `disabled` class. This class receives no properties from the library by default.
 
-For a demo see [`test/functional/no-loop.html`](http://master.origin.responsive-carousel.fgview.com/test/functional/no-loop.html).
+For a demo see [`test/functional/no-loop.html`](http://filamentgroup.github.io/responsive-carousel/test/functional/no-loop.html).
 
 ### Set the Carousel Speed
 
@@ -104,7 +104,7 @@ To declaratively set the speed of the carousel, add a <code>data-interval</code>
 </div>
 ```
 
-For a demo see [`test/functional/flip-auto.html`](http://master.origin.responsive-carousel.fgview.com/test/functional/flip-auto.html) .
+For a demo see [`test/functional/flip-auto.html`](http://filamentgroup.github.io/responsive-carousel/test/functional/flip-auto.html) .
 
 
 
